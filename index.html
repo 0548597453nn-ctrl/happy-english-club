@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy English Club | אנגלית לילדים</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap');
+:root{
+  --ink:#25365c;--soft:#6f7891;--purple:#7655df;--purple2:#efe8ff;--pink:#ff73a4;--green:#4bb88a;--cream:#fffaf3;--line:#e9e4f2;--yellow:#ffd96a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fffdfb;color:var(--ink);font-family:Heebo,Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.shell{max-width:1260px;margin:0 auto;padding:0 20px}
+.topNote{background:#6f4ad7;color:#fff;text-align:center;padding:8px 12px;font-size:13px;font-weight:700}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #f1edf6;box-shadow:0 8px 24px rgba(57,45,112,.07)}
+.nav{display:flex;align-items:center;gap:18px;min-height:76px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;white-space:nowrap}
+.logo{width:52px;height:52px;border-radius:18px;background:#fff1bf;border:2px solid #ffe49a;display:grid;place-items:center;font-size:30px;transform:rotate(-6deg)}
+.brand strong{display:block;font:700 25px Fredoka,Arial;direction:ltr;color:#6949ce}
+.brand small{display:block;color:#9b7bb5;font-weight:800;font-size:12px;text-align:center}
+.links{display:flex;gap:4px;align-items:center;flex:1;overflow:auto;padding-bottom:4px}
+.navBtn{border:0;background:none;padding:12px 14px;border-radius:15px;color:#667089;font-weight:800;white-space:nowrap}
+.navBtn.active,.navBtn:hover{background:#f1ebff;color:#6d4fd2}
+.hero{margin:28px 0 16px;background:linear-gradient(120deg,#fff1da 0%,#ffe6ef 42%,#ece9ff 100%);border-radius:34px;overflow:hidden;display:grid;grid-template-columns:1.15fr .85fr;min-height:390px;position:relative}
+.heroCopy{padding:48px 56px;position:relative;z-index:2}
+.eyebrow{display:inline-block;background:#fff;padding:7px 15px;border-radius:999px;color:#8e68c6;font-size:14px;font-weight:900;box-shadow:0 8px 20px rgba(138,108,205,.18)}
+.hero h1{margin:16px 0 10px;font-size:clamp(36px,5vw,58px);line-height:1.16;letter-spacing:-1.3px}
+.hero h1 em{font-style:normal;color:var(--pink)}
+.hero p{max-width:560px;font-size:18px;line-height:1.85;color:#656d84;margin:0 0 20px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.primary,.secondary,.softBtn,.smallBtn{border:0;border-radius:15px;font-weight:900}
+.primary{background:var(--purple);color:#fff;padding:13px 22px;box-shadow:0 10px 20px rgba(118,85,223,.25)}
+.secondary{background:#fff;color:var(--purple);border:1px solid #e2d9ff;padding:13px 22px}
+.heroArt{position:relative;display:grid;place-items:center}
+.cardArt{width:280px;height:240px;background:#fff;border-radius:30px;border:8px solid #fff;box-shadow:0 20px 45px rgba(92,70,128,.16);transform:rotate(-8deg);display:grid;place-items:center;text-align:center;padding:14px}
+.cardArt b{font:700 96px Fredoka;color:#ff79a8;text-shadow:5px 5px 0 #ffe7f1;display:block;line-height:1}
+.cardArt span{font:700 28px Fredoka;color:#6b54cf}
+.blob{position:absolute;border-radius:50%;background:rgba(255,255,255,.65)}
+.blob.one{width:290px;height:290px;top:50px;right:9%}
+.blob.two{width:230px;height:230px;bottom:-65px;left:2%;background:rgba(255,212,229,.52)}
+.floating{position:absolute;font-size:46px;filter:drop-shadow(0 8px 12px rgba(65,41,90,.18))}
+.f1{top:34px;right:11%}.f2{bottom:48px;left:11%}.f3{top:62px;left:12%}
+.statBar{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;padding:14px 8px 4px;color:#7c8398;font-size:14px;font-weight:800}
+.statBar span{display:flex;align-items:center;gap:8px}
+.sectionTitle{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:32px 0 16px;flex-wrap:wrap}
+.sectionTitle h2{margin:0;font-size:29px;letter-spacing:-.5px}
+.sectionTitle p{margin:4px 0 0;color:#8790a4}
+.linkish{border:0;background:none;color:#7253d2;font-weight:900}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.topicCard,.card{background:#fff;border:1px solid #ece7f4;border-radius:24px;box-shadow:0 8px 28px rgba(70,54,104,.05)}
+.topicCard{padding:24px 14px;text-align:center;transition:.18s;min-height:192px}
+.topicCard:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(70,54,104,.10)}
+.round{width:82px;height:82px;border-radius:26px;display:grid;place-items:center;margin:0 auto 12px;font-size:46px}
+.topicCard h3{margin:0;font-size:19px}
+.topicCard small{color:#8c94a7}
+.card{overflow:hidden}
+.cardTop{height:165px;display:grid;place-items:center;font-size:72px;position:relative}
+.cardTop .enSide{position:absolute;left:16px;bottom:12px;font:700 22px Fredoka;color:rgba(255,255,255,.95);direction:ltr}
+.cardBody{padding:18px}
+.badge{display:inline-block;padding:5px 11px;border-radius:999px;font-size:12px;font-weight:900;background:#eefaf5;color:#2aa37c}
+.badge.paid{background:#fff3df;color:#bc7c22}
+.cardBody h3{margin:9px 0 6px;font-size:20px}
+.cardBody p{margin:0 0 14px;color:#7b8497;line-height:1.7;min-height:47px}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.smallBtn{background:#f1ecff;color:#6c4fd0;padding:10px 15px}
+.price{font-size:22px;font-weight:900;color:#6b4fd0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+.chip{border:1px solid #e5dff2;background:#fff;color:#727c94;padding:9px 15px;border-radius:999px;font-weight:800}
+.chip.selected{background:#7453dd;color:#fff;border-color:#7453dd}
+.search{border:1px solid #e8e3ef;background:#fff;border-radius:14px;padding:12px 15px;min-width:min(100%,360px)}
+.search:focus{outline:none;border-color:#9675ef}
+.utility{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.page{display:none}
+.page.active{display:block}
+.notice{background:#ebfaf3;border-radius:24px;padding:24px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:38px 0}
+.notice .big{font-size:58px}
+.notice h3{margin:0 0 4px;font-size:25px}
+.notice p{margin:0;color:#6c8781}
+.notice .primary{margin-right:auto}
+.empty{background:#fff;border-radius:22px;padding:40px;text-align:center;color:#8891a3;border:1px solid #ece7f4}
+/* Game */
+.gameShell{background:#fff;border:1px solid #ece7f3;border-radius:28px;max-width:900px;margin:26px auto;padding:26px;box-shadow:0 8px 30px rgba(62,49,97,.07)}
+.gameHead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.gameHead strong{font-size:20px}
+.modeBar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.modeBtn{border:1px solid #e4ddf5;background:#fff;color:#6f78a0;padding:10px 13px;border-radius:999px;font-weight:900}
+.modeBtn.active{background:#f1ecff;color:#6b4fd0;border-color:#cbbdf7}
+.gameQuestion{text-align:center;padding:14px 0 10px}
+.bigLetter{font:700 104px Fredoka;color:#23314f;line-height:1.05;direction:ltr}
+.questionMeta{font-size:15px;color:#838ca0}
+.colorSample{width:170px;height:170px;border-radius:26px;border:10px solid #fff;box-shadow:0 14px 32px rgba(77,57,106,.10);margin:0 auto}
+.objectCard{display:inline-flex;align-items:center;justify-content:center;width:170px;height:170px;border-radius:28px;background:#fbf9ff;border:2px dashed #d6c9ff;font-size:88px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;direction:ltr}
+.answer{border:2px solid #ece5f8;background:#faf9ff;border-radius:18px;padding:16px 12px;font-weight:900;font-size:19px;color:#263457}
+.answer:hover{border-color:#a593ef}
+.answer.correct{background:#ddf8ea;border-color:#4bc08f}
+.answer.wrong{background:#ffe7e7;border-color:#e58d95}
+.feedback{text-align:center;min-height:32px;padding-top:13px;font-weight:900;color:#6f51d4}
+.gameFx{position:relative;min-height:90px}
+.celebrate,.failFlash{position:fixed;left:50%;top:24%;transform:translateX(-50%);z-index:80;pointer-events:none;font-weight:900}
+.celebrate{font-size:34px;color:#6c4fd0;text-shadow:0 3px 0 #fff}
+.failFlash{font-size:42px;color:#ef4f5a;text-shadow:0 3px 0 #fff;animation:popFade 1s ease forwards}
+.bursts{position:fixed;inset:0;pointer-events:none;z-index:79}
+.burst{position:absolute;left:50%;top:32%;width:12px;height:12px}
+.burst i{position:absolute;left:0;top:0;width:10px;height:10px;border-radius:50%;background:#ffd54d;animation:burstMove 900ms ease-out forwards}
+.burst i:nth-child(2){background:#ff77a8;animation-delay:40ms}
+.burst i:nth-child(3){background:#66d7ff;animation-delay:80ms}
+.burst i:nth-child(4){background:#7fe39c;animation-delay:20ms}
+.burst i:nth-child(5){background:#b08cff;animation-delay:60ms}
+.burst i:nth-child(6){background:#ff9d57;animation-delay:100ms}
+@keyframes burstMove{0%{transform:translate(0,0) scale(1);opacity:1}100%{opacity:0}}
+@keyframes popFade{0%{opacity:0;transform:translateX(-50%) scale(.5)}20%{opacity:1;transform:translateX(-50%) scale(1.08)}100%{opacity:0;transform:translateX(-50%) scale(.95)}}
+/* Modal */
+.modalOverlay{position:fixed;inset:0;background:rgba(31,28,54,.68);display:flex;justify-content:center;align-items:center;padding:18px;z-index:50}
+.modal{background:#fff;border-radius:28px;width:min(1100px,96vw);max-height:92vh;overflow:auto;position:relative;padding:26px 28px 30px;box-shadow:0 25px 70px rgba(20,17,40,.35)}
+.closeBtn{position:absolute;left:18px;top:16px;border:0;background:#f3f1fa;padding:8px 13px;border-radius:12px;font-weight:900}
+.previewHead{padding-left:62px}
+.previewHead h2{margin:0 0 8px;font-size:31px}
+.previewMeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.previewMeta span{background:#f3f0fe;color:#7053d0;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:800}
+.sheet{max-width:980px;margin:0 auto;background:#fff;border:1px solid #ece7f4;border-radius:26px;padding:28px;box-shadow:0 10px 40px rgba(70,54,104,.08)}
+.sheetTop{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#8a90a1;font-weight:800;font-size:14px}
+.sheet h3.sheetTitle{margin:14px 0 10px;font:700 42px Fredoka,Arial;line-height:1.12;text-align:center;color:#24314f}
+.sheetSub{margin:0 auto 18px;text-align:center;color:#6e7690;max-width:780px;line-height:1.7}
+.wsGrid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.wsBlock{border:2px dashed #d5caef;border-radius:22px;padding:16px;background:#fff}
+.wsBlock h4{margin:0 0 8px;font-size:18px;color:#5643a9}
+.mono{font-family:Fredoka,Arial,sans-serif;direction:ltr}
+.abcLine{font:700 34px Fredoka;direction:ltr;letter-spacing:2px;line-height:1.8}
+.traceRow{border-bottom:2px dashed #d7d1ea;padding:8px 0;margin-bottom:8px;font:700 36px Fredoka;direction:ltr}
+.matchCols{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:start}
+.matchItem{padding:11px 12px;border:1px solid #ebe5f6;border-radius:14px;background:#fbfaff;text-align:center;font-weight:800}
+.arrowCol{display:grid;gap:12px;padding-top:8px;color:#9c89d8;font-weight:900}
+.blankLines div{height:34px;border-bottom:2px solid #d9d2eb;margin-bottom:10px}
+.choiceGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.choice{padding:12px;border:1px solid #e8e1f3;border-radius:14px;background:#faf9fe;text-align:center;font-weight:800}
+.miniCards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.miniCard{border:1px solid #ebe5f6;border-radius:18px;padding:12px;text-align:center;background:#fff}
+.miniCard .pic{font-size:44px;line-height:1.2;display:block}
+.wordBank{border:2px solid #dfd6f4;background:#faf8ff;border-radius:18px;padding:14px;margin-top:14px}
+.wordBank b{display:block;margin-bottom:8px;color:#614bc4}
+.wordBank .mono{font-size:20px;line-height:1.8}
+.colorDots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.colorDot{border:2px dashed #d9d0f0;border-radius:18px;padding:12px;text-align:center}
+.circle{width:64px;height:64px;border-radius:50%;border:3px solid #111;margin:0 auto 8px;background:#fff}
+.numGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.numCell{border:1px solid #ebe4f6;border-radius:16px;padding:14px;text-align:center;background:#fff}
+.numCell b{display:block;font:700 34px Fredoka}
+.bwArtWrap{display:grid;place-items:center;padding:10px}
+.bwArtWrap svg{max-width:100%;height:230px;stroke:#111;stroke-width:4.5;fill:#fff;stroke-linecap:round;stroke-linejoin:round}
+.bwSmall svg{height:88px}
+.printAction{text-align:center;margin-top:16px}
+.tips{background:#fff8e5;border-radius:18px;padding:15px 16px;color:#866d31;line-height:1.7;margin-top:16px}
+.lessonPreview{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.lessonBox{border:1px solid #ece5f6;border-radius:20px;padding:18px;background:#fff}
+.lessonBox h4{margin:0 0 10px;color:#5948b7}
+.timeline{display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:16px;background:#faf8ff}
+.step b{display:grid;place-items:center;min-width:34px;height:34px;border-radius:12px;background:#ece6ff;color:#674bcf}
+.manageGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;font-weight:800;font-size:14px}
+.field input,.field select,.field textarea{border:1px solid #e4ddf1;border-radius:12px;padding:11px;background:#fff}
+.field.full{grid-column:1/-1}
+.customList{display:grid;gap:10px;margin-top:15px}
+.customItem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px;border:1px solid #ece6f3;border-radius:15px;background:#fff}
+footer{margin-top:62px;background:#f7f3fc;color:#7d7a90;padding:28px 0;font-size:13px}
+.footRow{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.noPrint{display:block}
+@media print{
+  body *{visibility:hidden}
+  .modal,.modal *{visibility:visible}
+  .modal{position:static;width:100%;max-height:none;box-shadow:none;padding:0}
+  .closeBtn,.printAction,.noPrint{display:none!important}
+  .sheet{box-shadow:none;border:0;padding:0}
+}
+@media (max-width:950px){
+  .grid4{grid-template-columns:repeat(2,1fr)}
+  .grid3{grid-template-columns:repeat(2,1fr)}
+  .hero{grid-template-columns:1fr}
+  .heroArt{height:220px}
+  .lessonPreview{grid-template-columns:1fr}
+  .wsGrid2,.manageGrid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .shell{padding:0 14px}
+  .nav{gap:10px;padding:8px 0}
+  .brand strong{font-size:21px}
+  .logo{width:44px;height:44px;font-size:26px}
+  .heroCopy{padding:28px}
+  .hero h1{font-size:40px}
+  .hero p{font-size:16px}
+  .cardArt{transform:rotate(-6deg) scale(.75)}
+  .grid4,.grid3,.miniCards,.numGrid,.colorDots,.answers{grid-template-columns:1fr 1fr}
+  .cardTop{height:124px;font-size:52px}
+  .cardBody h3{font-size:17px}
+  .sheet{padding:16px}
+  .sheet h3.sheetTitle{font-size:31px}
+  .bigLetter{font-size:82px}
+  .colorSample,.objectCard{width:140px;height:140px}
+}
+
+.contentTypes{margin:14px 0 34px}.contentTypes .topicCard{min-height:165px}.paidTopic{border:2px solid #eac879;background:#fffcf1}
+.lessonBanner{background:#fff7e7;border:1px solid #f5e4b8}
+.topicHubHero{padding:20px 24px;margin:25px 0;background:linear-gradient(125deg,#f7f3ff,#fff5e9);border-radius:26px}
+#topicHubIntro{display:flex;align-items:center;gap:20px;padding:12px 4px}.topicHeroIcon{width:105px;height:105px;display:grid;place-items:center;border-radius:28px;font-size:65px;flex-shrink:0}
+#topicHubIntro h1{font-size:36px;margin:0 0 4px}#topicHubIntro p{margin:0;color:#768099;line-height:1.8}
+.hubGame{display:flex;align-items:center;gap:20px;background:white;border:1px solid #e5dff2;border-radius:24px;padding:22px;flex-wrap:wrap}
+.hubGame h3{margin:0;font-size:23px}.hubGame p{margin:3px 0;color:#788097}.hubGame button{margin-right:auto}
+.cardArtImg{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+.coloringSheet{max-width:750px;padding:10px 18px 14px}.coloringImage{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain}.coloringWord{text-align:center;font-size:38px;font-weight:700;letter-spacing:4px;color:#111}
+@media print{ @page{size:A4 portrait;margin:8mm}html,body{background:#fff!important}body *{visibility:hidden!important}.modalOverlay,.modal,.coloringSheet,.coloringSheet *{visibility:visible!important}.modalOverlay{display:block;position:absolute;inset:0;padding:0;background:#fff}.modal{position:static;max-height:none!important;overflow:visible!important;width:100%;padding:0;box-shadow:none;border:0}.coloringSheet{margin:0 auto;max-width:100%;width:100%;border:0!important;box-shadow:none!important;padding:0}.coloringImage{width:100%;height:auto;max-height:245mm;object-fit:contain;break-inside:avoid}.coloringWord{font-size:25px}.previewHead,.closeBtn,.printAction{display:none!important}}
+@media(max-width:640px){#topicHubIntro{flex-direction:column;text-align:center}.hubGame button{margin-right:0;width:100%}.coloringWord{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="topNote">✨ אתר דמו מתפתח: משחקים, דפי פעילות, דפי צביעה ומערכי שיעור באנגלית לכיתות נמוכות</div>
+<header>
+  <div class="shell nav">
+    <div class="brand">
+      <div class="logo">🌈</div>
+      <div><strong>Happy English Club</strong><small>לומדים אנגלית בכיף</small></div>
+    </div>
+    <nav class="links">
+      <button class="navBtn active" data-page="home">בית</button>
+      <button class="navBtn" data-page="worksheets">דפי עבודה</button>
+      <button class="navBtn" data-page="printables">צביעה והדפסה</button>
+      <button class="navBtn" data-page="games">משחקים</button>
+      <button class="navBtn" data-page="lessons">👑 מערכי שיעור בתשלום</button>
+      <button class="navBtn" data-page="manage">ניהול תוכן</button>
+    </nav>
+  </div>
+</header>
+
+<main class="shell">
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="heroCopy">
+        <span class="eyebrow">לילדים, הורים ומורות פרטיות</span>
+        <h1>לומדים אנגלית עם <em>משחקים</em>, <em>דפי פעילות</em> ו<em>מערכי שיעור</em></h1>
+        <p>
+          אתר ידידותי לילדים שמחלק את התוכן לפי נושאים כמו אותיות, צבעים, מספרים ובעלי חיים.
+          יש כאן משחקים חכמים, דפי עבודה אמיתיים ללמידה, ודפי צביעה בשחור-לבן שאפשר להדפיס ולצבוע.
+        </p>
+        <div class="actions">
+          <button class="primary" data-page="topics">🌟 לכל נושאי הלימוד</button>
+          <button class="secondary" data-page="library">🧩 כל סוגי התוכן</button>
+        </div>
+      </div>
+      <div class="heroArt" aria-hidden="true">
+        <div class="blob one"></div>
+        <div class="blob two"></div>
+        <div class="floating f1">🔤</div>
+        <div class="floating f2">🎨</div>
+        <div class="floating f3">🐘</div>
+        <div class="cardArt"><div><b>Aa</b><span>Play • Learn • Print</span></div></div>
+      </div>
+    </div>
+
+    <div class="statBar">
+      <span>✅ <b>26 אותיות</b> במשחקי ABC</span>
+      <span>✅ <b>12 צבעים</b> לתרגול</span>
+      <span>✅ <b>20 מספרים</b> באנגלית</span>
+      <span>✅ <b>16 חיות</b> להיכרות</span>
+    </div>
+
+    <div class="sectionTitle">
+      <div><h2>מה רוצים ללמוד היום?</h2><p>בחירת נושא תציג את כל המשחקים, דפי העבודה ודפי הצביעה באותו נושא</p></div>
+    </div>
+    <div id="homeTopics" class="grid4"></div>
+    <div class="sectionTitle"><div><h2>או בוחרים לפי סוג התוכן</h2><p>כל החומרים החינמיים מסודרים לפי סוג, ומערכי השיעור באזור נפרד בתשלום</p></div></div><div class="grid4 contentTypes"><button class="topicCard" data-page="worksheets"><div class="round" style="background:#eef2ff">📖</div><h3>דפי עבודה</h3><small>התאמות, כתיבה ותרגול</small></button><button class="topicCard" data-page="printables"><div class="round" style="background:#fff0e2">🖍️</div><h3>דפי צביעה</h3><small>איורים מפורטים להדפסה</small></button><button class="topicCard" data-page="games"><div class="round" style="background:#e8faf2">🎮</div><h3>משחקים</h3><small>אינטראקטיביים עם ניקוד</small></button><button class="topicCard paidTopic" data-page="lessons"><div class="round" style="background:#fff2d7">👑</div><h3>מערכי שיעור</h3><small>חבילות מוכנות למורות - בתשלום</small></button></div>
+
+    <div class="notice lessonBanner">
+      <div class="big">👑</div>
+      <div><h3>למורות: לא רק דפי עבודה, אלא שיעור שלם ומוכן</h3><p>מערכי השיעור בתשלום מיועדים לחסוך זמן הכנה: מטרות, סדר הוראה, הנחיות למורה, חומרים משלימים ורעיונות לפעילות. כרגע מוצגת תצוגת דמו בלבד, ללא רכישה אמיתית.</p></div>
+      <button class="primary" data-page="lessons">למערכי השיעור</button>
+    </div>
+  </section>
+
+  <section id="topics" class="page"><div class="sectionTitle"><div><h2>כל נושאי הלימוד</h2><p>בחרו נושא ותראו את כל החומרים שלו במקום אחד</p></div></div><div id="topicDirectory" class="grid4"></div></section>
+  <section id="topicHub" class="page"><div class="topicHubHero"><button class="linkish" data-page="topics">→ לכל הנושאים</button><div id="topicHubIntro"></div></div><div id="topicHubContents"></div></section>
+  <section id="library" class="page"><div class="sectionTitle"><div><h2>בחרו סוג תוכן</h2><p>דפי עבודה, צביעה, משחקים או מערכי שיעור מוכנים בתשלום</p></div></div><div id="libraryTypes" class="grid4"></div></section>
+  <section id="worksheets" class="page">
+    <div class="sectionTitle">
+      <div><h2>דפי עבודה ופעילות</h2><p>לא רק צביעה – גם התאמות, קריאה, כתיבה, זיהוי מילה ותמונה</p></div>
+    </div>
+    <div class="utility">
+      <div id="worksheetFilters" class="filters"></div>
+      <div><input id="worksheetSearch" class="search" placeholder="חיפוש דף עבודה..."></div>
+    </div>
+    <div id="worksheetGrid" class="grid3"></div>
+  </section>
+
+  <section id="printables" class="page">
+    <div class="sectionTitle">
+      <div><h2>צביעה והדפסה</h2><p>איורים מושקעים עם נוף ודמויות, קווי מתאר בשחור-לבן וללא הוראות שמפריעות לצביעה</p></div>
+    </div>
+    <div id="printableGrid" class="grid3"></div>
+  </section>
+
+  <section id="games" class="page">
+    <div class="sectionTitle">
+      <div><h2>משחקי אנגלית</h2><p>יותר מגוון, יותר חכם, ובלי רמזים בעברית שמקלקלים את הלמידה</p></div>
+    </div>
+    <div id="gameTopicFilters" class="filters"></div>
+    <div class="gameShell">
+      <div class="gameHead">
+        <strong id="gameScore"></strong>
+        <button class="secondary" id="restartGame">🔄 סבב חדש</button>
+      </div>
+      <div id="gameContent"></div>
+    </div>
+  </section>
+
+  <section id="lessons" class="page">
+    <div class="sectionTitle">
+      <div><h2>מערכי שיעור</h2><p>כרגע תצוגה ברורה יותר של המבנה – אחר כך נבנה ביחד את התוכן המלא</p></div>
+    </div>
+    <div id="lessonGrid" class="grid3"></div>
+  </section>
+
+  <section id="manage" class="page">
+    <div class="sectionTitle">
+      <div><h2>ניהול תוכן</h2><p>הוספת חומרים משלך לדפדפן המקומי הזה</p></div>
+    </div>
+    <div class="card" style="padding:22px">
+      <form id="addForm">
+        <div class="manageGrid">
+          <label class="field"><span>כותרת</span><input name="title" required></label>
+          <label class="field"><span>סוג</span><select name="kind"><option value="worksheet">דף עבודה</option><option value="printable">דף צביעה / הדפסה</option><option value="lesson">מערך שיעור</option></select></label>
+          <label class="field"><span>נושא</span><select name="topic"><option>אותיות ABC</option><option>צבעים</option><option>מספרים</option><option>בעלי חיים</option><option>אחר</option></select></label>
+          <label class="field"><span>אימוג'י</span><input name="emoji" placeholder="📄"></label>
+          <label class="field full"><span>תיאור קצר</span><textarea name="desc" rows="3" required></textarea></label>
+          <label class="field"><span>מחיר (למערך שיעור)</span><input name="price" type="number" min="0" placeholder="29"></label>
+          <label class="field"><span>קובץ להעלאה (אופציונלי)</span><input name="file" type="file" accept=".pdf,image/*"></label>
+        </div>
+        <div class="filters">
+          <button class="primary" type="submit">💾 הוספה לאתר המקומי</button>
+          <span id="saveMsg" style="color:#7c8497;font-weight:800"></span>
+        </div>
+      </form>
+      <div class="tips">הערה: החומרים כאן נשמרים רק בדפדפן הנוכחי. כשנעביר את האתר לאחסון אמיתי יהיה אפשר לשתף אותם עם כולם.</div>
+      <h3 style="margin:20px 0 10px">חומרים שהוספת</h3>
+      <div id="customList" class="customList"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell footRow">
+    <span>🌈 Happy English Club – אתר הדגמה ללימוד אנגלית</span>
+    <span>מוכן להמשך פיתוח: חומרים חינמיים + חנות מערכי שיעור</span>
+  </div>
+</footer>
+<div id="modalRoot"></div>
+
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let currentPage='home', worksheetTopic='הכול', gameTopic='אותיות ABC', gameMode='case';
+let score=0, qnum=0, currentQuestion=null, answered=false, queue=[];
+const TOPICS = [
+  {name:'אותיות ABC', emoji:'🔤', bg:'#efe8ff', color:'#7352d6', label:'אותיות, שמות וצלילים'},
+  {name:'צבעים', emoji:'🎨', bg:'#ffeaf0', color:'#ec6d9f', label:'Colors'},
+  {name:'מספרים', emoji:'🔢', bg:'#fff3d6', color:'#d69827', label:'Numbers'},
+  {name:'בעלי חיים', emoji:'🐘', bg:'#e4f8ee', color:'#45b28c', label:'Animals'}
+];
+
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((l,i)=>({
+  id:l.toLowerCase(), en:l, lower:l.toLowerCase(), index:i,
+  heSound:['איי','בי','סי','די','אי','אף','ג׳י','הא','איי','ג׳יי','קיי','אל','אם','אן','או','פי','קיו','אר','אס','טי','יו','וי','וו','אקס','וואי','זי'][i],
+  word:['Apple','Ball','Cat','Dog','Egg','Fish','Gift','Hat','Ice cream','Jam','Key','Lion','Moon','Nest','Orange','Pizza','Queen','Robot','Sun','Tree','Umbrella','Van','Window','Box','Yo-yo','Zebra'][i],
+  icon:['🍎','⚽','🐱','🐶','🥚','🐟','🎁','🎩','🍦','🍓','🔑','🦁','🌙','🪺','🍊','🍕','👑','🤖','☀️','🌳','☂️','🚐','🪟','📦','🪀','🦓'][i]
+}));
+const COLORS = [
+  {en:'red', swatch:'#ef5350'},{en:'blue', swatch:'#4f7ef2'},{en:'green', swatch:'#44b870'},{en:'yellow', swatch:'#f3d548'},
+  {en:'orange', swatch:'#f39c38'},{en:'purple', swatch:'#9160f1'},{en:'pink', swatch:'#f77faf'},{en:'brown', swatch:'#9b6b43'},
+  {en:'black', swatch:'#222222'},{en:'white', swatch:'#ffffff'},{en:'gray', swatch:'#b4b7c0'},{en:'gold', swatch:'#d5a42b'}
+];
+const NUMBERS = Array.from({length:20}, (_,i)=>({digit:i+1, en:['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'][i]}));
+const ANIMALS = [
+  {en:'cat', icon:'🐱'},{en:'dog', icon:'🐶'},{en:'bird', icon:'🐦'},{en:'fish', icon:'🐟'},{en:'elephant', icon:'🐘'},{en:'lion', icon:'🦁'},
+  {en:'monkey', icon:'🐵'},{en:'rabbit', icon:'🐰'},{en:'horse', icon:'🐴'},{en:'cow', icon:'🐮'},{en:'duck', icon:'🦆'},{en:'frog', icon:'🐸'},
+  {en:'bear', icon:'🐻'},{en:'turtle', icon:'🐢'},{en:'zebra', icon:'🦓'},{en:'sheep', icon:'🐑'}
+];
+
+const WORKSHEETS = [
+  {id:'abc-alphabet-strip',title:'ABC Mega Strip',topic:'אותיות ABC',desc:'כל ה-ABC במקום אחד: אותיות גדולות, קטנות, מעקב וכתיבה.',emoji:'🔤',bg:'#ede7ff',side:'A to Z'},
+  {id:'abc-match',title:'Match Big and Small Letters',topic:'אותיות ABC',desc:'התאמת אות גדולה לאות קטנה בצורה מעניינת וברורה.',emoji:'🧩',bg:'#efeaff',side:'Aa Bb Cc'},
+  {id:'abc-sound',title:'What Letter Is It?',topic:'אותיות ABC',desc:'זיהוי איך האות נשמעת בעברית, עם אפשרויות בחירה.',emoji:'🎧',bg:'#f3ebff',side:'A · J · M'},
+  {id:'abc-picture',title:'Look, Say, Write',topic:'אותיות ABC',desc:'תמונה + מילה + אות פותחת – פעילות יותר רלוונטית ומושכת.',emoji:'🖼️',bg:'#f0ebff',side:'Cat · Sun'},
+  {id:'color-read',title:'Read and Color',topic:'צבעים',desc:'דף פעילות לקריאת שמות צבעים באנגלית וצביעה לפי בחירה.',emoji:'🌈',bg:'#ffe8ef',side:'red blue green'},
+  {id:'color-match',title:'Color Word Match',topic:'צבעים',desc:'התאמת שמות צבעים באנגלית לצורות ודוגמאות.',emoji:'🎨',bg:'#ffebf1',side:'12 colors'},
+  {id:'number-match',title:'Number to Word 1-10',topic:'מספרים',desc:'התאמת הספרה למילה באנגלית, מרמה קלה 1–10.',emoji:'🔢',bg:'#fff1da',side:'1-10'},
+  {id:'number-count',title:'Count and Write 11-20',topic:'מספרים',desc:'ספירה וכתיבה למספרים 11–20.',emoji:'⭐',bg:'#fff4e2',side:'11-20'},
+  {id:'animal-match',title:'Animal Word Match',topic:'בעלי חיים',desc:'המילה CAT ליד תמונה של חתול – בדיוק כמו שביקשת.',emoji:'🐾',bg:'#e8f8f0',side:'cat dog fish'},
+  {id:'animal-first',title:'First Letter Animals',topic:'בעלי חיים',desc:'זיהוי חיה והתאמה לאות הראשונה באנגלית.',emoji:'🦊',bg:'#ebfaf2',side:'C · D · B'}
+];
+
+const PRINTABLES = [
+  {id:'cat-print',title:'CAT - חתול בגן הפרחים',topic:'בעלי חיים',desc:'חתול מפורט עם פרחים, פרפרים ובית קטן ברקע.',emoji:'🐱',bg:'#eef8f2',word:'CAT',art:'cat'},
+  {id:'dog-print',title:'DOG - כלב בחצר',topic:'בעלי חיים',desc:'כלב חמוד לצד מלונה, צעצועים ובלונים.',emoji:'🐶',bg:'#eef8f2',word:'DOG',art:'dog'},
+  {id:'fish-print',title:'FISH - עולם מתחת למים',topic:'בעלי חיים',desc:'דג, אלמוגים, צמחי ים, בועות וחיות ים נוספות.',emoji:'🐟',bg:'#e9f5ff',word:'FISH',art:'fish'},
+  {id:'bird-print',title:'BIRD - ציפור בטבע',topic:'בעלי חיים',desc:'ציפור, קן, פרחים וגבעות עם בית כפרי ברקע.',emoji:'🐦',bg:'#f1f6e9',word:'BIRD',art:'bird'},
+  {id:'kitten-print',title:'GARDEN - גינה פורחת',topic:'צבעים',desc:'גינה מלאת פרחים ופרפרים שאפשר לצבוע בכל צבע.',emoji:'🌼',bg:'#fff0f5',word:'GARDEN',art:'kitten-garden'},
+  {id:'elephant-print',title:'ELEPHANT - פיל בג׳ונגל',topic:'בעלי חיים',desc:'פיל ליד מפל מים, פרחים ועלי ג׳ונגל עשירים בפרטים.',emoji:'🐘',bg:'#e5f8ed',word:'ELEPHANT',art:'elephant'},
+  {id:'sea-print',title:'OCEAN - חברים בים',topic:'צבעים',desc:'ים שלם שאפשר לתרגל בו מגוון צבעים.',emoji:'🌊',bg:'#e8f5ff',word:'OCEAN',art:'sea-friends'},
+  {id:'nature-print',title:'NATURE - נוף כפרי',topic:'צבעים',desc:'ציפורים, פרחים, עצים, עננים ושדות לצביעה.',emoji:'🌿',bg:'#eef7e9',word:'NATURE',art:'bird-country'}
+];
+const ART_FILES = {'cat':'cat.png','dog':'dog.png','fish':'fish.png','bird':'bird.png','kitten-garden':'kitten-garden.png','elephant':'elephant.png','sea-friends':'sea-friends.png','bird-country':'bird-country.png'};
+
+const LESSONS = [
+  {id:'lesson-colors',title:'Colorful English',topic:'צבעים',price:29,minutes:45,emoji:'🎨',bg:'#ffe8ef',desc:'היכרות עם 8–10 צבעים, משחק תנועה, דף עבודה ויצירה.',audience:'כיתות א׳–ג׳'},
+  {id:'lesson-abc',title:'ABC First Steps',topic:'אותיות ABC',price:29,minutes:45,emoji:'🔤',bg:'#ece7ff',desc:'אותיות גדולות וקטנות, צליל/שם של אות, פעילות תנועה ודף סיכום.',audience:'תחילת הדרך'},
+  {id:'lesson-animals',title:'Animal Friends',topic:'בעלי חיים',price:35,minutes:45,emoji:'🐘',bg:'#e6f8ef',desc:'אוצר מילים בנושא חיות, התאמה לתמונות, משחק זיכרון ודף תרגול.',audience:'כיתות א׳–ד׳'}
+];
+
+let customItems=[];
+try{ customItems = JSON.parse(localStorage.getItem('happyEnglishCustomV3') || '[]'); if(!Array.isArray(customItems)) customItems=[]; } catch(e){ customItems=[]; }
+const saveCustom = ()=> localStorage.setItem('happyEnglishCustomV3', JSON.stringify(customItems));
+
+function resourceCard(item, type='worksheet'){
+  const paid = type==='lesson';
+  return `<article class="card">
+    <div class="cardTop" style="background:${item.bg || '#f3efff'}">
+      ${type==='printable' && item.art && ART_FILES[item.art] ? `<img class="cardArtImg" loading="lazy" src="art/${ART_FILES[item.art]}" alt="איור לצביעה - ${esc(item.title)}">` : `<span>${esc(item.emoji || '📄')}</span><span class="enSide">${esc(item.side || item.topic || 'ENGLISH')}</span>`}
+    </div>
+    <div class="cardBody">
+      <span class="badge ${paid?'paid':''}">${paid?'👑 בתשלום':'✨ חינם'}</span>
+      <h3>${esc(item.title)}</h3>
+      <p>${esc(item.desc)}</p>
+      <div class="foot">
+        <button class="smallBtn" data-open="${esc(item.id)}" data-type="${type}">${paid?'לפרטים ותצוגה ←':'פתיחה ←'}</button>
+        ${paid ? `<span class="price">₪${Number(item.price)||29}</span>` : `<span style="color:#7d8498;font-weight:800;font-size:13px">להורדה / הדפסה</span>`}
+      </div>
+    </div>
+  </article>`;
+}
+
+function goto(page){
+  currentPage = page;
+  $$('.page').forEach(p=>p.classList.toggle('active', p.id===page));
+  $$('.navBtn').forEach(b=>b.classList.toggle('active', b.dataset.page===page));
+  if(page==='topics') renderTopicDirectory();
+  if(page==='library') renderLibraryTypes();
+  if(page==='topicHub') renderTopicHub();
+  if(page==='worksheets') renderWorksheets();
+  if(page==='printables') renderPrintables();
+  if(page==='games') renderGames();
+  if(page==='lessons') renderLessons();
+  if(page==='manage') renderManage();
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null,'','#'+page);
+}
+
+function renderHome(){
+  $('#homeTopics').innerHTML = TOPICS.map(t=>`<button class="topicCard" data-topic-hub="${esc(t.name)}"><div class="round" style="background:${t.bg};color:${t.color}">${t.emoji}</div><h3>${esc(t.name)}</h3><small>${esc(t.label)}</small></button>`).join('');
+  $('#homeFeatured').innerHTML = [WORKSHEETS[0], WORKSHEETS[4], LESSONS[0]].map((item,i)=>resourceCard(item, i===2?'lesson':'worksheet')).join('');
+}
+
+let selectedTopic='אותיות ABC';
+function topicCardHtml(t){return `<button class="topicCard" data-topic-hub="${esc(t.name)}"><div class="round" style="background:${t.bg};color:${t.color}">${t.emoji}</div><h3>${esc(t.name)}</h3><small>לכל המשחקים, דפי העבודה והצביעה</small></button>`;}
+function renderTopicDirectory(){$('#topicDirectory').innerHTML=TOPICS.map(topicCardHtml).join('');}
+function renderLibraryTypes(){$('#libraryTypes').innerHTML=[['worksheets','📖','דפי עבודה','תרגול והתאמות'],['printables','🖍️','דפי צביעה','איורים להדפסה'],['games','🎮','משחקים','למידה אינטראקטיבית'],['lessons','👑','מערכי שיעור בתשלום','תכנון שיעור שלם']].map(x=>`<button class="topicCard" data-page="${x[0]}"><div class="round" style="background:#f2edff">${x[1]}</div><h3>${x[2]}</h3><small>${x[3]}</small></button>`).join('');}
+function topicOpen(name){selectedTopic=name;goto('topicHub');}
+function renderTopicHub(){
+ const t=TOPICS.find(t=>t.name===selectedTopic);if(!t)return;
+ const ws=[...WORKSHEETS,...customItems.filter(x=>x.kind==='worksheet')].filter(x=>x.topic===t.name);
+ const pr=[...PRINTABLES,...customItems.filter(x=>x.kind==='printable')].filter(x=>x.topic===t.name);
+ const ls=[...LESSONS,...customItems.filter(x=>x.kind==='lesson')].filter(x=>x.topic===t.name);
+ $('#topicHubIntro').innerHTML=`<div class="topicHeroIcon" style="background:${t.bg}">${t.emoji}</div><div><h1>${esc(t.name)}</h1><p>כל מה שצריך לתרגול ${esc(t.name)} במקום אחד. מתחילים במשחק, ממשיכים בדפי עבודה ויוצרים עם דפי צביעה.</p></div>`;
+ $('#topicHubContents').innerHTML=`<div class="sectionTitle"><div><h2>🎮 משחקים</h2><p>משחק שאלות עם ניקוד, תשובות מתחלפות ומשוב מיידי</p></div></div><div class="hubGame"><div style="font-size:54px">${t.emoji}</div><div><h3>משחקי ${esc(t.name)}</h3><p>לומדים ומתרגלים אינטראקטיבית</p></div><button class="primary" data-start-game="${esc(t.name)}">מתחילים לשחק</button></div><div class="sectionTitle"><div><h2>📖 דפי עבודה</h2><p>${ws.length} פעילויות לתרגול והדפסה</p></div></div><div class="grid3">${ws.map(x=>resourceCard(x,'worksheet')).join('')||'<p>עוד אין דפי עבודה בנושא.</p>'}</div><div class="sectionTitle"><div><h2>🖍️ דפי צביעה</h2><p>${pr.length} דפים שחור-לבן עם איורים מושקעים</p></div></div><div class="grid3">${pr.map(x=>resourceCard(x,'printable')).join('')||'<p>עוד אין דפי צביעה בנושא.</p>'}</div><div class="sectionTitle"><div><h2>👑 מערכי שיעור בתשלום</h2><p>מערכי שיעור מלאים למורה, לא רק קבצים חינמיים</p></div></div><div class="grid3">${ls.map(x=>resourceCard(x,'lesson')).join('')||'<p>בקרוב נוסיף מערכי שיעור.</p>'}</div>`;
+}
+function renderWorksheetFilters(){
+  const labels = ['הכול', ...TOPICS.map(t=>t.name)];
+  $('#worksheetFilters').innerHTML = labels.map(t=>`<button class="chip ${t===worksheetTopic?'selected':''}" data-filter="${esc(t)}">${esc(t)}</button>`).join('');
+}
+
+function renderWorksheets(){
+  renderWorksheetFilters();
+  const q = $('#worksheetSearch').value.trim().toLowerCase();
+  const list = [...WORKSHEETS, ...customItems.filter(x=>x.kind==='worksheet')].filter(item => {
+    return (worksheetTopic==='הכול' || item.topic===worksheetTopic) && `${item.title} ${item.desc} ${item.topic}`.toLowerCase().includes(q);
+  });
+  $('#worksheetGrid').innerHTML = list.length ? list.map(i=>resourceCard(i,'worksheet')).join('') : '<div class="empty">לא נמצאו דפי עבודה בנושא הזה.</div>';
+}
+
+function renderPrintables(){
+  const list = [...PRINTABLES, ...customItems.filter(x=>x.kind==='printable')];
+  $('#printableGrid').innerHTML = list.map(i=>resourceCard(i,'printable')).join('');
+}
+
+function renderLessons(){
+  $('#lessonGrid').innerHTML = [...LESSONS, ...customItems.filter(x=>x.kind==='lesson')].map(i=>resourceCard(i,'lesson')).join('');
+}
+
+function renderManage(){
+  $('#customList').innerHTML = customItems.length ? customItems.map((item,idx)=>`<div class="customItem"><div><b>${esc(item.title)}</b><div style="color:#7b8398">${esc(item.topic)} · ${item.kind==='worksheet'?'דף עבודה':item.kind==='printable'?'דף צביעה/הדפסה':'מערך שיעור'}</div></div><button class="smallBtn" data-delete-custom="${idx}">מחיקה</button></div>`).join('') : '<div class="empty">עוד לא הוספת חומרים משלך.</div>';
+}
+
+function showModal(html){
+  $('#modalRoot').innerHTML = `<div class="modalOverlay" id="overlay"><div class="modal" role="dialog" aria-modal="true"><button class="closeBtn noPrint" id="closeModal">✕</button>${html}</div></div>`;
+  $('#closeModal').onclick = closeModal;
+  $('#overlay').onclick = e => { if(e.target.id==='overlay') closeModal(); };
+}
+function closeModal(){ $('#modalRoot').innerHTML=''; }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+function getCustomById(id){ return customItems.find(x=>x.id===id); }
+
+function openResource(id, type){
+  const custom = getCustomById(id);
+  if(custom){
+    if(custom.fileData){
+      const isImage = /^data:image\//.test(custom.fileData);
+      const isPdf = /^data:application\/pdf/.test(custom.fileData);
+      showModal(`<div class="previewHead"><h2>${esc(custom.title)}</h2><div class="previewMeta"><span>${esc(custom.topic)}</span><span>${custom.kind==='lesson'?'מערך שיעור':custom.kind==='printable'?'דף צביעה/הדפסה':'דף עבודה'}</span></div><p>${esc(custom.desc)}</p></div>${isImage?`<img src="${custom.fileData}" style="max-width:100%;border-radius:18px">`:isPdf?`<iframe src="${custom.fileData}" style="width:100%;height:70vh;border:0;border-radius:18px"></iframe>`:`<p>הקובץ מוכן להורדה</p>`}<div class="printAction"><a class="primary" download="${esc(custom.fileName||'file')}" href="${custom.fileData}">⬇️ הורדת הקובץ</a></div>`);
+    } else {
+      showModal(`<div class="previewHead"><h2>${esc(custom.title)}</h2><div class="previewMeta"><span>${esc(custom.topic)}</span></div><p>${esc(custom.desc)}</p></div><div class="tips">לחומר הזה אין עדיין קובץ מצורף, אבל הכרטיס נוסף לאתר המקומי.</div>`);
+    }
+    return;
+  }
+  if(type==='worksheet') openWorksheet(id);
+  else if(type==='printable') openPrintable(id);
+  else openLesson(id);
+}
+
+function smallArt(name){ return `<div class="bwArtWrap bwSmall"><svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">${artPaths(name)}</svg></div>`; }
+function bigArt(name){ return `<div class="bwArtWrap"><svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg">${artPaths(name)}</svg></div>`; }
+function artPaths(name){
+  if(name==='cat') return `<path d="M72 120 L72 64 L108 88 L128 57 L155 78 Q172 64 195 77 L214 56 L234 88 L270 63 L270 120 Q282 205 170 218 Q58 205 72 120Z"/><circle cx="135" cy="136" r="6" fill="#111"/><circle cx="205" cy="136" r="6" fill="#111"/><path d="M160 160 L180 160 L170 171 Z M170 171 Q154 188 141 175 M170 171 Q186 188 199 175 M110 158 L54 144 M110 172 L50 173 M230 158 L286 144 M230 172 L290 173"/><path d="M110 209 Q132 188 149 205 M191 205 Q209 187 230 208"/><path d="M141 98 Q150 87 160 97 M180 97 Q190 87 199 98"/>`;
+  if(name==='dog') return `<path d="M78 110 Q78 66 124 66 Q139 43 171 46 Q202 50 217 76 Q243 79 258 102 Q272 124 268 157 Q264 191 240 206 Q219 220 190 218 L126 216 Q95 215 79 193 Q63 170 69 138 Q72 121 78 110Z"/><path d="M106 78 Q86 55 72 64 Q57 74 60 97 Q63 118 84 129"/><path d="M210 91 Q229 73 245 82 Q261 91 257 115"/><circle cx="140" cy="131" r="6" fill="#111"/><circle cx="197" cy="131" r="6" fill="#111"/><ellipse cx="169" cy="153" rx="17" ry="11"/><path d="M169 164 Q151 181 136 171 M169 164 Q187 181 203 171"/><path d="M121 209 L121 238 M151 214 L151 240 M190 214 L190 240 M222 209 L222 237"/><path d="M102 106 Q123 116 137 117 M202 118 Q217 115 229 103"/>`;
+  if(name==='fish') return `<path d="M62 141 Q108 79 187 92 Q223 97 251 121 L300 89 L286 126 L315 142 L286 160 L300 199 L250 165 Q221 188 187 193 Q107 202 62 141Z"/><circle cx="138" cy="131" r="6" fill="#111"/><path d="M104 162 Q139 180 180 167"/><path d="M171 93 Q193 117 202 140 Q193 165 172 190"/><path d="M214 111 Q236 123 251 140 Q235 160 213 171"/><path d="M86 126 Q101 142 86 158"/>`;
+  if(name==='bird') return `<path d="M99 157 Q79 136 83 105 Q90 68 135 60 Q173 52 201 72 Q231 72 248 94 Q263 116 257 149 Q249 183 219 197 Q188 213 149 205 Q108 195 97 170Z"/><path d="M197 98 L232 77 Q248 67 259 79 Q246 92 216 108"/><circle cx="145" cy="123" r="6" fill="#111"/><path d="M95 145 Q67 136 50 147 Q68 164 100 161"/><path d="M160 146 Q179 162 203 156"/><path d="M130 174 Q153 188 178 178"/><path d="M121 205 L109 235 M137 206 L127 237"/>`;
+  if(name==='sun') return `<circle cx="170" cy="134" r="66"/><path d="M170 24 V60 M170 208 V245 M60 134 H98 M242 134 H280 M92 58 L117 84 M223 185 L247 209 M248 58 L223 84 M117 185 L92 209"/><circle cx="147" cy="126" r="4" fill="#111"/><circle cx="193" cy="126" r="4" fill="#111"/><path d="M143 154 Q170 178 198 154"/><path d="M130 98 Q145 90 156 99 M184 99 Q195 90 209 98"/>`;
+  if(name==='flower') return `<path d="M170 174 V258 M170 217 Q138 178 98 198 Q122 230 170 217 M170 228 Q201 180 242 198 Q224 231 170 228"/><circle cx="170" cy="121" r="28"/><ellipse cx="170" cy="73" rx="33" ry="46"/><ellipse cx="170" cy="170" rx="33" ry="40"/><ellipse cx="120" cy="122" rx="45" ry="30"/><ellipse cx="220" cy="122" rx="45" ry="30"/><circle cx="170" cy="121" r="14"/><path d="M154 121 H186 M170 105 V137"/>`;
+  if(name==='apple') return `<path d="M173 69 Q168 41 190 29"/><path d="M191 44 Q220 35 236 49 Q214 65 191 61"/><path d="M95 124 Q101 84 141 79 Q159 63 183 66 Q206 69 221 83 Q258 88 264 123 Q270 169 248 204 Q224 242 179 242 Q133 242 108 204 Q89 172 95 124Z"/><path d="M144 118 Q171 146 196 118"/><path d="M139 167 Q157 183 172 184 Q188 182 203 166"/>`;
+  if(name==='balloon') return `<ellipse cx="170" cy="102" rx="70" ry="88"/><path d="M170 190 L160 209 L180 209 Z M170 209 Q170 235 156 257"/><path d="M146 71 Q162 59 182 69"/><path d="M126 108 Q138 96 150 99"/>`;
+  return `<rect x="70" y="50" width="200" height="160" rx="24"/>`;
+}
+
+function worksheetModal(title, topic, subtitle, body){
+  showModal(`<div class="previewHead"><h2>${esc(title)}</h2><div class="previewMeta"><span>${esc(topic)}</span><span>דף עבודה</span><span>חלון גדול להדפסה נוחה</span></div><p>${esc(subtitle)}</p></div><div class="sheet"><div class="sheetTop"><span>Happy English Club</span><span>Name: __________________</span></div>${body}<div class="printAction"><button class="primary noPrint" onclick="window.print()">🖨️ הדפסה</button></div></div>`);
+}
+
+function openWorksheet(id){
+  if(id==='abc-alphabet-strip') return worksheetModal('ABC Mega Strip','אותיות ABC','כל האותיות במקום אחד – פחות משעמם ויותר מזמין.', `
+    <h3 class="sheetTitle mono">Aa Bb Cc ... Xx Yy Zz</h3>
+    <p class="sheetSub">Trace the letters, say them aloud, and write your favorite three letters.</p>
+    <div class="wsGrid2">
+      <div class="wsBlock">
+        <h4>1. Look and say</h4>
+        <div class="abcLine">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+        <div class="abcLine" style="font-size:28px">abcdefghijklmnopqrstuvwxyz</div>
+      </div>
+      <div class="wsBlock">
+        <h4>2. Trace and write</h4>
+        <div class="traceRow">A a&nbsp;&nbsp;&nbsp; A a&nbsp;&nbsp;&nbsp; A a</div>
+        <div class="traceRow">M m&nbsp;&nbsp;&nbsp; M m&nbsp;&nbsp;&nbsp; M m</div>
+        <div class="traceRow">S s&nbsp;&nbsp;&nbsp; S s&nbsp;&nbsp;&nbsp; S s</div>
+        <div class="traceRow">Z z&nbsp;&nbsp;&nbsp; Z z&nbsp;&nbsp;&nbsp; Z z</div>
+      </div>
+    </div>
+    <div class="wsBlock" style="margin-top:16px">
+      <h4>3. My favorite letters</h4>
+      <div class="blankLines"><div></div><div></div><div></div></div>
+    </div>`);
+
+  if(id==='abc-match') return worksheetModal('Match Big and Small Letters','אותיות ABC','דף התאמה ברור ומעניין בין אות גדולה לקטנה.', `
+    <h3 class="sheetTitle mono">Match the letters</h3>
+    <p class="sheetSub">Draw a line from the big letter to the small letter.</p>
+    <div class="matchCols">
+      <div class="wsBlock">${['A','B','D','J','M','Q','W','Y'].map(x=>`<div class="matchItem mono">${x}</div>`).join('')}</div>
+      <div class="arrowCol">${Array.from({length:8},()=>'<div>↔</div>').join('')}</div>
+      <div class="wsBlock">${['m','a','q','y','d','w','j','b'].map(x=>`<div class="matchItem mono">${x}</div>`).join('')}</div>
+    </div>
+    <div class="tips">טיפ למורה/הורה: אחרי ההתאמה, בקשו מהילד לומר בקול כל זוג: A-a, B-b, J-j.</div>`);
+
+  if(id==='abc-sound') return worksheetModal('What Letter Is It?','אותיות ABC','זיהוי האות והשם שלה – כולל אפשרויות בעברית כמו שביקשת.', `
+    <h3 class="sheetTitle mono">How does the letter sound?</h3>
+    <p class="sheetSub">Circle the sound that matches the letter.</p>
+    <div class="wsGrid2">
+      <div class="wsBlock"><h4 class="mono">A</h4><div class="choiceGrid"><div class="choice">איי</div><div class="choice">בי</div><div class="choice">ג׳יי</div><div class="choice">די</div></div></div>
+      <div class="wsBlock"><h4 class="mono">J</h4><div class="choiceGrid"><div class="choice">קיי</div><div class="choice">ג׳יי</div><div class="choice">אייץ׳</div><div class="choice">סי</div></div></div>
+      <div class="wsBlock"><h4 class="mono">M</h4><div class="choiceGrid"><div class="choice">אם</div><div class="choice">אן</div><div class="choice">אל</div><div class="choice">או</div></div></div>
+      <div class="wsBlock"><h4 class="mono">W</h4><div class="choiceGrid"><div class="choice">דבליו</div><div class="choice">וי</div><div class="choice">וואי</div><div class="choice">יו</div></div></div>
+    </div>`);
+
+  if(id==='abc-picture') return worksheetModal('Look, Say, Write','אותיות ABC','מילה + תמונה + אות פותחת – יותר מחובר לאנגלית אמיתית.', `
+    <h3 class="sheetTitle mono">Look, say, write</h3>
+    <div class="miniCards">
+      <div class="miniCard">${smallArt('cat')}<div class="mono"><b>CAT</b></div><div>First letter: ______</div></div>
+      <div class="miniCard">${smallArt('sun')}<div class="mono"><b>SUN</b></div><div>First letter: ______</div></div>
+      <div class="miniCard">${smallArt('apple')}<div class="mono"><b>APPLE</b></div><div>First letter: ______</div></div>
+      <div class="miniCard">${smallArt('balloon')}<div class="mono"><b>BALLOON</b></div><div>First letter: ______</div></div>
+    </div>
+    <div class="wordBank"><b>Word bank</b><div class="mono">A · B · C · S</div></div>`);
+
+  if(id==='color-read') return worksheetModal('Read and Color','צבעים','דף עבודה שבאמת מלמד צבעים באנגלית.', `
+    <h3 class="sheetTitle mono">Read and color</h3>
+    <p class="sheetSub">Read the instruction and color the picture.</p>
+    <div class="miniCards">
+      <div class="miniCard">${smallArt('apple')}<div class="mono">Color the apple <b>red</b>.</div></div>
+      <div class="miniCard">${smallArt('sun')}<div class="mono">Color the sun <b>yellow</b>.</div></div>
+      <div class="miniCard">${smallArt('balloon')}<div class="mono">Color the balloon <b>blue</b>.</div></div>
+      <div class="miniCard">${smallArt('flower')}<div class="mono">Color the flower <b>pink</b>.</div></div>
+    </div>
+    <div class="wordBank"><b>More colors to practice</b><div class="mono">orange · green · purple · black · white · gray · brown · gold</div></div>`);
+
+  if(id==='color-match') return worksheetModal('Color Word Match','צבעים','יותר מארבעה צבעים – מגוון מלא יותר.', `
+    <h3 class="sheetTitle mono">Match the color words</h3>
+    <p class="sheetSub">Read the color word and write its number inside the circle.</p>
+    <div class="colorDots">${COLORS.map((c,i)=>`<div class="colorDot"><div class="circle"></div><div class="mono">${c.en}</div><div style="font-weight:800;color:#8d95ab">No. ${i+1}</div></div>`).join('')}</div>
+    <div class="tips">אפשרות להורה/מורה: להקריא מילה באנגלית, והילד צריך לזהות ולצבוע את העיגול המתאים.</div>`);
+
+  if(id==='number-match') return worksheetModal('Number to Word','מספרים','התאמת מספרים למילים באנגלית, בלי רמז בעברית.', `
+    <h3 class="sheetTitle mono">Match the number</h3>
+    <div class="matchCols">
+      <div class="wsBlock">${NUMBERS.slice(0,10).map(n=>`<div class="matchItem mono"><b>${n.digit}</b></div>`).join('')}</div>
+      <div class="arrowCol">${Array.from({length:10},()=>'<div>↔</div>').join('')}</div>
+      <div class="wsBlock">${shuffle(NUMBERS.slice(0,10)).map(n=>`<div class="matchItem mono">${n.en}</div>`).join('')}</div>
+    </div>`);
+
+  if(id==='number-count') return worksheetModal('Count and Write','מספרים','סופרים, קוראים וכותבים באנגלית.', `
+    <h3 class="sheetTitle mono">Count and write</h3>
+    <div class="numGrid">
+      ${[3,5,2,8,10].map((n,idx)=>`<div class="numCell"><div style="font-size:24px">${'⭐'.repeat(Math.min(n,5))}${n>5?'<br>'+ '⭐'.repeat(n-5):''}</div><div class="mono" style="margin-top:6px">${n}</div><div style="margin-top:8px">Write: __________</div></div>`).join('')}
+    </div>
+    <div class="wordBank"><b>Word bank</b><div class="mono">two · three · five · eight · ten</div></div>`);
+
+  if(id==='animal-match') return worksheetModal('Animal Word Match','בעלי חיים','מילה באנגלית ליד תמונה מתאימה – הרבה יותר רלוונטי ללמידה.', `
+    <h3 class="sheetTitle mono">Look and match</h3>
+    <div class="miniCards">
+      <div class="miniCard">${smallArt('cat')}<div class="mono"><b>CAT</b></div></div>
+      <div class="miniCard">${smallArt('dog')}<div class="mono"><b>DOG</b></div></div>
+      <div class="miniCard">${smallArt('fish')}<div class="mono"><b>FISH</b></div></div>
+      <div class="miniCard">${smallArt('bird')}<div class="mono"><b>BIRD</b></div></div>
+    </div>
+    <div class="wsBlock" style="margin-top:16px"><h4>Write the words again</h4><div class="blankLines"><div></div><div></div><div></div><div></div></div></div>`);
+
+  if(id==='animal-first') return worksheetModal('First Letter Animals','בעלי חיים','זיהוי האות הראשונה של שם החיה.', `
+    <h3 class="sheetTitle mono">Choose the first letter</h3>
+    <div class="wsGrid2">
+      <div class="wsBlock">${smallArt('cat')}<div class="mono"><b>CAT</b></div><div class="choiceGrid"><div class="choice mono">C</div><div class="choice mono">B</div><div class="choice mono">D</div><div class="choice mono">A</div></div></div>
+      <div class="wsBlock">${smallArt('dog')}<div class="mono"><b>DOG</b></div><div class="choiceGrid"><div class="choice mono">F</div><div class="choice mono">D</div><div class="choice mono">T</div><div class="choice mono">G</div></div></div>
+      <div class="wsBlock">${smallArt('fish')}<div class="mono"><b>FISH</b></div><div class="choiceGrid"><div class="choice mono">F</div><div class="choice mono">P</div><div class="choice mono">S</div><div class="choice mono">M</div></div></div>
+      <div class="wsBlock">${smallArt('bird')}<div class="mono"><b>BIRD</b></div><div class="choiceGrid"><div class="choice mono">R</div><div class="choice mono">J</div><div class="choice mono">B</div><div class="choice mono">L</div></div></div>
+    </div>`);
+}
+
+function openPrintable(id){
+  const item = PRINTABLES.find(x=>x.id===id);if(!item) return;
+  showModal(`<div class="previewHead noPrint"><h2>${esc(item.title)}</h2><div class="previewMeta"><span>${esc(item.topic)}</span><span>דף צביעה בשחור-לבן</span></div><p>${esc(item.desc)}</p></div><div class="sheet coloringSheet"><img class="coloringImage" src="art/${ART_FILES[item.art]}" alt="${esc(item.title)}"><div class="coloringWord mono">${esc(item.word)}</div></div><div class="printAction noPrint"><button class="primary" onclick="window.print()">🖨️ הדפסת דף הצביעה</button></div>`);
+}
+
+function lessonBody(item){
+  const steps = item.topic==='צבעים' ? [
+    'פתיחה: שיר קצר עם כרטיסי צבעים.',
+    'הצגת אוצר מילים: red, blue, green, yellow ועוד.',
+    'משחק תנועה: Touch something blue!',
+    'דף עבודה: Read and Color.',
+    'סיכום: כרטיס יציאה – What is your favorite color?'
+  ] : item.topic==='אותיות ABC' ? [
+    'פתיחה: שיר ABC וחימום עם כרטיסיות.',
+    'היכרות עם 4–6 אותיות חדשות.',
+    'פעילות התאמה: אות גדולה מול אות קטנה.',
+    'משחק זיהוי שם האות/צליל.',
+    'דף סיכום קצר ויציאה.'
+  ] : [
+    'פתיחה: Animal sounds guessing game.',
+    'הצגת מילים חדשות עם תמונות/בובות.',
+    'משחק זיכרון או התאמה.',
+    'דף עבודה: Animal Word Match.',
+    'סיכום: My favorite animal.'
+  ];
+  return `<div class="previewHead"><h2>${esc(item.title)}</h2><div class="previewMeta"><span>${esc(item.topic)}</span><span>${item.minutes} דקות</span><span>${esc(item.audience)}</span></div><p>${esc(item.desc)}</p></div>
+  <div class="lessonPreview">
+    <div class="lessonBox"><h4>מה המערך כולל?</h4><div class="timeline">${steps.map((s,i)=>`<div class="step"><b>${i+1}</b><div>${esc(s)}</div></div>`).join('')}</div></div>
+    <div class="lessonBox"><h4>פרטי החבילה</h4><p><b>קהל יעד:</b> ${esc(item.audience)}</p><p><b>אורך השיעור:</b> ${item.minutes} דקות</p><p><b>מה יהיה בחבילה:</b> מערך שיעור מלא עם הנחיות למורה לפי דקות, מטרות מדידות, הכנה וחומרים, דפי עבודה, משחקים מתואמים והצעות להתאמה לרמות שונות.</p><p><b>מחיר:</b> ₪${item.price}</p><div class="tips">זוהי תצוגת דמו בלבד, ואין כאן עדיין קובץ מלא לרכישה או סליקה פעילה. תוכן השיעור המפורט ייבנה ויישמר בנפרד מהחומרים החינמיים.</div></div>
+  </div>`;
+}
+function openLesson(id){ const item = LESSONS.find(x=>x.id===id); if(item) showModal(lessonBody(item)); }
+
+function shuffle(arr){ const out = [...arr]; for(let i=out.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [out[i],out[j]]=[out[j],out[i]]; } return out; }
+function renderGames(){
+  $('#gameTopicFilters').innerHTML = TOPICS.map(t=>`<button class="chip ${t.name===gameTopic?'selected':''}" data-game-topic="${esc(t.name)}">${esc(t.name)}</button>`).join('');
+  if(!queue.length || !currentQuestion) resetGame(); else drawQuestion();
+}
+function getBank(){
+  if(gameTopic==='אותיות ABC') return LETTERS;
+  if(gameTopic==='צבעים') return COLORS;
+  if(gameTopic==='מספרים') return gameMode==='teen' ? NUMBERS.slice(10,20) : NUMBERS.slice(0,10);
+  return ANIMALS;
+}
+function allowedModes(){
+  if(gameTopic==='אותיות ABC') return [
+    {id:'case', label:'A ↔ a'},
+    {id:'picture', label:'🍎 אות פותחת'},
+    {id:'order', label:'ABC לפי הסדר'},
+    {id:'sound', label:'🔊 איך האות נשמעת?'}
+  ];
+  if(gameTopic==='מספרים') return [
+    {id:'oneTen', label:'1–10'},
+    {id:'teen', label:'11–20'}
+  ];
+  return [];
+}
+function resetGame(){
+  score = 0; qnum = 0; answered = false; currentQuestion = null;
+  const bank = getBank();
+  queue = shuffle(bank).slice(0, Math.min(bank.length, 10));
+  nextQuestion();
+}
+function nextQuestion(){
+  answered = false;
+  if(!queue.length){
+    $('#gameContent').innerHTML = `<div class="gameQuestion"><div class="bigLetter">🏆</div><h3 style="font-size:34px;margin:0 0 10px">כל הכבוד!</h3><p class="questionMeta">סיימת ${qnum} שאלות עם ${score} תשובות נכונות.</p><div class="printAction"><button class="primary" id="playAgain">🔄 לשחק שוב</button></div></div>`;
+    $('#gameScore').textContent = `⭐ ${score} / ${qnum}`;
+    return;
+  }
+  currentQuestion = queue.shift();
+  qnum++;
+  drawQuestion();
+}
+function showGameEffect(ok){
+  const root = document.createElement('div');
+  if(ok){
+    root.innerHTML = `<div class="celebrate">🎉 Great job! 🎉</div><div class="bursts">${Array.from({length:6},(_,n)=>`<div class="burst" style="transform:translate(${(n-3)*70}px, ${(n%2)*20}px)">${'<i></i>'.repeat(6)}</div>`).join('')}</div>`;
+    document.body.appendChild(root);
+    root.querySelectorAll('.burst').forEach((b,idx)=>{const pos=[[0,-70],[75,-35],[-78,-25],[84,28],[-72,30],[0,60]]; b.querySelectorAll('i').forEach((dot,i)=>{const ang=(Math.PI*2/6)*i; const r=28+8*i; const x=Math.cos(ang)*r + pos[idx][0]; const y=Math.sin(ang)*r + pos[idx][1]; dot.style.setProperty('transform',`translate(${x}px, ${y}px) scale(${1+(i%2)*.25})`);});});
+  } else {
+    root.innerHTML = `<div class="failFlash">❌ Oops!</div>`;
+    document.body.appendChild(root);
+  }
+  setTimeout(()=>root.remove(), 950);
+}
+function drawQuestion(){
+  let prompt='', visual='', correct='', choices=[], hint='Choose the correct answer';
+  const modes = allowedModes();
+  if(gameTopic==='אותיות ABC'){
+    if(!modes.find(m=>m.id===gameMode)) gameMode='case';
+    if(gameMode==='case'){
+      prompt = 'איזו אות קטנה מתאימה לאות הגדולה?';
+      visual = `<div class="bigLetter">${currentQuestion.en}</div>`;
+      correct = currentQuestion.lower;
+      choices = shuffle([correct, ...shuffle(LETTERS.filter(x=>x.en!==currentQuestion.en)).slice(0,3).map(x=>x.lower)]);
+      hint = 'Choose the matching lowercase letter';
+    } else if(gameMode==='picture'){
+      prompt = 'באיזו אות מתחילה המילה שבתמונה?';
+      visual = `<div class="objectCard">${currentQuestion.icon}</div><div class="questionMeta mono">${currentQuestion.word}</div>`;
+      correct = currentQuestion.en;
+      choices = shuffle([correct, ...shuffle(LETTERS.filter(x=>x.en!==currentQuestion.en)).slice(0,3).map(x=>x.en)]);
+      hint = 'Choose the first letter';
+    } else if(gameMode==='order'){
+      const prev = LETTERS[(currentQuestion.index+25)%26];
+      prompt = 'איזו אות באה אחרי האות הזאת?';
+      visual = `<div class="bigLetter">${prev.en}</div>`;
+      correct = currentQuestion.en;
+      choices = shuffle([correct, ...shuffle(LETTERS.filter(x=>x.en!==correct)).slice(0,3).map(x=>x.en)]);
+      hint = 'Which letter comes next?';
+    } else {
+      prompt = 'איך האות הזאת נשמעת?';
+      visual = `<div class="bigLetter">${currentQuestion.en}</div>`;
+      correct = currentQuestion.heSound;
+      choices = shuffle([correct, ...shuffle(LETTERS.filter(x=>x.en!==currentQuestion.en)).slice(0,3).map(x=>x.heSound)]);
+      hint = 'Choose the sound of the letter';
+    }
+  } else if(gameTopic==='צבעים'){
+    prompt = 'איך קוראים לצבע הזה באנגלית?';
+    visual = `<div class="colorSample" style="background:${currentQuestion.swatch};border:10px solid ${currentQuestion.en==='white'?'#ddd':'#fff'}"></div>`;
+    correct = currentQuestion.en;
+    choices = shuffle([correct, ...shuffle(COLORS.filter(x=>x.en!==correct)).slice(0,3).map(x=>x.en)]);
+  } else if(gameTopic==='מספרים'){
+    if(!modes.find(m=>m.id===gameMode)) gameMode='oneTen';
+    prompt = gameMode==='teen' ? 'איך כותבים את המספר הזה באנגלית? (11–20)' : 'איך כותבים את המספר הזה באנגלית? (1–10)';
+    visual = `<div class="bigLetter">${currentQuestion.digit}</div>`;
+    correct = currentQuestion.en;
+    const bank = getBank();
+    choices = shuffle([correct, ...shuffle(bank.filter(x=>x.digit!==currentQuestion.digit)).slice(0,3).map(x=>x.en)]);
+  } else {
+    prompt = 'איך קוראים לחיה הזאת באנגלית?';
+    visual = `<div class="objectCard">${currentQuestion.icon}</div>`;
+    correct = currentQuestion.en;
+    choices = shuffle([correct, ...shuffle(ANIMALS.filter(x=>x.en!==correct)).slice(0,3).map(x=>x.en)]);
+  }
+  $('#gameScore').textContent = `⭐ ${score} נקודות · שאלה ${qnum}`;
+  $('#gameContent').innerHTML = `${modes.length?`<div class="modeBar">${modes.map(m=>`<button class="modeBtn ${gameMode===m.id?'active':''}" data-mode="${m.id}">${esc(m.label)}</button>`).join('')}</div>`:''}<div class="gameFx"></div><div class="gameQuestion"><h3 style="margin:0 0 12px;font-size:28px">${esc(prompt)}</h3>${visual}<p class="questionMeta">${esc(hint)}</p></div><div class="answers">${choices.map(c=>`<button class="answer" data-answer="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="feedback" id="feedback"></div>`;
+  currentQuestion.correct = correct;
+}
+
+// Events
+ document.addEventListener('click', e=>{
+   const pageBtn = e.target.closest('[data-page]');
+   if(pageBtn){ goto(pageBtn.dataset.page); return; }
+   const filterBtn = e.target.closest('[data-filter]');
+   if(filterBtn){ worksheetTopic = filterBtn.dataset.filter; renderWorksheets(); return; }
+   const topicJump = e.target.closest('[data-topic-hub]');
+   if(topicJump){topicOpen(topicJump.dataset.topicHub);return;}
+   const startGame = e.target.closest('[data-start-game]');
+   if(startGame){gameTopic=startGame.dataset.startGame;gameMode=gameTopic==='מספרים'?'oneTen':'case';queue=[];currentQuestion=null;goto('games');return;}
+   const openBtn = e.target.closest('[data-open]');
+   if(openBtn){ openResource(openBtn.dataset.open, openBtn.dataset.type); return; }
+   const del = e.target.closest('[data-delete-custom]');
+   if(del){ customItems.splice(Number(del.dataset.deleteCustom),1); saveCustom(); renderManage(); renderWorksheets(); renderPrintables(); renderLessons(); return; }
+   const gt = e.target.closest('[data-game-topic]');
+   if(gt){ gameTopic = gt.dataset.gameTopic; gameMode = gameTopic==='אותיות ABC' ? 'case' : gameTopic==='מספרים' ? 'oneTen' : ''; queue=[]; currentQuestion=null; renderGames(); return; }
+   const gm = e.target.closest('[data-mode]');
+   if(gm){ gameMode = gm.dataset.mode; queue=[]; currentQuestion=null; renderGames(); return; }
+   const ans = e.target.closest('[data-answer]');
+   if(ans && !answered && currentQuestion){
+      answered = true;
+      const ok = ans.dataset.answer === currentQuestion.correct;
+      if(ok) score++;
+      $$('.answer').forEach(btn=>{
+        btn.disabled = true;
+        if(btn.dataset.answer === currentQuestion.correct) btn.classList.add('correct');
+        else if(btn===ans) btn.classList.add('wrong');
+      });
+      $('#feedback').textContent = ok ? '🎉 Excellent! תשובה נכונה!' : `❌ לא נכון — התשובה היא ${currentQuestion.correct}`;
+      $('#gameScore').textContent = `⭐ ${score} נקודות · שאלה ${qnum}`;
+      showGameEffect(ok);
+      setTimeout(()=>nextQuestion(), ok ? 900 : 1300);
+      return;
+   }
+   if(e.target.id==='playAgain' || e.target.id==='restartGame'){ resetGame(); return; }
+ });
+ $('#worksheetSearch').addEventListener('input', renderWorksheets);
+ $('#restartGame').addEventListener('click', resetGame);
+
+ const fileToData = file => new Promise((resolve,reject)=>{ const r=new FileReader(); r.onload=()=>resolve(r.result); r.onerror=()=>reject(new Error('read failed')); r.readAsDataURL(file); });
+ $('#addForm').addEventListener('submit', async e=>{
+   e.preventDefault();
+   const fd = new FormData(e.target);
+   const file = fd.get('file');
+   const kind = fd.get('kind');
+   const obj = {id:'custom-'+Date.now(), title:String(fd.get('title')).trim(), topic:String(fd.get('topic')), kind:String(kind), desc:String(fd.get('desc')).trim(), emoji:String(fd.get('emoji')).trim() || (kind==='lesson'?'👩‍🏫':'📄'), bg:'#f3efff', price:Number(fd.get('price'))||29};
+   if(!obj.title || !obj.desc) return;
+   if(file && file.size){ if(file.size > 8*1024*1024){ $('#saveMsg').textContent='הקובץ גדול מדי'; return; } obj.fileName=file.name; obj.fileData = await fileToData(file); }
+   customItems.push(obj); saveCustom(); e.target.reset(); $('#saveMsg').textContent='✅ נוסף בהצלחה'; renderManage();
+ });
+
+ renderHome();
+ renderWorksheetFilters();
+ renderWorksheets();
+ const target = (location.hash||'#home').slice(1);
+ goto(document.getElementById(target) ? target : 'home');
+</script>
+</body>
+</html>
