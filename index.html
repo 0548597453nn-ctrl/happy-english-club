@@ -852,5 +852,130 @@ function drawQuestion(){
  const target = (location.hash||'#home').slice(1);
  goto(document.getElementById(target) ? target : 'home');
 </script>
+
+<script>
+(function () {
+  const project = 'https://kmumnnfjxdkzeqgmuqpc.supabase.co';
+  const key = 'sb_publishable_0MKxnDaPLrvILMkcKS8osQ_5YhbrWGn';
+  const bucket = 'free-materials';
+
+  const topicNames = {
+    alphabet: 'אותיות ABC',
+    colors: 'צבעים',
+    animals: 'בעלי חיים',
+    numbers: 'מספרים',
+    other: 'אחר'
+  };
+
+  let materials = [];
+
+  function createCard(item) {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.onlineMaterial = item.id;
+
+    const top = document.createElement('div');
+    top.className = 'cardTop';
+    top.style.background = '#efe8ff';
+    top.textContent = item.category === 'coloring' ? '🖍️' : '📄';
+
+    const body = document.createElement('div');
+    body.className = 'cardBody';
+
+    const heading = document.createElement('h3');
+    heading.textContent = item.title;
+
+    const desc = document.createElement('p');
+    desc.textContent = item.description || '';
+
+    const foot = document.createElement('div');
+    foot.className = 'foot';
+
+    const link = document.createElement('a');
+    link.className = 'smallBtn';
+    link.textContent = 'פתיחה והורדה ←';
+    link.href = project + '/storage/v1/object/public/' +
+      bucket + '/' +
+      item.file_path.split('/').map(encodeURIComponent).join('/');
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    foot.append(link);
+    body.append(heading, desc, foot);
+    card.append(top, body);
+
+    return card;
+  }
+
+  function renderOnlineMaterials() {
+    const destinations = [
+      ['worksheetGrid', 'worksheet'],
+      ['printableGrid', 'coloring']
+    ];
+
+    for (const [id, category] of destinations) {
+      const grid = document.getElementById(id);
+      if (!grid) continue;
+
+      const filter = document.querySelector(
+        '#worksheetFilters .active[data-filter]'
+      );
+
+      for (const item of materials) {
+        if (item.category !== category || !item.file_path) continue;
+
+        const existing = Array.from(grid.children).some(
+          node => node.dataset.onlineMaterial === item.id
+        );
+
+        if (existing) continue;
+
+        if (
+          category === 'worksheet' &&
+          filter &&
+          filter.dataset.filter !== 'הכול' &&
+          filter.dataset.filter !==
+            (topicNames[item.topic] || item.topic)
+        ) continue;
+
+        grid.append(createCard(item));
+      }
+    }
+  }
+
+  async function loadOnlineMaterials() {
+    try {
+      const response = await fetch(
+        project +
+        '/rest/v1/site_content?select=id,title,description,category,topic,file_path' +
+        '&is_published=eq.true&category=in.(worksheet,coloring)',
+        {
+          headers: {
+            apikey: key
+          }
+        }
+      );
+
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+
+      materials = await response.json();
+      renderOnlineMaterials();
+    } catch (error) {
+      console.error('Could not load online materials:', error);
+    }
+  }
+
+  const observer = new MutationObserver(() => {
+    renderOnlineMaterials();
+  });
+
+  ['worksheetGrid', 'printableGrid'].forEach(id => {
+    const grid = document.getElementById(id);
+    if (grid) observer.observe(grid, {childList: true});
+  });
+
+  loadOnlineMaterials();
+})();
+</script>
 </body>
 </html>
