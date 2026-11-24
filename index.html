@@ -1556,5 +1556,607 @@ if(document.readyState==="loading"){
 </script>
 <!-- END HAPPY ENGLISH CLUB LIBRARY -->
 
+<!-- HAPPY ENGLISH CLUB LEVELS AND PROGRESS -->
+<style>
+.hePanel{
+ margin:25px 0;padding:22px;border-radius:24px;
+ background:linear-gradient(135deg,#fff3d8,#f1eaff,#e2fff4);
+ border:2px solid #e4d7ff;color:#29345c
+}
+.hePanel h2{color:#7450d5;margin:0 0 10px}
+.hePanel p{color:#69728a}
+.heButtons{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+.heButtons button{
+ background:white;color:#6a4bc2;border:2px solid #dcd0fc;
+ padding:12px 17px;border-radius:16px;font-weight:bold;cursor:pointer
+}
+.heButtons button.heSelected{
+ background:#7655df;color:white;border-color:#7655df
+}
+.heGrid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));
+ gap:15px;margin-top:18px
+}
+.heCard{
+ background:white;border-radius:18px;padding:17px;
+ box-shadow:0 5px 16px #6654a51a;border:1px solid #eee7fc
+}
+.heCard .heIcon{font-size:40px}
+.heCard strong{display:block;margin:9px 0}
+.heCard small{display:block;color:#77809a}
+.heCard button{
+ background:#7655df;color:white;border:0;
+ border-radius:11px;padding:11px 15px;margin-top:12px;cursor:pointer
+}
+.heStatus{
+ background:white;border-radius:13px;padding:12px;
+ font-weight:bold;margin:12px 0
+}
+.heDone{color:#198553;font-weight:bold;margin-top:9px}
+.heGame{
+ background:white;border-radius:19px;padding:23px;
+ text-align:center;margin-top:15px
+}
+.heAnswers{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:10px;max-width:520px;margin:18px auto
+}
+.heAnswers button{
+ padding:17px;border-radius:14px;border:2px solid #dacbff;
+ background:#f2edff;color:#5940a8;font-size:21px;cursor:pointer
+}
+.heAnswers button:disabled{opacity:.65}
+.heGame input{
+ padding:13px;border:2px solid #d7c6ff;border-radius:12px;
+ font-size:20px;width:220px;max-width:100%
+}
+@media print{
+ .hePanel{display:none!important}
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+
+const STORE="happyEnglishProgressV2";
+let progress={};
+
+try{
+ progress=JSON.parse(localStorage.getItem(STORE)||"{}");
+}catch(error){
+ progress={};
+}
+
+function completed(id){
+ return progress[id]===true;
+}
+
+function saveProgress(id){
+ progress[id]=true;
+ try{
+  localStorage.setItem(STORE,JSON.stringify(progress));
+ }catch(error){}
+ updateDisplays();
+}
+
+function element(tag,text,className){
+ const node=document.createElement(tag);
+ if(text!==undefined)node.textContent=text;
+ if(className)node.className=className;
+ return node;
+}
+
+const levels=[
+ {id:1,label:"⭐ רמה 1",desc:"קל"},
+ {id:2,label:"⭐⭐ רמה 2",desc:"בינוני"},
+ {id:3,label:"⭐⭐⭐ רמה 3",desc:"מאתגר"}
+];
+
+const library=document.getElementById("hcLibrary");
+const oldCards=library
+ ? Array.from(library.querySelectorAll(".hcCard"))
+ : [];
+
+const items=oldCards.map((card,index)=>{
+ const isWorksheet=index<24;
+ return {
+  id:"abc-library-"+index,
+  card:card,
+  category:isWorksheet?"worksheet":"coloring",
+  level:isWorksheet
+   ?(index%3)+1
+   :((index-24)%3)+1,
+  title:card.querySelector(".hcInfo strong")?.textContent||"Activity",
+  icon:card.querySelector(".hcCover")?.textContent||"📄"
+ };
+});
+
+if(library){
+ library.style.display="none";
+}
+
+let activeWorksheet=1;
+let activeColoring=1;
+const panels={};
+
+function createLibraryPanel(pageId,category,title){
+ const page=document.getElementById(pageId);
+ if(!page)return;
+
+ const panel=element("section",undefined,"hePanel");
+ panel.id="he-panel-"+category;
+ panel.append(element("h2",title));
+
+ const explanation=category==="coloring"
+  ?"רמה 1: ציורים פשוטים | רמה 2: יותר פרטים | רמה 3: ציורים מורכבים"
+  :"רמה 1: זיהוי | רמה 2: התאמות והשלמות | רמה 3: כתיבה ואתגר";
+
+ panel.append(element("p",explanation));
+
+ const buttons=element("div",undefined,"heButtons");
+ const status=element("div",undefined,"heStatus");
+ const grid=element("div",undefined,"heGrid");
+
+ for(const level of levels){
+  const button=element("button",level.label);
+  button.dataset.level=level.id;
+  button.onclick=()=>{
+   if(category==="worksheet")activeWorksheet=level.id;
+   else activeColoring=level.id;
+   renderLibrary(category);
+  };
+  buttons.append(button);
+ }
+
+ panel.append(buttons,status,grid);
+ page.append(panel);
+
+ panels[category]={buttons,status,grid};
+ renderLibrary(category);
+}
+
+function renderLibrary(category){
+ const panel=panels[category];
+ if(!panel)return;
+
+ const level=category==="worksheet"
+  ?activeWorksheet:activeColoring;
+
+ panel.buttons.querySelectorAll("button").forEach(button=>{
+  button.classList.toggle(
+   "heSelected",
+   Number(button.dataset.level)===level
+  );
+ });
+
+ const selected=items.filter(item=>
+  item.category===category&&item.level===level
+ );
+
+ const finished=selected.filter(item=>completed(item.id)).length;
+
+ panel.status.textContent=
+  "רמה "+level+" | בוצעו "+finished+
+  " מתוך "+selected.length+" פעילויות";
+
+ panel.grid.replaceChildren();
+
+ for(const item of selected){
+  const card=element("article",undefined,"heCard");
+  card.append(element("div",item.icon,"heIcon"));
+  card.append(element("strong",item.title));
+  card.append(element(
+   "small",
+   "רמה "+level+" | "+
+   (category==="worksheet"?"דף עבודה":"דף צביעה")
+  ));
+
+  card.append(element(
+   "div",
+   completed(item.id)?"✅ בוצע":"○ טרם בוצע",
+   "heDone"
+  ));
+
+  const button=element(
+   "button",
+   category==="worksheet"?"פתיחת דף עבודה":"פתיחת דף צביעה"
+  );
+
+  button.onclick=()=>{
+   item.card.querySelector(".hcOpen")?.click();
+   activeDownload=item.id;
+   setupDownload();
+  };
+
+  card.append(button);
+  panel.grid.append(card);
+ }
+}
+
+let activeDownload=null;
+
+function setupDownload(){
+ const tools=document.querySelector("#hcDialog .hcTools");
+ if(!tools)return;
+
+ let button=document.getElementById("heDownload");
+
+ if(!button){
+  button=element("button","⬇️ הורדת הדף");
+  button.id="heDownload";
+  tools.prepend(button);
+
+  button.addEventListener("click",()=>{
+   if(!activeDownload)return;
+
+   const paper=document.getElementById("hcPaper");
+   if(!paper)return;
+
+   const content=`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy English Club</title>
+<style>
+body{font-family:Arial;background:white;color:black}
+main{width:185mm;max-width:100%;margin:auto;direction:ltr}
+h2{text-align:center}
+.hcLine{padding:12px;border-bottom:1px dashed #999;font-size:19px}
+svg{max-width:100%;height:auto}
+@page{size:A4;margin:10mm}
+</style>
+</head>
+<body><main>${paper.innerHTML}</main></body>
+</html>`;
+
+   const blob=new Blob(
+    [content],
+    {type:"text/html;charset=utf-8"}
+   );
+
+   const url=URL.createObjectURL(blob);
+   const link=document.createElement("a");
+   link.href=url;
+   link.download="Happy-English-Club-"+activeDownload+".html";
+   document.body.append(link);
+   link.click();
+   link.remove();
+
+   setTimeout(()=>URL.revokeObjectURL(url),1000);
+   saveProgress(activeDownload);
+  });
+ }
+}
+
+createLibraryPanel(
+ "worksheets","worksheet","📄 דפי עבודה לפי רמות"
+);
+createLibraryPanel(
+ "printables","coloring","🎨 דפי צביעה לפי רמות"
+);
+
+// Keep tracking existing downloadable materials.
+let lastResource=null;
+
+document.addEventListener("click",event=>{
+ const opener=event.target.closest("[data-open]");
+ if(opener){
+  lastResource="original-"+opener.dataset.type+
+   "-"+opener.dataset.open;
+ }
+
+ const download=event.target.closest("a[download]");
+ if(download&&lastResource){
+  saveProgress(lastResource);
+ }
+},true);
+
+// Games with three different difficulty levels.
+const gamesPage=document.getElementById("games");
+
+if(gamesPage){
+ const panel=element("section",undefined,"hePanel");
+ panel.id="heLevelGames";
+ panel.append(element("h2","🎮 משחקים לפי רמות"));
+ panel.append(element(
+  "p",
+  "בחרו נושא ורמה. המשחק נחשב להושלם רק לאחר 10 שאלות."
+ ));
+
+ const levelButtons=element("div",undefined,"heButtons");
+ const topicButtons=element("div",undefined,"heButtons");
+ const status=element("div",undefined,"heStatus");
+ const game=element("div",undefined,"heGame");
+
+ panel.append(levelButtons,topicButtons,status,game);
+ gamesPage.insertBefore(panel,gamesPage.firstChild);
+
+ const wordBank=[
+  ["A","apple","🍎"],["B","ball","⚽"],
+  ["C","cat","🐱"],["D","dog","🐶"],
+  ["E","egg","🥚"],["F","fish","🐟"],
+  ["G","gift","🎁"],["H","house","🏠"],
+  ["I","ice","🧊"],["J","jam","🍓"],
+  ["K","kite","🪁"],["L","lion","🦁"],
+  ["M","moon","🌙"],["N","nest","🪺"],
+  ["O","orange","🍊"],["P","pen","🖊️"],
+  ["Q","queen","👑"],["R","rabbit","🐰"],
+  ["S","sun","☀️"],["T","tree","🌳"],
+  ["U","umbrella","☂️"],["V","van","🚐"],
+  ["W","water","💧"],["Y","yellow","💛"],
+  ["Z","zebra","🦓"]
+ ];
+
+ const animals=[
+  ["cat","🐱"],["dog","🐶"],["lion","🦁"],
+  ["fish","🐟"],["frog","🐸"],["bird","🐦"],
+  ["cow","🐮"],["pig","🐷"],["horse","🐴"],
+  ["rabbit","🐰"]
+ ];
+
+ const colors=[
+  ["red","🔴"],["blue","🔵"],["green","🟢"],
+  ["yellow","🟡"],["orange","🟠"],
+  ["purple","🟣"],["black","⚫"],["white","⚪"]
+ ];
+
+ const numberWords=[
+  "one","two","three","four","five",
+  "six","seven","eight","nine","ten",
+  "eleven","twelve","thirteen","fourteen",
+  "fifteen","sixteen","seventeen",
+  "eighteen","nineteen","twenty"
+ ];
+
+ let difficulty=1;
+ let topic="ABC";
+ let questionNumber=0;
+ let points=0;
+ let questions=[];
+ let answered=false;
+
+ function shuffle(array){
+  return [...array].sort(()=>Math.random()-.5);
+ }
+
+ function gameId(){
+  return "level-game-"+topic+"-"+difficulty;
+ }
+
+ const topics=["ABC","Animals","Colors","Numbers"];
+
+ for(const level of levels){
+  const button=element("button",level.label);
+  button.dataset.level=level.id;
+  button.onclick=()=>{
+   difficulty=level.id;
+   startGame();
+  };
+  levelButtons.append(button);
+ }
+
+ for(const name of topics){
+  const button=element("button",name);
+  button.dataset.topic=name;
+  button.onclick=()=>{
+   topic=name;
+   startGame();
+  };
+  topicButtons.append(button);
+ }
+
+ function makeQuestion(item){
+  if(topic==="ABC"){
+   if(difficulty===1){
+    return {
+     prompt:"Choose the small letter",
+     picture:item[0],
+     answer:item[0].toLowerCase(),
+     choices:wordBank.map(x=>x[0].toLowerCase())
+    };
+   }
+   if(difficulty===2){
+    return {
+     prompt:"Choose the first letter",
+     picture:item[2]+" "+item[1],
+     answer:item[0],
+     choices:wordBank.map(x=>x[0])
+    };
+   }
+   return {
+    prompt:"Type the first letter",
+    picture:item[2]+" "+item[1],
+    answer:item[0].toLowerCase(),
+    typing:true
+   };
+  }
+
+  if(topic==="Numbers"){
+   return {
+    prompt:difficulty===3
+     ?"Type the number in English"
+     :"Choose the correct number word",
+    picture:item[0],
+    answer:item[1],
+    choices:questionsPool.map(x=>x[1]),
+    typing:difficulty===3
+   };
+  }
+
+  return {
+   prompt:difficulty===3
+    ?"Type the English word"
+    :"Choose the correct English word",
+   picture:item[1],
+   answer:item[0],
+   choices:questionsPool.map(x=>x[0]),
+   typing:difficulty===3
+  };
+ }
+
+ let questionsPool=[];
+
+ function startGame(){
+  questionNumber=0;
+  points=0;
+  answered=false;
+
+  if(topic==="ABC"){
+   questionsPool=difficulty===1
+    ?wordBank.slice(0,13):wordBank;
+  }else if(topic==="Animals"){
+   questionsPool=animals;
+  }else if(topic==="Colors"){
+   questionsPool=colors;
+  }else{
+   questionsPool=numberWords.map((word,index)=>[
+    String(index+1),word
+   ]);
+   if(difficulty===1)questionsPool=questionsPool.slice(0,10);
+  }
+
+  questions=shuffle(questionsPool).slice(0,10)
+   .map(makeQuestion);
+
+  levelButtons.querySelectorAll("button").forEach(button=>{
+   button.classList.toggle(
+    "heSelected",
+    Number(button.dataset.level)===difficulty
+   );
+  });
+
+  topicButtons.querySelectorAll("button").forEach(button=>{
+   button.classList.toggle(
+    "heSelected",
+    button.dataset.topic===topic
+   );
+  });
+
+  drawQuestion();
+ }
+
+ function drawQuestion(){
+  game.replaceChildren();
+
+  status.textContent=
+   topic+" | רמה "+difficulty+
+   " | שאלה "+Math.min(questionNumber+1,10)+"/10"+
+   " | ניקוד "+points+
+   (completed(gameId())?" | ✅ הושלם בעבר":"");
+
+  if(questionNumber>=10){
+   saveProgress(gameId());
+
+   game.append(element("h2","🏆 Excellent!"));
+   game.append(element(
+    "p",
+    "סיימת את המשחק! הצלחת ב-"+points+" מתוך 10."
+   ));
+
+   const again=element("button","🔄 משחק חדש");
+   again.onclick=startGame;
+   game.append(again);
+   return;
+  }
+
+  const question=questions[questionNumber];
+  game.append(element("h3",question.prompt));
+
+  const visual=element("div",question.picture);
+  visual.style.fontSize="55px";
+  game.append(visual);
+
+  const feedback=element("p","");
+  feedback.style.minHeight="30px";
+
+  const next=element("button","לשאלה הבאה ←");
+  next.style.display="none";
+  next.onclick=()=>{
+   questionNumber++;
+   drawQuestion();
+  };
+
+  function checkAnswer(value){
+   if(answered)return;
+   answered=true;
+
+   const isCorrect=value.trim().toLowerCase()===
+    question.answer.toLowerCase();
+
+   if(isCorrect)points++;
+
+   feedback.textContent=isCorrect
+    ?"✅ Excellent! כל הכבוד!"
+    :"❌ התשובה הנכונה: "+question.answer;
+
+   game.querySelectorAll(".heAnswers button")
+    .forEach(button=>button.disabled=true);
+
+   next.style.display="inline-block";
+  }
+
+  if(question.typing){
+   const input=element("input");
+   input.dir="ltr";
+   input.placeholder="Type in English";
+
+   const check=element("button","בדיקה");
+   check.onclick=()=>checkAnswer(input.value);
+
+   input.addEventListener("keydown",event=>{
+    if(event.key==="Enter")checkAnswer(input.value);
+   });
+
+   game.append(input,check);
+  }else{
+   const options=element("div",undefined,"heAnswers");
+
+   const wrong=shuffle(
+    [...new Set(question.choices)]
+     .filter(x=>x!==question.answer)
+   ).slice(0,3);
+
+   shuffle([question.answer,...wrong]).forEach(choice=>{
+    const button=element("button",choice);
+    button.onclick=()=>checkAnswer(choice);
+    options.append(button);
+   });
+
+   game.append(options);
+  }
+
+  game.append(feedback,next);
+ }
+
+ startGame();
+}
+
+// Update progress indicators.
+function updateDisplays(){
+ renderLibrary("worksheet");
+ renderLibrary("coloring");
+}
+
+// The original games are marked only on their completion screen.
+const classicGame=document.getElementById("gameContent");
+
+if(classicGame){
+ const observer=new MutationObserver(()=>{
+  if(classicGame.querySelector("#playAgain")){
+   saveProgress("classic-game-completed");
+  }
+ });
+
+ observer.observe(classicGame,{
+  childList:true,
+  subtree:true
+ });
+}
+
+})();
+</script>
+<!-- END HAPPY ENGLISH CLUB LEVELS -->
+
 </body>
 </html>
