@@ -4025,5 +4025,606 @@ if(document.readyState === "loading"){
 })();
 </script>
 <!-- END HAPPY ENGLISH CLUB MASTER PATCH -->
+
+<!-- HAPPY ENGLISH CLUB - UNIFIED TOPIC AND LEVEL FILTER -->
+<style>
+.heUnified {
+  margin: 24px 0;
+  padding: 22px;
+  border: 2px solid #e8dfff;
+  border-radius: 24px;
+  background: linear-gradient(130deg,#fff5e2,#f2ebff,#e9fbf3);
+}
+.heUnified h2 {color:#7150d2;margin:0 0 8px}
+.heUnified p {color:#6d7791}
+.heFilterTitle {font-weight:800;margin:18px 0 9px}
+.heFilterRow {display:flex;gap:9px;flex-wrap:wrap}
+.heFilterRow button {
+  padding:11px 15px;border-radius:13px;
+  border:2px solid #dfd3fc;background:white;
+  color:#664bbb;font-weight:800;cursor:pointer
+}
+.heFilterRow button.heActive {
+  background:#7655df;color:white;border-color:#7655df
+}
+.heUnifiedGrid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:15px;margin-top:19px
+}
+.heUnifiedCard {
+  background:white;border:1px solid #eee4fb;
+  border-radius:18px;padding:17px;
+  box-shadow:0 5px 17px #654daa17
+}
+.heUnifiedCard h3 {margin:7px 0;color:#334066}
+.heUnifiedCard p {font-size:13px;color:#737d96}
+.heUnifiedCard button {
+  background:#7655df;color:white;border:0;
+  padding:11px 15px;border-radius:11px;
+  font-weight:bold;cursor:pointer
+}
+.heUnifiedCard .heEmoji{font-size:37px}
+.heUnifiedCard .heMeta{font-size:12px;color:#7155c6}
+.heUnifiedCount {
+  margin-top:15px;padding:11px;
+  border-radius:12px;background:white;font-weight:bold
+}
+.heMasterCard {
+  background:white;border-radius:18px;
+  border:1px solid #eee4fb;padding:15px
+}
+.heMasterCard .hecCard{box-shadow:none;border:0;padding:0}
+.heHiddenOriginal{display:none!important}
+@media(max-width:550px){
+  .heUnified{padding:14px}
+  .heFilterRow button{font-size:13px;padding:10px}
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+
+if(window.__HE_UNIFIED_FILTER__) return;
+window.__HE_UNIFIED_FILTER__=true;
+
+const subjects=[
+  "אותיות ABC","צבעים","מספרים","בעלי חיים"
+];
+
+const subjectMap={
+  alphabet:"אותיות ABC",
+  colors:"צבעים",
+  numbers:"מספרים",
+  animals:"בעלי חיים"
+};
+
+const legacyWorksheetLevels={
+  "abc-alphabet-strip":2,
+  "abc-match":1,
+  "abc-sound":2,
+  "abc-picture":2,
+  "color-read":2,
+  "color-match":1,
+  "number-match":1,
+  "number-count":3,
+  "animal-match":1,
+  "animal-first":2
+};
+
+const legacyColorLevels={
+  "cat-print":3,
+  "dog-print":3,
+  "fish-print":3,
+  "bird-print":3,
+  "kitten-print":3,
+  "elephant-print":3,
+  "sea-print":3,
+  "nature-print":3
+};
+
+const newColorSubjects={
+  "דג פשוט":"בעלי חיים",
+  "פרח גדול":"צבעים",
+  "פרפר פשוט":"בעלי חיים",
+  "בית קטן":"צבעים",
+  "בלון שמח":"צבעים",
+  "חתול חמוד":"בעלי חיים",
+  "ים בינוני":"בעלי חיים",
+  "גינה פורחת":"צבעים",
+  "כפר קטן":"צבעים",
+  "חווה שמחה":"בעלי חיים",
+  "מסיבת בלונים":"צבעים",
+  "רכבת בינונית":"מספרים",
+  "יער קסום":"בעלי חיים",
+  "עולם הים":"בעלי חיים",
+  "מסע בחלל":"מספרים",
+  "טירה קסומה":"צבעים",
+  "כפר הפטריות":"צבעים",
+  "גן החתול":"בעלי חיים"
+};
+
+const state={
+  worksheet:{topic:"אותיות ABC",level:1},
+  coloring:{topic:"אותיות ABC",level:1},
+  game:{topic:"אותיות ABC",level:1}
+};
+
+const elements={};
+const onlineItems=[];
+
+const $id=id=>document.getElementById(id);
+
+function node(tag,txt,cls){
+  const n=document.createElement(tag);
+  if(txt!==undefined)n.textContent=txt;
+  if(cls)n.className=cls;
+  return n;
+}
+
+function normalizeTopic(t){
+  return subjectMap[t]||t||"אותיות ABC";
+}
+
+function progressDone(id){
+  try{
+    return JSON.parse(
+      localStorage.getItem("happyEnglishClubProgressV4")||"{}"
+    )[id]===true;
+  }catch(e){return false;}
+}
+
+function markProgress(id){
+  try{
+    const key="happyEnglishClubProgressV4";
+    const data=JSON.parse(localStorage.getItem(key)||"{}");
+    data[id]=true;
+    localStorage.setItem(key,JSON.stringify(data));
+  }catch(e){}
+}
+
+function buildPanel(type,pageId,title){
+  const page=$id(pageId);
+  if(!page)return;
+
+  const panel=node("section",undefined,"heUnified");
+  panel.id="heUnified-"+type;
+  panel.append(node("h2",title));
+  panel.append(node(
+    "p",
+    "בחרו נושא ורמה. יוצגו רק חומרים שמתאימים לשתי הבחירות."
+  ));
+
+  panel.append(node("div","בחרו נושא:","heFilterTitle"));
+  const topics=node("div",undefined,"heFilterRow");
+
+  subjects.forEach(subject=>{
+    const btn=node("button",subject);
+    btn.dataset.topic=subject;
+    btn.onclick=()=>{
+      state[type].topic=subject;
+      render(type);
+    };
+    topics.append(btn);
+  });
+
+  panel.append(topics);
+  panel.append(node("div","בחרו רמה:","heFilterTitle"));
+
+  const levels=node("div",undefined,"heFilterRow");
+
+  [1,2,3].forEach(level=>{
+    const label=
+      level===1?"⭐ רמה 1 - קל":
+      level===2?"⭐⭐ רמה 2 - בינוני":
+      "⭐⭐⭐ רמה 3 - מתקדם";
+
+    const btn=node("button",label);
+    btn.dataset.level=level;
+    btn.onclick=()=>{
+      state[type].level=level;
+      render(type);
+    };
+    levels.append(btn);
+  });
+
+  panel.append(levels);
+
+  const count=node("div",undefined,"heUnifiedCount");
+  const grid=node("div",undefined,"heUnifiedGrid");
+
+  panel.append(count,grid);
+  page.insertBefore(panel,page.firstChild);
+
+  elements[type]={panel,topics,levels,count,grid};
+}
+
+function categoryRecords(type){
+  let source=[];
+
+  if(type==="worksheet"){
+    source=WORKSHEETS.map(x=>({
+      ...x,
+      level:legacyWorksheetLevels[x.id]||1,
+      source:"legacy"
+    }));
+
+    source.push(...customItems
+      .filter(x=>x.kind==="worksheet")
+      .map(x=>({
+        ...x,
+        level:Number(x.level)||1,
+        source:"custom"
+      })));
+  }
+
+  if(type==="coloring"){
+    source=PRINTABLES.map(x=>({
+      ...x,
+      level:legacyColorLevels[x.id]||3,
+      source:"legacy"
+    }));
+
+    source.push(...customItems
+      .filter(x=>x.kind==="printable")
+      .map(x=>({
+        ...x,
+        level:Number(x.level)||1,
+        source:"custom"
+      })));
+  }
+
+  source.push(...onlineItems
+    .filter(x=>x.category===
+      (type==="worksheet"?"worksheet":"coloring"))
+    .map(x=>({
+      ...x,
+      id:"online-"+x.id,
+      topic:normalizeTopic(x.topic),
+      level:Number(x.level)||1,
+      source:"online"
+    })));
+
+  return source;
+}
+
+function makeLegacyCard(item,type){
+  const card=node("article",undefined,"heUnifiedCard");
+  card.append(node("div",item.emoji||"📄","heEmoji"));
+  card.append(node("h3",item.title));
+  card.append(node("p",item.desc||item.description||""));
+  card.append(node("div",
+    "רמה "+item.level+" | "+normalizeTopic(item.topic),
+    "heMeta"
+  ));
+
+  const progressId="legacy-"+type+"-"+item.id;
+
+  card.append(node(
+    "p",
+    progressDone(progressId)?"✅ בוצע":"○ טרם בוצע"
+  ));
+
+  const button=node("button","פתיחה וצפייה");
+
+  button.onclick=()=>{
+    if(item.source==="online"){
+      window.open(item.publicUrl,"_blank","noopener");
+    }else{
+      openResource(item.id,
+        type==="worksheet"?"worksheet":"printable");
+    }
+  };
+
+  card.append(button);
+
+  if(item.source==="online"&&item.publicUrl){
+    const download=node("button","⬇️ הורדת קובץ");
+    download.style.marginRight="8px";
+    download.onclick=async()=>{
+      try{
+        const response=await fetch(item.publicUrl);
+        if(!response.ok)throw Error("ההורדה נכשלה");
+        const blob=await response.blob();
+        const url=URL.createObjectURL(blob);
+        const link=node("a");
+        link.href=url;
+        link.download=item.title+
+          (blob.type==="application/pdf"?".pdf":
+           blob.type==="image/png"?".png":".jpg");
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),1500);
+        markProgress(progressId);
+        render(type);
+      }catch(error){
+        alert("לא ניתן להוריד את הקובץ כרגע.");
+      }
+    };
+    card.append(download);
+  }
+
+  return card;
+}
+
+function getMaster(type){
+  return $id(
+    type==="worksheet"?
+      "hec-worksheet-panel":"hec-coloring-panel"
+  );
+}
+
+function appendMasterCards(type,grid,topic,level){
+  const master=getMaster(type);
+  if(!master)return 0;
+
+  const buttons=master.querySelectorAll(
+    ".hecRowButtons button"
+  );
+
+  if(buttons[level-1]){
+    buttons[level-1].click();
+  }
+
+  const masterGrid=master.querySelector(".hecGrid");
+  if(!masterGrid)return 0;
+
+  let amount=0;
+  const cards=Array.from(masterGrid.children);
+
+  cards.forEach(card=>{
+    const title=card.querySelector("strong")?.textContent||"";
+
+    let belongs;
+
+    if(type==="worksheet"){
+      belongs=topic==="אותיות ABC";
+    }else{
+      belongs=newColorSubjects[title]===topic;
+    }
+
+    if(!belongs)return;
+
+    const wrap=node("div",undefined,"heMasterCard");
+    wrap.append(card);
+    grid.append(wrap);
+    amount++;
+  });
+
+  return amount;
+}
+
+function render(type){
+  const parts=elements[type];
+  if(!parts)return;
+
+  const selected=state[type];
+
+  parts.topics.querySelectorAll("button").forEach(btn=>{
+    btn.classList.toggle(
+      "heActive",btn.dataset.topic===selected.topic
+    );
+  });
+
+  parts.levels.querySelectorAll("button").forEach(btn=>{
+    btn.classList.toggle(
+      "heActive",
+      Number(btn.dataset.level)===selected.level
+    );
+  });
+
+  parts.grid.replaceChildren();
+
+  if(type==="game"){
+    syncGame(selected);
+    return;
+  }
+
+  const records=categoryRecords(type).filter(item=>
+    normalizeTopic(item.topic)===selected.topic&&
+    Number(item.level)===selected.level
+  );
+
+  records.forEach(item=>{
+    parts.grid.append(makeLegacyCard(item,type));
+  });
+
+  const masterCount=appendMasterCards(
+    type,parts.grid,selected.topic,selected.level
+  );
+
+  const total=records.length+masterCount;
+
+  parts.count.textContent=
+    selected.topic+" | רמה "+selected.level+
+    " | "+total+" פעילויות";
+
+  if(!total){
+    parts.grid.append(node(
+      "p",
+      "עדיין אין חומרים בנושא וברמה שבחרתם."
+    ));
+  }
+}
+
+function syncGame(selected){
+  const master=$id("hec-games-panel");
+  const parts=elements.game;
+  if(!master||!parts)return;
+
+  const topicNames={
+    "אותיות ABC":"ABC",
+    "צבעים":"Colors",
+    "מספרים":"Numbers",
+    "בעלי חיים":"Animals"
+  };
+
+  const topic=topicNames[selected.topic];
+
+  const rows=master.querySelectorAll(".hecRowButtons");
+  const topicButton=Array.from(rows[0]?.querySelectorAll("button")||[])
+    .find(b=>b.textContent===topic);
+
+  const levelButton=rows[1]?.querySelectorAll("button")[
+    selected.level-1
+  ];
+
+  if(topicButton)topicButton.click();
+  if(levelButton)levelButton.click();
+
+  parts.count.textContent=
+    selected.topic+" | משחקים ברמה "+selected.level;
+
+  if(master.parentElement!==parts.grid){
+    parts.grid.append(master);
+  }
+
+  master.style.display="block";
+}
+
+async function loadOnline(){
+  try{
+    const endpoint=
+      "https://kmumnnfjxdkzeqgmuqpc.supabase.co";
+
+    const response=await fetch(
+      endpoint+"/rest/v1/site_content"+
+      "?select=*&is_published=eq.true",
+      {
+        headers:{
+          apikey:"sb_publishable_0MKxnDaPLrvILMkcKS8osQ_5YhbrWGn"
+        }
+      }
+    );
+
+    if(!response.ok)throw Error("Failed to load content");
+
+    const data=await response.json();
+    onlineItems.length=0;
+
+    data.forEach(item=>{
+      if(!["worksheet","coloring"].includes(item.category))return;
+      if(!item.file_path)return;
+
+      const path=item.file_path.split("/")
+        .map(encodeURIComponent).join("/");
+
+      onlineItems.push({
+        ...item,
+        publicUrl:endpoint+
+          "/storage/v1/object/public/free-materials/"+path
+      });
+    });
+
+    render("worksheet");
+    render("coloring");
+  }catch(error){
+    console.warn("Online materials unavailable",error);
+  }
+}
+
+function hideOldDisplays(){
+  [
+    "worksheetGrid",
+    "printableGrid",
+    "worksheetFilters",
+    "he-panel-worksheet",
+    "he-panel-coloring",
+    "hcLibrary",
+    "hec-worksheet-panel",
+    "hec-coloring-panel"
+  ].forEach(id=>{
+    const item=$id(id);
+    if(item)item.classList.add("heHiddenOriginal");
+  });
+
+  document.querySelectorAll(".abcFixedLibrary")
+    .forEach(n=>n.classList.add("heHiddenOriginal"));
+
+  const games=$id("games");
+  if(games){
+    games.querySelector(".gameShell")
+      ?.classList.add("heHiddenOriginal");
+
+    $id("gameTopicFilters")
+      ?.classList.add("heHiddenOriginal");
+  }
+}
+
+function replaceTopicHub(){
+  const page=$id("topicHub");
+  const container=$id("topicHubContents");
+
+  if(!page||!container)return;
+
+  const topic=selectedTopic;
+  if(!subjects.includes(topic))return;
+
+  container.replaceChildren();
+
+  const heading=node("h2","בחרו סוג פעילות בנושא "+topic);
+  container.append(heading);
+
+  [
+    ["worksheet","worksheets","📄 דפי עבודה"],
+    ["coloring","printables","🎨 דפי צביעה"],
+    ["game","games","🎮 משחקים"]
+  ].forEach(([type,pageId,label])=>{
+    const btn=node("button",label);
+    btn.className="primary";
+    btn.style.margin="8px";
+
+    btn.onclick=()=>{
+      state[type].topic=topic;
+      render(type);
+      goto(pageId);
+    };
+
+    container.append(btn);
+  });
+}
+
+function init(){
+  buildPanel("worksheet","worksheets","📄 דפי עבודה");
+  buildPanel("coloring","printables","🎨 דפי צביעה");
+  buildPanel("game","games","🎮 משחקים");
+
+  hideOldDisplays();
+
+  render("worksheet");
+  render("coloring");
+  render("game");
+
+  loadOnline();
+
+  document.addEventListener("click",event=>{
+    if(event.target.closest("[data-topic-hub]")){
+      setTimeout(replaceTopicHub,0);
+    }
+
+    if(event.target.id==="hecDownloadBtn"){
+      setTimeout(()=>{
+        render("worksheet");
+        render("coloring");
+      },50);
+    }
+  });
+
+  if(location.hash==="#topicHub"){
+    replaceTopicHub();
+  }
+}
+
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",init);
+}else{
+  init();
+}
+})();
+</script>
+<!-- END UNIFIED FILTER -->
+
 </body>
 </html>
