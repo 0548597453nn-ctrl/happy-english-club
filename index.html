@@ -993,5 +993,568 @@ function drawQuestion(){
   loadOnlineMaterials();
 })();
 </script>
+
+<!-- HAPPY ENGLISH CLUB - ABC CREATIVE LIBRARY -->
+<style>
+#hcLibrary{margin:32px 0;padding:24px;border-radius:26px;
+background:linear-gradient(135deg,#fff2d7,#f0e9ff,#e4f9f2);
+border:2px solid #e6d6ff}
+#hcLibrary h2{font-size:29px;color:#7550d4;margin:0 0 8px}
+.hcSub{color:#655d82;margin:0 0 20px}
+.hcTabs{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+.hcTabs button{background:white;border:2px solid #ddd1fb;
+color:#5c4499;border-radius:50px;padding:11px 18px;
+font-weight:bold;cursor:pointer}
+.hcTabs button.active{background:#7655df;color:white}
+.hcCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+gap:15px}
+.hcCard{background:white;border-radius:20px;overflow:hidden;
+box-shadow:0 7px 18px #55448a18;border:1px solid #eee6fa}
+.hcCover{height:135px;display:grid;place-items:center;
+background:linear-gradient(130deg,#ffe1ec,#e6e1ff);font-size:57px}
+.hcCard:nth-child(3n+2) .hcCover{background:linear-gradient(130deg,#d5f5eb,#fff1c9)}
+.hcCard:nth-child(3n) .hcCover{background:linear-gradient(130deg,#dceeff,#ffe1ef)}
+.hcInfo{padding:16px}
+.hcInfo strong{display:block;font-size:17px;color:#29365f}
+.hcInfo p{font-size:13px;color:#70798e;min-height:38px}
+.hcTag{display:inline-block;background:#f1eafe;color:#7354c8;
+border-radius:30px;padding:4px 10px;font-size:12px;font-weight:bold}
+.hcOpen{width:100%;margin-top:12px;padding:11px;border:0;
+background:#7655df;color:white;border-radius:11px;
+font-weight:bold;cursor:pointer}
+#hcOverlay{position:fixed;inset:0;z-index:10000;
+background:#202036bf;display:none;overflow:auto;padding:20px}
+#hcDialog{max-width:820px;margin:20px auto;background:white;
+border-radius:19px;padding:20px;text-align:center}
+#hcPaper{background:white;color:black;direction:ltr;
+text-align:left;padding:25px;max-width:690px;margin:15px auto;
+border:1px solid #ddd;font-family:Arial,sans-serif}
+#hcPaper h2{text-align:center;color:black;font-size:25px}
+.hcLine{padding:15px 7px;border-bottom:1px dashed #aaa;
+font-size:20px;min-height:45px;direction:ltr;text-align:left}
+.hcSmall{font-size:13px;color:#666}
+.hcTools{display:flex;justify-content:center;gap:12px;
+flex-wrap:wrap}
+.hcTools button{background:#7655df;color:white;border:0;
+padding:12px 19px;border-radius:11px;cursor:pointer}
+.hcTools button:last-child{background:#eee8ff;color:#59449d}
+.hcColoring{width:100%;height:auto;max-height:850px}
+@media print{
+body *{visibility:hidden!important}
+#hcOverlay,#hcOverlay *,#hcPaper,#hcPaper *{visibility:visible!important}
+#hcOverlay{display:block!important;position:absolute;inset:0;
+background:white;padding:0;overflow:visible}
+#hcDialog{margin:0;padding:0;max-width:none}
+#hcPaper{border:0;margin:0 auto;padding:8mm;max-width:none}
+.hcTools{display:none!important}
+@page{size:A4;margin:10mm}
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+if(document.getElementById("hcOverlay"))return;
+
+const ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const WORDS=[
+["A","apple","🍎"],["B","ball","⚽"],
+["C","cat","🐱"],["D","dog","🐶"],
+["E","egg","🥚"],["F","fish","🐟"],
+["G","gift","🎁"],["H","house","🏠"],
+["I","ice cream","🍦"],["J","jam","🍓"],
+["K","kite","🪁"],["L","lion","🦁"],
+["M","moon","🌙"],["N","nest","🪺"],
+["O","orange","🍊"],["P","pencil","✏️"],
+["Q","queen","👑"],["R","rabbit","🐰"],
+["S","sun","☀️"],["T","tree","🌳"],
+["U","umbrella","☂️"],["V","van","🚐"],
+["W","water","💧"],["X","box","📦"],
+["Y","yoyo","🪀"],["Z","zebra","🦓"]
+];
+
+const WORKS=[
+["🔎","Letter Detective","Find and circle the letters","hunt"],
+["🔠","Big and Small","Match capital and small letters","match"],
+["🚂","ABC Train","Write the next letter","train"],
+["✍️","Missing Letters","Complete the words","missing"],
+["🖼️","Picture ABC","Write the beginning letter","picture"],
+["🧩","Word Builder","Put the letters in order","build"],
+["🎯","Odd One Out","Find the different letter","odd"],
+["📚","ABC Sorting","Sort capital and small letters","sort"]
+];
+
+const THEMES=[
+["🌳","Magic Forest","יער קסום עם עצים ופרחים","forest"],
+["🐠","Ocean Adventure","דגים ובועות מתחת למים","ocean"],
+["🏡","Happy Village","בתים, גינות ועננים","village"],
+["🚀","Space Journey","חלליות וכוכבים","space"],
+["🌸","Flower Garden","גינה מלאה בפרחים","garden"],
+["🦋","Butterfly World","פרפרים מעל שדה פרחים","butterfly"],
+["🏰","Castle Land","טירה קסומה","castle"],
+["🚂","Train Adventure","רכבת במסלול הררי","train"],
+["🍄","Mushroom Village","פטריות גדולות ביער","mushroom"],
+["☀️","Sunny Farm","חווה עם גדר ושמש","farm"],
+["🎈","Balloon Party","מסיבת בלונים","balloons"],
+["🐱","Cat's Garden","חתול בגינה","cat"]
+];
+
+const $=id=>document.getElementById(id);
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+
+const works=WORKS.flatMap((w,i)=>
+ [1,2,3].map(level=>({
+ id:"w"+i+"-"+level,
+ title:w[1]+" "+level,
+ desc:w[2],
+ icon:w[0],type:"work",
+ kind:w[3],level
+ }))
+);
+
+const colors=THEMES.map((t,i)=>({
+ id:"c"+i,title:t[1],desc:t[2],
+ icon:t[0],type:"color",
+ scene:t[3],level:i%3+1
+}));
+
+let items=[...works,...colors];
+let active="all";
+
+function section(title){
+ const el=document.createElement("section");
+ el.id="hcLibrary";
+ el.innerHTML=
+ '<h2>🌈 ABC Creative Library</h2>'+
+ '<p class="hcSub">דפי עבודה, יצירה וצביעה חדשים להדפסה</p>'+
+ '<div class="hcTabs" id="hcTabs"></div>'+
+ '<div class="hcCards" id="hcCards"></div>';
+ return el;
+}
+
+function init(){
+ const worksheet=document.getElementById("worksheets");
+ const printable=document.getElementById("printables");
+
+ if(!worksheet&&!printable)return;
+
+ const host=section();
+ (worksheet||printable).append(host);
+
+ const overlay=document.createElement("div");
+ overlay.id="hcOverlay";
+ overlay.innerHTML=
+ '<div id="hcDialog">'+
+ '<div class="hcTools">'+
+ '<button id="hcPrint">🖨️ הדפסה / שמירה כ-PDF</button>'+
+ '<button id="hcClose">✕ סגירה</button>'+
+ '</div><div id="hcPaper"></div></div>';
+
+ document.body.append(overlay);
+
+ $("hcPrint").onclick=()=>window.print();
+ $("hcClose").onclick=()=>overlay.style.display="none";
+
+ overlay.onclick=e=>{
+ if(e.target===overlay)overlay.style.display="none";
+ };
+
+ document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")overlay.style.display="none";
+ });
+
+ const tabs=[
+ ["all","הכול"],
+ ["work","✏️ דפי עבודה"],
+ ["color","🎨 דפי צביעה"],
+ ["easy","⭐ קל"],
+ ["hard","⭐⭐⭐ מאתגר"]
+ ];
+
+ tabs.forEach(([id,label])=>{
+ const btn=document.createElement("button");
+ btn.textContent=label;
+ btn.onclick=()=>{active=id;render();};
+ btn.dataset.tab=id;
+ $("hcTabs").append(btn);
+ });
+
+ render();
+}
+
+function render(){
+ $("hcCards").replaceChildren();
+
+ document.querySelectorAll("#hcTabs button")
+ .forEach(b=>b.classList.toggle(
+ "active",b.dataset.tab===active
+ ));
+
+ let shown=items.filter(x=>
+ active==="all"||
+ active===x.type||
+ (active==="easy"&&x.level===1)||
+ (active==="hard"&&x.level===3)
+ );
+
+ shown.forEach(item=>{
+ const card=document.createElement("article");
+ card.className="hcCard";
+
+ const cover=document.createElement("div");
+ cover.className="hcCover";
+ cover.textContent=item.icon;
+
+ const info=document.createElement("div");
+ info.className="hcInfo";
+
+ const title=document.createElement("strong");
+ title.textContent=item.title;
+
+ const desc=document.createElement("p");
+ desc.textContent=item.desc;
+
+ const tag=document.createElement("span");
+ tag.className="hcTag";
+ tag.textContent=
+ item.type==="work"?"דף עבודה":"דף צביעה";
+
+ const btn=document.createElement("button");
+ btn.className="hcOpen";
+ btn.textContent="👀 תצוגה והדפסה";
+ btn.onclick=()=>openItem(item);
+
+ info.append(title,desc,tag,btn);
+ card.append(cover,info);
+ $("hcCards").append(card);
+ });
+}
+
+function line(text){
+ const d=document.createElement("div");
+ d.className="hcLine";
+ d.textContent=text;
+ return d;
+}
+
+function paperTitle(text){
+ const paper=$("hcPaper");
+ paper.replaceChildren();
+
+ const h=document.createElement("h2");
+ h.textContent=text;
+
+ const name=document.createElement("p");
+ name.className="hcSmall";
+ name.textContent=
+ "Name: __________________     Date: __________";
+
+ paper.append(h,name);
+ return paper;
+}
+
+function makeWorksheet(item){
+ const p=paperTitle(item.title);
+ const n=item.level===1?7:item.level===2?9:12;
+ const bank=shuffle(WORDS).slice(0,n);
+
+ if(item.kind==="hunt"){
+ const target=ABC[item.level+4];
+ p.append(line("Find and circle every "+target+" and "+
+ target.toLowerCase()+"."));
+
+ for(let i=0;i<7;i++){
+ let pool=shuffle(ABC).slice(0,8);
+ pool.splice(i%8,0,target);
+ pool.splice((i+3)%9,0,target.toLowerCase());
+ p.append(line(pool.join("    ")));
+ }
+ }
+ else if(item.kind==="match"){
+ p.append(line("Match the big letter to the small letter."));
+ const big=bank.map(w=>w[0]);
+ const small=shuffle(big.map(x=>x.toLowerCase()));
+ big.forEach((x,i)=>{
+ p.append(line((i+1)+".   "+x+
+ "    ____________    "+small[i]));
+ });
+ }
+ else if(item.kind==="train"){
+ const letters=shuffle(ABC.slice(0,22)).slice(0,n);
+ letters.forEach((l,i)=>{
+ const index=ABC.indexOf(l);
+ const a=ABC[index+1],b=ABC[index+2];
+ p.append(line((i+1)+".   "+l+
+ "  →  "+a+"  →  _____  →  "+ABC[index+3]));
+ });
+ }
+ else if(item.kind==="missing"){
+ bank.forEach((w,i)=>{
+ const word=w[1].split("");
+ const index=item.level===1?0:
+ item.level===2?Math.floor(word.length/2):
+ word.length-1;
+ word[index]="_";
+ p.append(line((i+1)+".  "+w[2]+
+ "      "+word.join(" ")+"     __________"));
+ });
+ }
+ else if(item.kind==="picture"){
+ bank.forEach((w,i)=>{
+ p.append(line((i+1)+".  "+w[2]+
+ "      _____ "+w[1].slice(1)));
+ });
+ }
+ else if(item.kind==="build"){
+ bank.forEach((w,i)=>{
+ const mixed=shuffle(w[1].split(""));
+ p.append(line((i+1)+".  "+w[2]+
+ "    "+mixed.join(" - ")+
+ "    __________________"));
+ });
+ }
+ else if(item.kind==="odd"){
+ bank.forEach((w,i)=>{
+ const l=w[0];
+ const odd=ABC[(ABC.indexOf(l)+5)%26];
+ const row=shuffle([l,l,l,odd,l,l]);
+ p.append(line((i+1)+".   "+row.join("      ")));
+ });
+ }
+ else if(item.kind==="sort"){
+ p.append(line("Circle capital letters. Underline small letters."));
+ for(let i=0;i<n;i++){
+ const a=shuffle(ABC).slice(0,5);
+ const mix=a.map((x,j)=>j%2?x.toLowerCase():x);
+ p.append(line(mix.join("       ")));
+ }
+ }
+}
+
+function svgTag(name,attrs={},content=""){
+ const a=Object.entries(attrs).map(([k,v])=>
+ " "+k+'="'+String(v)+'"').join("");
+ return "<"+name+a+">"+content+"</"+name+">";
+}
+
+const P='fill="white" stroke="black" stroke-width="3" '+
+'stroke-linecap="round" stroke-linejoin="round"';
+
+function circle(x,y,r){
+ return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" '+P+'/>';
+}
+function rect(x,y,w,h,rx=0){
+ return '<rect x="'+x+'" y="'+y+'" width="'+w+
+ '" height="'+h+'" rx="'+rx+'" '+P+'/>';
+}
+function path(d){
+ return '<path d="'+d+'" '+P+'/>';
+}
+function lineSvg(x1,y1,x2,y2){
+ return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+
+ '" y2="'+y2+'" stroke="black" stroke-width="3"/>';
+}
+function star(x,y,r=22){
+ let pts=[];
+ for(let k=0;k<10;k++){
+ const ang=-Math.PI/2+k*Math.PI/5;
+ const rr=k%2?r*.48:r;
+ pts.push((x+Math.cos(ang)*rr)+","+
+ (y+Math.sin(ang)*rr));
+ }
+ return '<polygon points="'+pts.join(" ")+'" '+P+'/>';
+}
+function flower(x,y,s=1){
+ let out="";
+ for(let i=0;i<6;i++){
+ const a=i*Math.PI/3;
+ out+=circle(x+Math.cos(a)*18*s,
+ y+Math.sin(a)*18*s,11*s);
+ }
+ return out+circle(x,y,9*s)+
+ lineSvg(x,y+28*s,x,y+66*s);
+}
+function tree(x,y,s=1){
+ return rect(x-10*s,y,20*s,95*s,2)+
+ circle(x,y-18*s,48*s)+
+ circle(x-25*s,y-4*s,30*s)+
+ circle(x+27*s,y-3*s,30*s);
+}
+function house(x,y,s=1){
+ return rect(x,y,145*s,125*s,4)+
+ path("M"+(x-10*s)+" "+y+
+ " L"+(x+72*s)+" "+(y-70*s)+
+ " L"+(x+155*s)+" "+y+" Z")+
+ rect(x+55*s,y+62*s,38*s,63*s,3)+
+ rect(x+13*s,y+22*s,30*s,30*s,2)+
+ rect(x+104*s,y+22*s,30*s,30*s,2);
+}
+function cloud(x,y){
+ return circle(x,y,28)+circle(x+28,y-16,32)+
+ circle(x+60,y,27);
+}
+function butterfly(x,y){
+ return '<ellipse cx="'+(x-25)+'" cy="'+(y-16)+
+ '" rx="29" ry="38" '+P+'/>'+
+ '<ellipse cx="'+(x+25)+'" cy="'+(y-16)+
+ '" rx="29" ry="38" '+P+'/>'+
+ '<ellipse cx="'+(x-22)+'" cy="'+(y+26)+
+ '" rx="23" ry="28" '+P+'/>'+
+ '<ellipse cx="'+(x+22)+'" cy="'+(y+26)+
+ '" rx="23" ry="28" '+P+'/>'+
+ rect(x-5,y-40,10,92,5);
+}
+function fish(x,y,s=1){
+ return '<ellipse cx="'+x+'" cy="'+y+'" rx="'+
+ (65*s)+'" ry="'+(35*s)+'" '+P+'/>'+
+ path("M"+(x-60*s)+" "+y+
+ " l"+(-45*s)+" "+(-35*s)+
+ " v"+(70*s)+" Z")+
+ circle(x+37*s,y-9*s,4*s);
+}
+function cat(x,y){
+ return '<ellipse cx="'+x+'" cy="'+(y+65)+
+ '" rx="65" ry="76" '+P+'/>'+
+ circle(x,y-30,56)+
+ path("M"+(x-48)+" "+(y-60)+
+ " l-4 -50 43 30 Z")+
+ path("M"+(x+48)+" "+(y-60)+
+ " l4 -50 -43 30 Z")+
+ circle(x-20,y-37,4)+circle(x+20,y-37,4)+
+ path("M"+(x-7)+" "+(y-14)+" l7 8 7 -8 Z");
+}
+function balloon(x,y){
+ return '<ellipse cx="'+x+'" cy="'+y+
+ '" rx="32" ry="43" '+P+'/>'+
+ path("M"+x+" "+(y+43)+
+ " l-6 13 12 0 Z")+
+ path("M"+x+" "+(y+55)+
+ " q-20 38 0 80");
+}
+
+function makeScene(item){
+ const idx=THEMES.findIndex(t=>t[3]===item.scene);
+ let shapes="";
+ const detailed=item.level===3;
+
+ // מסגרת ונוף משותף
+ shapes+=rect(12,12,566,772,15);
+ shapes+=path("M18 635 Q160 575 300 635 T575 635");
+ shapes+=circle(490,95,38);
+
+ if(item.scene==="forest"||item.scene==="garden"||
+ item.scene==="butterfly"||item.scene==="farm"){
+ shapes+=tree(115,315,.85)+tree(440,305,.85);
+ for(let i=0;i<7;i++)
+ shapes+=flower(70+i*72,675+(i%2)*25,.7);
+ if(item.scene==="butterfly"){
+ shapes+=butterfly(270,245)+butterfly(360,420);
+ }else if(item.scene==="farm"){
+ shapes+=house(228,400,.9);
+ shapes+=lineSvg(45,590,550,590);
+ }else if(item.scene==="garden"){
+ shapes+=butterfly(290,360);
+ shapes+=flower(280,475,1.6);
+ }else{
+ shapes+=house(250,435,.7);
+ shapes+=butterfly(370,360);
+ }
+ }
+ else if(item.scene==="ocean"){
+ shapes+=fish(170,270,1)+fish(395,420,.8);
+ shapes+=fish(180,535,.55);
+ for(let i=0;i<16;i++)
+ shapes+=circle(60+(i*71)%480,110+(i*49)%520,
+ 5+(i%3)*5);
+ shapes+=path("M55 670 Q90 560 105 665");
+ shapes+=path("M475 670 Q500 550 540 660");
+ }
+ else if(item.scene==="space"){
+ shapes+=path("M250 470 L300 230 L350 470 Z");
+ shapes+=circle(300,342,27);
+ shapes+=path("M250 440 L210 490 L250 480 Z");
+ shapes+=path("M350 440 L390 490 L350 480 Z");
+ shapes+=circle(110,280,58)+circle(460,420,48);
+ for(let i=0;i<13;i++)
+ shapes+=star(55+(i*137)%490,125+(i*83)%500,10+i%3*4);
+ }
+ else if(item.scene==="village"){
+ shapes+=house(55,340,1.2)+house(355,400,.9);
+ shapes+=tree(300,455,.6);
+ shapes+=cloud(130,130)+cloud(330,200);
+ }
+ else if(item.scene==="castle"){
+ for(let x of [120,235,350])
+ shapes+=rect(x,350,105,270,5)+
+ rect(x-9,324,30,30)+rect(x+35,324,30,30)+
+ rect(x+85,324,30,30);
+ shapes+=rect(257,530,45,90,22);
+ shapes+=cloud(155,160);
+ }
+ else if(item.scene==="train"){
+ for(let x of [75,225,375])
+ shapes+=rect(x,430,125,115,10)+
+ circle(x+28,555,21)+circle(x+95,555,21)+
+ rect(x+22,445,52,45);
+ shapes+=rect(390,365,40,65)+cloud(170,155);
+ }
+ else if(item.scene==="mushroom"){
+ for(let i=0;i<4;i++){
+ const x=65+i*125,y=480+(i%2)*50;
+ shapes+=rect(x+20,y,56,140,15);
+ shapes+=path("M"+(x-10)+" "+y+
+ " Q"+(x+48)+" "+(y-180)+
+ " "+(x+106)+" "+y+" Z");
+ shapes+=circle(x+40,y-30,12);
+ }
+ }
+ else if(item.scene==="balloons"){
+ for(let i=0;i<9;i++)
+ shapes+=balloon(65+i*56,170+(i%3)*85);
+ shapes+=rect(180,600,220,95,12);
+ shapes+=star(290,650,28);
+ }
+ else if(item.scene==="cat"){
+ shapes+=cat(285,375)+tree(110,400,.7);
+ for(let i=0;i<7;i++)
+ shapes+=flower(75+i*70,665,.7);
+ }
+
+ if(detailed){
+ for(let i=0;i<22;i++){
+ const x=38+(i*97)%510;
+ const y=80+(i*59)%520;
+ if(item.scene!=="space")
+ shapes+=star(x,y,7);
+ }
+ }
+
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" '+
+ 'viewBox="0 0 590 800" class="hcColoring">'+
+ '<rect width="590" height="800" fill="white"/>'+
+ shapes+'</svg>';
+
+ const paper=paperTitle(item.title);
+ paper.insertAdjacentHTML("beforeend",svg);
+}
+
+function openItem(item){
+ $("hcOverlay").style.display="block";
+
+ if(item.type==="work")makeWorksheet(item);
+ else makeScene(item);
+
+ $("hcOverlay").scrollTop=0;
+}
+
+if(document.readyState==="loading"){
+ document.addEventListener("DOMContentLoaded",init);
+}else{
+ init();
+}
+})();
+</script>
+<!-- END HAPPY ENGLISH CLUB LIBRARY -->
+
 </body>
 </html>
