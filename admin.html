@@ -1,18 +1,490 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>כניסת מנהלת | Happy English Club</title>
-<style>*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#29345c;background:linear-gradient(130deg,#fff2dc,#eee8ff,#e7f9f1)}.wrap{max-width:760px;margin:auto;padding:35px 17px}.header{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;align-items:center}.brand{font-size:23px;font-weight:bold;color:#7655df}.header a{color:#7655df;font-weight:bold;text-decoration:none}.panel{background:white;border-radius:26px;padding:35px;margin-top:35px;box-shadow:0 16px 50px #5a4b8820}h1{margin-top:0}p{line-height:1.7;color:#707b93}.btn{border:0;border-radius:14px;padding:13px 21px;background:#7655df;color:white;font-weight:bold;cursor:pointer;font-size:16px}.btn.alt{background:#ede7ff;color:#6448c2}.btn:disabled{opacity:.6}.notice{padding:16px;background:#f4f0ff;border-radius:15px;margin:18px 0;line-height:1.6}.notice.error{background:#ffe9e9;color:#ac3535}.notice.ok{background:#e5f8ed;color:#17673e}.hidden{display:none}.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:19px}.tile{border:1px solid #eee5fa;background:#fbfaff;border-radius:16px;padding:16px}.tile b{display:block}.tile small{color:#8089a0}.fine{font-size:13px}@media(max-width:540px){.tiles{grid-template-columns:1fr}.panel{padding:22px}}</style></head>
-<body><div class="wrap"><div class="header"><div class="brand">🌈 Happy English Club</div><a href="/">חזרה לאתר הראשי ←</a></div><div class="panel">
-<h1>👩‍🏫 כניסת מנהלת</h1><p>מתחברים באמצעות Google כדי לבדוק את החיבור למערכת Supabase.</p><div id="status" class="notice">מתחברת ל-Supabase...</div><div id="guest" class="hidden"><button class="btn" id="login">כניסה עם Google</button></div>
-<div id="signed" class="hidden"><p>מחוברת באמצעות: <b id="email" dir="ltr"></b></p><div id="owner" class="hidden"><div class="notice ok">ההתחברות בוצעה עם החשבון שהוגדר למנהלת. פעולות עריכה והעלאה יופעלו רק לאחר הגדרת הרשאות מאובטחות ב-Supabase.</div><div class="tiles"><div class="tile"><b>📄 דפי עבודה</b><small>ניהול והעלאה - בקרוב</small></div><div class="tile"><b>🖍️ דפי צביעה</b><small>ניהול והעלאה - בקרוב</small></div><div class="tile"><b>🎮 משחקים</b><small>ניהול תרגולים - בקרוב</small></div><div class="tile"><b>👑 מערכי שיעור</b><small>תוכן בתשלום - בהמשך</small></div></div></div><div id="notOwner" class="notice error hidden">החשבון אינו החשבון שנבחר למנהלת. לא ניתנה גישה לניהול.</div><p><button class="btn alt" id="logout">יציאה</button></p></div><p class="fine">זהו מסך בדיקת התחברות בלבד. אין בו פעולות שינוי נתונים או גישה לקבצים מוגנים. זיהוי כתובת האימייל בדפדפן אינו תחליף להרשאות שרת.</p>
-</div></div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ניהול האתר | Happy English Club</title>
+<style>
+* {box-sizing:border-box}
+body {margin:0;background:#f8f5ff;color:#273452;font-family:Arial,sans-serif}
+header {background:#fff;padding:22px;text-align:center;border-bottom:2px solid #eee6ff}
+header h1 {color:#7655df;margin:0 0 8px}
+main {max-width:950px;margin:auto;padding:22px}
+.card {background:white;border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 5px 22px #46317c10}
+h2 {color:#7655df}
+label {display:block;font-weight:bold;margin:15px 0 5px}
+input,textarea,select {width:100%;padding:12px;border:1px solid #d9d4e6;border-radius:10px;font:inherit}
+textarea {min-height:85px}
+button {cursor:pointer;border:0;border-radius:11px;padding:12px 20px;font-weight:bold;background:#7655df;color:white;margin:6px 0}
+button.secondary {background:#eee9fa;color:#684ac0}
+button.danger {background:#c94358}
+button:disabled {opacity:.5;cursor:wait}
+.hidden {display:none!important}
+.notice {padding:14px;border-radius:11px;background:#f0edff;margin:14px 0;line-height:1.6;white-space:pre-wrap}
+.error {background:#ffe5e5;color:#a32132}
+.success {background:#e1faeb;color:#18673c}
+.item {border:1px solid #e8e2f4;border-radius:14px;padding:16px;margin:12px 0}
+.item h3 {margin:0 0 8px}
+.muted {color:#69748a;font-size:14px}
+.actions {display:flex;gap:8px;flex-wrap:wrap}
+a {color:#7655df}
+</style>
+</head>
+<body>
+<header>
+<h1>🌈 Happy English Club</h1>
+<strong>מערכת ניהול התכנים</strong>
+<p><a href="/">חזרה לאתר הראשי</a></p>
+</header>
+
+<main>
+<section class="card">
+<h2>🔐 כניסת מנהלת</h2>
+<div id="status" class="notice">בודקת התחברות...</div>
+<div id="loginArea" class="hidden">
+<button id="login">התחברות עם Google</button>
+</div>
+<div id="accountArea" class="hidden">
+<p>מחוברת: <b id="email"></b></p>
+<button id="logout" class="secondary">התנתקות</button>
+</div>
+</section>
+
+<div id="adminArea" class="hidden">
+<section class="card">
+<h2 id="formTitle">➕ הוספת חומר חדש</h2>
+<form id="contentForm">
+<label for="title">שם החומר</label>
+<input id="title" required maxlength="150"
+placeholder="לדוגמה: דף עבודה על צבעים">
+
+<label for="description">תיאור</label>
+<textarea id="description"
+placeholder="מה הילדים ילמדו?"></textarea>
+
+<label for="category">סוג החומר</label>
+<select id="category" required>
+<option value="worksheet">📄 דף עבודה</option>
+<option value="coloring">🖍️ דף צביעה</option>
+</select>
+
+<label for="topic">נושא</label>
+<select id="topic">
+<option value="alphabet">אותיות ABC</option>
+<option value="colors">צבעים</option>
+<option value="animals">בעלי חיים</option>
+<option value="numbers">מספרים</option>
+<option value="other">אחר</option>
+</select>
+
+<label for="file">קובץ PDF או תמונה</label>
+<input type="file" id="file"
+accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
+<p class="muted">עד 20MB. בעת עריכה אפשר להשאיר ללא קובץ חדש.</p>
+
+<label>
+<input type="checkbox" id="published" style="width:auto">
+פרסום החומר באתר
+</label>
+
+<div class="actions">
+<button type="submit" id="saveBtn">💾 שמירה</button>
+<button type="button" id="cancelEdit" class="secondary hidden">
+ביטול עריכה
+</button>
+</div>
+</form>
+<div id="formMessage" class="notice hidden"></div>
+</section>
+
+<section class="card">
+<h2>📚 החומרים שלי</h2>
+<p class="muted">כאן אפשר לערוך, לפרסם, להסתיר או למחוק חומרים.</p>
+<input id="search" placeholder="🔎 חיפוש חומר לפי שם">
+<div id="items"></div>
+</section>
+</div>
+</main>
+
 <script type="module">
-import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const supabase=createClient('https://kmumnnfjxdkzeqgmuqpc.supabase.co','sb_publishable_0MKxnDaPLrvILMkcKS8osQ_5YhbrWGn',{auth:{flowType:'pkce',detectSessionInUrl:true,persistSession:true}});
-const el=id=>document.getElementById(id),ADMIN='0548597453nn@gmail.com';
-function msg(s,err=false){el('status').textContent=s;el('status').className='notice'+(err?' error':'')}
-function render(session){let email=session?.user?.email?.toLowerCase()||'';el('guest').classList.toggle('hidden',!!session);el('signed').classList.toggle('hidden',!session);el('owner').classList.toggle('hidden',email!==ADMIN);el('notOwner').classList.toggle('hidden',!session||email===ADMIN);el('email').textContent=email;msg(session?'התחברת ל-Google בהצלחה.':'אפשר להתחבר עם חשבון Google שלך.')}
-el('login').addEventListener('click',async()=>{el('login').disabled=true;msg('מעבירה ל-Google...');try{const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/admin.html'}});if(error)throw error}catch(e){msg('ההתחברות נכשלה: '+e.message,true);el('login').disabled=false}});
-el('logout').addEventListener('click',async()=>{const {error}=await supabase.auth.signOut();if(error)msg(error.message,true);else render(null)});
-(async()=>{try{const {data,error}=await supabase.auth.getSession();if(error)throw error;render(data.session);supabase.auth.onAuthStateChange((_event,session)=>render(session))}catch(e){msg('שגיאת חיבור: '+e.message,true)}})();
-</script></body></html>
+import {createClient} from
+'https://esm.sh/@supabase/supabase-js@2';
+
+const supabase = createClient(
+  'https://kmumnnfjxdkzeqgmuqpc.supabase.co',
+  'sb_publishable_0MKxnDaPLrvILMkcKS8osQ_5YhbrWGn',
+  {
+    auth: {
+      flowType: 'pkce',
+      detectSessionInUrl: true,
+      persistSession: true
+    }
+  }
+);
+
+const $ = id => document.getElementById(id);
+const BUCKET = 'free-materials';
+
+let records = [];
+let editingId = null;
+let administrator = false;
+
+function status(message, error=false) {
+  $('status').textContent = message;
+  $('status').className = 'notice' + (error ? ' error' : '');
+}
+
+function formMessage(message, error=false) {
+  const el = $('formMessage');
+  el.classList.remove('hidden');
+  el.className = 'notice ' + (error ? 'error' : 'success');
+  el.textContent = message;
+}
+
+function hideFormMessage() {
+  $('formMessage').classList.add('hidden');
+}
+
+function formatError(error) {
+  return error?.message || String(error);
+}
+
+async function checkAdmin() {
+  const {data, error} = await supabase
+    .from('admin_users')
+    .select('user_id')
+    .limit(1);
+
+  if (error) throw error;
+  return Array.isArray(data) && data.length > 0;
+}
+
+async function refreshAuth() {
+  $('adminArea').classList.add('hidden');
+  administrator = false;
+
+  const {data, error} = await supabase.auth.getUser();
+  if (error && !data?.user) {
+    status('לא ניתן לבדוק התחברות: ' + error.message, true);
+    return;
+  }
+
+  const user = data?.user;
+  $('loginArea').classList.toggle('hidden', !!user);
+  $('accountArea').classList.toggle('hidden', !user);
+
+  if (!user) {
+    status('יש להתחבר באמצעות Google.');
+    return;
+  }
+
+  $('email').textContent = user.email || '';
+
+  try {
+    administrator = await checkAdmin();
+    if (!administrator) {
+      status('החשבון מחובר, אבל אין לו הרשאת מנהלת.', true);
+      return;
+    }
+
+    status('✅ התחברת בהצלחה כמנהלת.');
+    $('adminArea').classList.remove('hidden');
+    await loadItems();
+  } catch (e) {
+    status('שגיאה בבדיקת הרשאות: ' + formatError(e), true);
+  }
+}
+
+$('login').onclick = async () => {
+  $('login').disabled = true;
+  const {error} = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: location.origin + '/admin.html'
+    }
+  });
+  if (error) {
+    status(formatError(error), true);
+    $('login').disabled = false;
+  }
+};
+
+$('logout').onclick = async () => {
+  const {error} = await supabase.auth.signOut();
+  if (error) status(formatError(error), true);
+  else location.reload();
+};
+
+function resetForm() {
+  editingId = null;
+  $('contentForm').reset();
+  $('formTitle').textContent = '➕ הוספת חומר חדש';
+  $('cancelEdit').classList.add('hidden');
+  hideFormMessage();
+}
+
+$('cancelEdit').onclick = resetForm;
+
+function validateFile(file) {
+  if (!file) return;
+
+  const allowed = {
+    'application/pdf': 'pdf',
+    'image/png': 'png',
+    'image/jpeg': 'jpg'
+  };
+
+  if (!allowed[file.type]) {
+    throw new Error('ניתן להעלות רק PDF, PNG או JPG.');
+  }
+
+  if (file.size > 20 * 1024 * 1024) {
+    throw new Error('הקובץ גדול מ-20MB.');
+  }
+
+  return allowed[file.type];
+}
+
+async function uploadFile(file) {
+  const extension = validateFile(file);
+  const path = crypto.randomUUID() + '.' + extension;
+
+  const {error} = await supabase.storage
+    .from(BUCKET)
+    .upload(path, file, {
+      contentType: file.type,
+      upsert: false
+    });
+
+  if (error) throw error;
+  return path;
+}
+
+$('contentForm').onsubmit = async event => {
+  event.preventDefault();
+  if (!administrator) {
+    formMessage('אין הרשאת מנהלת.', true);
+    return;
+  }
+
+  const button = $('saveBtn');
+  button.disabled = true;
+  hideFormMessage();
+
+  let uploadedPath = null;
+
+  try {
+    const file = $('file').files[0];
+    if (file) validateFile(file);
+
+    const old = records.find(item => item.id === editingId);
+
+    if (!editingId && !file) {
+      throw new Error('יש לבחור קובץ לחומר חדש.');
+    }
+
+    if (file) uploadedPath = await uploadFile(file);
+
+    const payload = {
+      title: $('title').value.trim(),
+      description: $('description').value.trim(),
+      category: $('category').value,
+      topic: $('topic').value,
+      is_published: $('published').checked,
+      price: 0,
+      file_path: uploadedPath || old?.file_path || null,
+      updated_at: new Date().toISOString()
+    };
+
+    if (!payload.title) throw new Error('יש להכניס שם לחומר.');
+
+    let error;
+
+    if (editingId) {
+      ({error} = await supabase.from('site_content')
+        .update(payload).eq('id', editingId));
+    } else {
+      ({error} = await supabase.from('site_content')
+        .insert(payload));
+    }
+
+    if (error) throw error;
+
+    const previousPath = old?.file_path;
+
+    resetForm();
+    await loadItems();
+    formMessage('✅ החומר נשמר בהצלחה.');
+
+    if (uploadedPath && previousPath && previousPath !== uploadedPath) {
+      const result = await supabase.storage.from(BUCKET)
+        .remove([previousPath]);
+      if (result.error) {
+        formMessage(
+          'החומר נשמר, אבל מחיקת הקובץ הישן נכשלה: ' +
+          formatError(result.error), true
+        );
+      }
+    }
+
+  } catch (e) {
+    formMessage('השמירה נכשלה: ' + formatError(e), true);
+
+    if (uploadedPath) {
+      await supabase.storage.from(BUCKET).remove([uploadedPath]);
+    }
+  } finally {
+    button.disabled = false;
+  }
+};
+
+async function loadItems() {
+  const {data, error} = await supabase
+    .from('site_content')
+    .select('*')
+    .order('created_at', {ascending: false});
+
+  if (error) {
+    $('items').textContent = 'שגיאה: ' + formatError(error);
+    return;
+  }
+
+  records = data || [];
+  renderItems();
+}
+
+function editItem(item) {
+  editingId = item.id;
+  $('title').value = item.title || '';
+  $('description').value = item.description || '';
+  $('category').value = item.category;
+  $('topic').value = item.topic || 'other';
+  $('published').checked = !!item.is_published;
+  $('file').value = '';
+  $('formTitle').textContent = '✏️ עריכת חומר';
+  $('cancelEdit').classList.remove('hidden');
+  hideFormMessage();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+async function togglePublished(item) {
+  if (!administrator) return;
+
+  const {error} = await supabase.from('site_content')
+    .update({
+      is_published: !item.is_published,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', item.id);
+
+  if (error) {
+    alert('שגיאה: ' + formatError(error));
+    return;
+  }
+
+  await loadItems();
+}
+
+async function deleteItem(item) {
+  if (!administrator) return;
+
+  if (!confirm('למחוק את "' + item.title + '"?')) return;
+
+  const {error} = await supabase.from('site_content')
+    .delete().eq('id', item.id);
+
+  if (error) {
+    alert('שגיאת מחיקה: ' + formatError(error));
+    return;
+  }
+
+  if (item.file_path) {
+    const result = await supabase.storage.from(BUCKET)
+      .remove([item.file_path]);
+
+    if (result.error) {
+      alert('הרשומה נמחקה, אך הקובץ לא נמחק מהאחסון: ' +
+        formatError(result.error));
+    }
+  }
+
+  if (editingId === item.id) resetForm();
+  await loadItems();
+}
+
+function actionButton(text, className, fn) {
+  const button = document.createElement('button');
+  button.textContent = text;
+  if (className) button.className = className;
+  button.onclick = fn;
+  return button;
+}
+
+function renderItems() {
+  const container = $('items');
+  container.replaceChildren();
+
+  const search = $('search').value.trim().toLowerCase();
+  const filtered = records.filter(item =>
+    (item.title || '').toLowerCase().includes(search)
+  );
+
+  if (!filtered.length) {
+    const p = document.createElement('p');
+    p.textContent = 'אין חומרים להצגה.';
+    container.append(p);
+    return;
+  }
+
+  for (const item of filtered) {
+    const card = document.createElement('div');
+    card.className = 'item';
+
+    const heading = document.createElement('h3');
+    heading.textContent = item.title;
+
+    const description = document.createElement('p');
+    description.textContent = item.description || '';
+
+    const state = document.createElement('p');
+    state.className = 'muted';
+    state.textContent = item.is_published
+      ? '🟢 פורסם'
+      : '🟡 טיוטה';
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+
+    actions.append(
+      actionButton('✏️ עריכה', 'secondary', () => editItem(item)),
+      actionButton(
+        item.is_published ? 'הסתרה' : 'פרסום',
+        'secondary',
+        () => togglePublished(item)
+      ),
+      actionButton('🗑️ מחיקה', 'danger', () => deleteItem(item))
+    );
+
+    if (item.file_path) {
+      const link = document.createElement('a');
+      const {data} = supabase.storage.from(BUCKET)
+        .getPublicUrl(item.file_path);
+      link.href = data.publicUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = '📎 פתיחת הקובץ';
+      actions.append(link);
+    }
+
+    card.append(heading, description, state, actions);
+    container.append(card);
+  }
+}
+
+$('search').oninput = renderItems;
+
+refreshAuth();
+</script>
+</body>
+</html>
