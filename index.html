@@ -2158,5 +2158,324 @@ if(classicGame){
 </script>
 <!-- END HAPPY ENGLISH CLUB LEVELS -->
 
+<!-- FIX: SEPARATE ABC LEVELS AND CONTENT -->
+<style>
+.abcFixedLibrary {
+  margin: 28px 0;
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,#fff1d9,#efe9ff,#e4faf3);
+  border: 2px solid #e6d8ff;
+}
+.abcFixedLibrary h2 {
+  color: #7655df;
+  margin: 0 0 12px;
+}
+.abcFixedLevels {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+.abcFixedLevels button {
+  border: 2px solid #ddd0fa;
+  background: white;
+  color: #6043b5;
+  border-radius: 17px;
+  padding: 15px 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.abcFixedLevels button.selected {
+  background: #7655df;
+  color: white;
+  border-color: #7655df;
+}
+.abcFixedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(205px,1fr));
+  gap: 15px;
+}
+.abcFixedCard {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 5px 18px #604b9920;
+}
+.abcFixedCard strong {
+  display: block;
+  margin: 10px 0;
+}
+.abcFixedCard p {
+  color: #69738a;
+  font-size: 13px;
+}
+.abcFixedCard button {
+  background: #7655df;
+  color: white;
+  border: 0;
+  padding: 11px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.abcFixedProgress {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+@media(max-width:550px) {
+  .abcFixedLevels {gap:5px}
+  .abcFixedLevels button {font-size:12px;padding:12px 4px}
+}
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  function setup() {
+    const original = document.getElementById("hcLibrary");
+    if (!original) {
+      console.warn("ABC library not loaded");
+      return;
+    }
+
+    // The original library mixes worksheets and coloring.
+    // Its first 24 cards are worksheets,
+    // and the next 12 cards are coloring sheets.
+    const sourceCards = Array.from(
+      original.querySelectorAll(".hcCard")
+    );
+
+    if (sourceCards.length < 36) {
+      console.warn("ABC cards are missing:", sourceCards.length);
+      return;
+    }
+
+    // Hide the mixed library and the earlier empty level panels.
+    original.style.display = "none";
+
+    document.querySelectorAll(
+      "#he-panel-worksheet,#he-panel-coloring"
+    ).forEach(node => node.style.display = "none");
+
+    const content = {
+      worksheet: sourceCards.slice(0, 24),
+      coloring: sourceCards.slice(24, 36)
+    };
+
+    const progressKey = "happyEnglishProgressV2";
+
+    function progress() {
+      try {
+        return JSON.parse(
+          localStorage.getItem(progressKey) || "{}"
+        );
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function markDone(id) {
+      const data = progress();
+      data[id] = true;
+      localStorage.setItem(
+        progressKey,
+        JSON.stringify(data)
+      );
+    }
+
+    function createPanel(category, pageId, title) {
+      const page = document.getElementById(pageId);
+      if (!page) return;
+
+      const panel = document.createElement("section");
+      panel.className = "abcFixedLibrary";
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const intro = document.createElement("p");
+      intro.textContent = category === "coloring"
+        ? "בחרו רמת ציור: פשוט, מפורט או מורכב."
+        : "בחרו רמת תרגול: קל, בינוני או מאתגר.";
+
+      const buttons = document.createElement("div");
+      buttons.className = "abcFixedLevels";
+
+      const counter = document.createElement("div");
+      counter.className = "abcFixedProgress";
+
+      const grid = document.createElement("div");
+      grid.className = "abcFixedGrid";
+
+      panel.append(heading, intro, buttons, counter, grid);
+      page.append(panel);
+
+      let selectedLevel = 1;
+      const all = content[category];
+
+      function render() {
+        buttons.replaceChildren();
+        grid.replaceChildren();
+
+        [1, 2, 3].forEach(level => {
+          const button = document.createElement("button");
+          button.textContent = "⭐".repeat(level) +
+            " רמה " + level;
+
+          if (selectedLevel === level) {
+            button.className = "selected";
+          }
+
+          button.onclick = () => {
+            selectedLevel = level;
+            render();
+          };
+
+          buttons.append(button);
+        });
+
+        const chosen = all.map((card, index) => ({
+          card,
+          index,
+          level: category === "worksheet"
+            ? index % 3 + 1
+            : index % 3 + 1,
+          id: "abc-library-" +
+            (category === "worksheet" ? index : index + 24)
+        })).filter(item => item.level === selectedLevel);
+
+        const saved = progress();
+        const done = chosen.filter(item => saved[item.id]).length;
+
+        counter.textContent =
+          "רמה " + selectedLevel + " | " +
+          done + " מתוך " + chosen.length + " בוצעו";
+
+        chosen.forEach(item => {
+          const title = item.card.querySelector(
+            ".hcInfo strong"
+          )?.textContent || "ABC Activity";
+
+          const description = item.card.querySelector(
+            ".hcInfo p"
+          )?.textContent || "";
+
+          const emoji = item.card.querySelector(
+            ".hcCover"
+          )?.textContent || "📄";
+
+          const card = document.createElement("article");
+          card.className = "abcFixedCard";
+
+          const icon = document.createElement("div");
+          icon.style.fontSize = "42px";
+          icon.textContent = emoji;
+
+          const name = document.createElement("strong");
+          name.textContent = title;
+
+          const desc = document.createElement("p");
+          desc.textContent = description;
+
+          const state = document.createElement("div");
+          state.textContent = saved[item.id]
+            ? "✅ בוצע"
+            : "○ טרם בוצע";
+
+          const open = document.createElement("button");
+          open.textContent = "פתיחה ותצוגה";
+
+          open.onclick = () => {
+            // Open the existing printable preview.
+            item.card.querySelector(".hcOpen")?.click();
+
+            const tools = document.querySelector(
+              "#hcDialog .hcTools"
+            );
+            const paper = document.getElementById("hcPaper");
+
+            if (!tools || !paper) return;
+
+            let download = document.getElementById(
+              "abcFixedDownload"
+            );
+
+            if (!download) {
+              download = document.createElement("button");
+              download.id = "abcFixedDownload";
+              download.textContent = "⬇️ הורדת הדף";
+              tools.prepend(download);
+            }
+
+            download.onclick = () => {
+              const doc = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Happy English Club</title>
+<style>
+body {font-family:Arial;color:black;background:white}
+main {width:185mm;max-width:100%;margin:auto}
+svg {max-width:100%;height:auto}
+.hcLine {padding:13px;border-bottom:1px dashed #aaa}
+@page {size:A4;margin:10mm}
+</style>
+</head>
+<body><main>${paper.innerHTML}</main></body>
+</html>`;
+
+              const blob = new Blob([doc], {
+                type: "text/html;charset=utf-8"
+              });
+
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "ABC-" + item.id + ".html";
+              document.body.append(a);
+              a.click();
+              a.remove();
+
+              setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+              markDone(item.id);
+              render();
+            };
+          };
+
+          card.append(icon, name, desc, state, open);
+          grid.append(card);
+        });
+      }
+
+      render();
+    }
+
+    createPanel(
+      "worksheet",
+      "worksheets",
+      "📄 דפי עבודה - בחרו רמה"
+    );
+
+    createPanel(
+      "coloring",
+      "printables",
+      "🎨 דפי צביעה - בחרו רמה"
+    );
+  }
+
+  // Wait until the original ABC library has created its cards.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+})();
+</script>
+<!-- END ABC LEVEL FIX -->
+
 </body>
 </html>
