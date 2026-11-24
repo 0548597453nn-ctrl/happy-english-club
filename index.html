@@ -2476,6 +2476,1554 @@ svg {max-width:100%;height:auto}
 })();
 </script>
 <!-- END ABC LEVEL FIX -->
+<!-- HAPPY ENGLISH CLUB MASTER PATCH -->
+<style id="hecMasterPatchStyle">
+.hecPanel{
+  margin:28px 0;
+  padding:24px;
+  border-radius:26px;
+  background:linear-gradient(135deg,#fff2da,#efe8ff,#e3fbf2);
+  border:2px solid #e5d7ff;
+  color:#2c3458;
+}
+.hecPanel h2{
+  margin:0 0 10px;
+  color:#7452d8;
+}
+.hecPanel .hecIntro{
+  color:#68728d;
+  margin-bottom:14px;
+}
+.hecRowButtons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:14px 0;
+}
+.hecRowButtons button{
+  background:#fff;
+  color:#6548be;
+  border:2px solid #dccffc;
+  border-radius:16px;
+  padding:12px 16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.hecRowButtons button.active{
+  background:#7655df;
+  color:#fff;
+  border-color:#7655df;
+}
+.hecStatus{
+  background:#fff;
+  border-radius:14px;
+  padding:12px 14px;
+  margin:12px 0 18px;
+  font-weight:bold;
+}
+.hecGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(215px,1fr));
+  gap:15px;
+}
+.hecCard{
+  background:#fff;
+  border:1px solid #eee6fb;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 6px 18px rgba(98,80,160,.12);
+}
+.hecCardIcon{
+  font-size:42px;
+}
+.hecCard strong{
+  display:block;
+  margin:9px 0 7px;
+  font-size:17px;
+}
+.hecCard small{
+  display:block;
+  color:#727b94;
+  margin-bottom:7px;
+}
+.hecCard .hecDone{
+  margin:10px 0;
+  font-weight:bold;
+  color:#1f8a54;
+}
+.hecCard .hecNotDone{
+  margin:10px 0;
+  font-weight:bold;
+  color:#7d869e;
+}
+.hecCard button{
+  background:#7655df;
+  color:#fff;
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.hecOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(30,27,49,.74);
+  z-index:100000;
+  display:none;
+  overflow:auto;
+  padding:20px;
+}
+.hecDialog{
+  max-width:860px;
+  margin:20px auto;
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+}
+.hecDialog h3{
+  margin-top:0;
+  color:#6f4fd2;
+}
+.hecInstruction{
+  background:#f5f1ff;
+  border-right:5px solid #7a5ae1;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:12px;
+  color:#3a4063;
+}
+.hecPaper{
+  direction:ltr;
+  text-align:left;
+  max-width:720px;
+  margin:0 auto;
+  background:#fff;
+  color:#000;
+  padding:18px;
+  border:1px solid #ddd;
+}
+.hecPaper h2{
+  text-align:center;
+  color:#000;
+}
+.hecNameLine{
+  font-size:14px;
+  margin-bottom:14px;
+}
+.hecLine{
+  padding:12px 6px;
+  border-bottom:1px dashed #aaa;
+  min-height:42px;
+  font-size:20px;
+}
+.hecBox{
+  display:inline-block;
+  min-width:90px;
+  border:1px solid #bbb;
+  padding:6px 10px;
+  margin:0 6px;
+  border-radius:8px;
+}
+.hecTools{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+.hecTools button{
+  border:0;
+  padding:12px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.hecPrimary{
+  background:#7655df;
+  color:#fff;
+}
+.hecSecondary{
+  background:#efe9ff;
+  color:#6146bb;
+}
+.hecGameWrap{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  margin-top:18px;
+}
+.hecGameVisual{
+  font-size:60px;
+  margin:12px 0;
+  text-align:center;
+}
+.hecGameQuestion{
+  font-size:22px;
+  font-weight:bold;
+  text-align:center;
+}
+.hecGameInstruction{
+  margin:10px auto 16px;
+  max-width:650px;
+  background:#f7f3ff;
+  border-radius:12px;
+  padding:10px 14px;
+  text-align:center;
+  color:#4a4f71;
+}
+.hecGameAnswers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  max-width:520px;
+  margin:16px auto;
+}
+.hecGameAnswers button{
+  border:2px solid #dacfff;
+  background:#f3eeff;
+  color:#5640a5;
+  border-radius:14px;
+  padding:16px;
+  font-size:20px;
+  cursor:pointer;
+}
+.hecGameAnswers button:disabled{
+  opacity:.65;
+  cursor:default;
+}
+.hecGameInput{
+  text-align:center;
+  margin:18px 0;
+}
+.hecGameInput input{
+  width:240px;
+  max-width:100%;
+  padding:13px;
+  border:2px solid #dccdfc;
+  border-radius:12px;
+  font-size:20px;
+  direction:ltr;
+}
+.hecGameFeedback{
+  min-height:32px;
+  text-align:center;
+  font-weight:bold;
+  margin-top:8px;
+}
+.hecGameMeta{
+  text-align:center;
+  font-weight:bold;
+  color:#6a4cc2;
+  margin-bottom:8px;
+}
+.hecMiniTag{
+  display:inline-block;
+  background:#f1eafe;
+  color:#6f52c8;
+  border-radius:50px;
+  padding:5px 10px;
+  font-size:12px;
+  font-weight:bold;
+}
+@media(max-width:560px){
+  .hecGameAnswers{grid-template-columns:1fr;}
+}
+@media print{
+  body *{visibility:hidden!important;}
+  #hecOverlay,#hecOverlay *{visibility:visible!important;}
+  #hecOverlay{
+    display:block!important;
+    position:absolute;
+    inset:0;
+    background:#fff;
+    padding:0;
+    overflow:visible;
+  }
+  .hecDialog{
+    margin:0;
+    border-radius:0;
+    padding:0;
+    max-width:none;
+  }
+  .hecTools{display:none!important;}
+  .hecPaper{
+    border:0;
+    max-width:none;
+    margin:0 auto;
+    padding:8mm;
+  }
+  @page{size:A4;margin:10mm;}
+}
+</style>
 
+<script id="hecMasterPatch">
+(function(){
+"use strict";
+if(window.__HEC_MASTER_PATCH__) return;
+window.__HEC_MASTER_PATCH__ = true;
+
+/* ---------------------------
+   STORAGE
+--------------------------- */
+const STORE_KEY = "happyEnglishClubProgressV4";
+function loadProgress(){
+  try{
+    return JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
+  }catch(error){
+    return {};
+  }
+}
+function saveProgressData(data){
+  localStorage.setItem(STORE_KEY, JSON.stringify(data));
+}
+function isDone(id){
+  const data = loadProgress();
+  return data[id] === true;
+}
+function markDone(id){
+  const data = loadProgress();
+  data[id] = true;
+  saveProgressData(data);
+  rerenderAll();
+}
+
+/* ---------------------------
+   HELPERS
+--------------------------- */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const shuffle = arr => [...arr].sort(() => Math.random() - .5);
+const sample = arr => arr[Math.floor(Math.random() * arr.length)];
+
+function el(tag, text, className){
+  const node = document.createElement(tag);
+  if(text !== undefined) node.textContent = text;
+  if(className) node.className = className;
+  return node;
+}
+
+function hideOldBlocks(){
+  [
+    "#hcLibrary",
+    "#he-panel-worksheet",
+    "#he-panel-coloring",
+    "#heLevelGames",
+    ".abcFixedLibrary",
+    "#he-panel-games",
+    "#he-panel-worksheet",
+    "#he-panel-coloring"
+  ].forEach(selector=>{
+    $$(selector).forEach(node=>node.style.display="none");
+  });
+}
+
+/* ---------------------------
+   DATA
+--------------------------- */
+const WORDS = [
+  ["A","apple","🍎"],["B","ball","⚽"],["C","cat","🐱"],["D","dog","🐶"],
+  ["E","egg","🥚"],["F","fish","🐟"],["G","gift","🎁"],["H","house","🏠"],
+  ["I","ice cream","🍦"],["J","jam","🍓"],["K","kite","🪁"],["L","lion","🦁"],
+  ["M","moon","🌙"],["N","nest","🪺"],["O","orange","🍊"],["P","pencil","✏️"],
+  ["Q","queen","👑"],["R","rabbit","🐰"],["S","sun","☀️"],["T","tree","🌳"],
+  ["U","umbrella","☂️"],["V","van","🚐"],["W","water","💧"],["X","box","📦"],
+  ["Y","yoyo","🪀"],["Z","zebra","🦓"]
+];
+
+const ANIMALS = [
+  ["cat","🐱"],["dog","🐶"],["lion","🦁"],["fish","🐟"],["bird","🐦"],
+  ["frog","🐸"],["cow","🐮"],["pig","🐷"],["rabbit","🐰"],["horse","🐴"]
+];
+
+const COLORS = [
+  ["red","🔴"],["blue","🔵"],["green","🟢"],["yellow","🟡"],
+  ["orange","🟠"],["purple","🟣"],["black","⚫"],["white","⚪"]
+];
+
+const NUMBERS = [
+  ["1","one"],["2","two"],["3","three"],["4","four"],["5","five"],
+  ["6","six"],["7","seven"],["8","eight"],["9","nine"],["10","ten"],
+  ["11","eleven"],["12","twelve"],["13","thirteen"],["14","fourteen"],
+  ["15","fifteen"],["16","sixteen"],["17","seventeen"],["18","eighteen"],
+  ["19","nineteen"],["20","twenty"]
+];
+
+const WORKSHEETS = {
+  1: [
+    {id:"ws1-match-case",icon:"🔠",title:"אות גדולה ואות קטנה",desc:"התאמת אותיות גדולות וקטנות",instruction:"מתחו קו בין האות הגדולה לאות הקטנה המתאימה.",kind:"match-case"},
+    {id:"ws1-first-letter",icon:"🖼️",title:"האות הראשונה",desc:"מצאו באיזו אות מתחילה המילה",instruction:"הביטו בתמונה וכתבו את האות הראשונה של המילה.",kind:"first-letter"},
+    {id:"ws1-circle-letter",icon:"🔎",title:"הקיפו את האות",desc:"זיהוי אות מבוקשת",instruction:"הקיפו בכל שורה את האות שביקשנו למצוא.",kind:"circle-letter"},
+    {id:"ws1-next-letter",icon:"🚂",title:"האות הבאה",desc:"השלמת סדר האותיות",instruction:"כתבו את האות הבאה לפי סדר ה-ABC.",kind:"next-letter"},
+    {id:"ws1-trace",icon:"✍️",title:"מעקב אחרי אותיות",desc:"תרגול כתיבת אותיות",instruction:"עברו עם העיפרון על האותיות וכתבו אות נוספת לבד.",kind:"trace"},
+    {id:"ws1-picture-word",icon:"🧩",title:"תמונה ומילה",desc:"התאמת תמונה למילה",instruction:"חברו כל תמונה למילה המתאימה לה.",kind:"picture-word"},
+    {id:"ws1-same-letter",icon:"🎯",title:"אות פותחת זהה",desc:"מציאת מילה עם אותה אות פותחת",instruction:"בכל שורה בחרו את המילה שמתחילה באותה אות כמו התמונה.",kind:"same-letter"},
+    {id:"ws1-find-lower",icon:"🔡",title:"מצאו אות קטנה",desc:"זיהוי אותיות קטנות",instruction:"מצאו וסמנו את האות הקטנה המתאימה.",kind:"find-lower"}
+  ],
+  2: [
+    {id:"ws2-missing-middle",icon:"✏️",title:"האות החסרה באמצע",desc:"השלמת מילה",instruction:"השלימו את האות החסרה בתוך המילה.",kind:"missing-middle"},
+    {id:"ws2-sort-letters",icon:"📚",title:"מיון אותיות",desc:"מיינו לאותיות גדולות וקטנות",instruction:"כתבו בכל תיבה את האותיות המתאימות: גדולות או קטנות.",kind:"sort-letters"},
+    {id:"ws2-unscramble",icon:"🧠",title:"סדרו את האותיות",desc:"בניית מילה מאותיות מבולבלות",instruction:"סדרו את האותיות וכתבו את המילה הנכונה.",kind:"unscramble"},
+    {id:"ws2-odd-one",icon:"🚫",title:"היוצא דופן",desc:"מצאו את מה שלא מתאים",instruction:"בכל שורה מצאו את המילה או האות שלא מתאימה לקבוצה.",kind:"odd-one"},
+    {id:"ws2-match-beginnings",icon:"🔗",title:"חיבור לפי אות פותחת",desc:"חיבור תמונות לפי התחלה",instruction:"חברו בין פריטים שמתחילים באותה אות.",kind:"match-beginnings"},
+    {id:"ws2-classroom",icon:"🎒",title:"חפצים בכיתה",desc:"תרגול אוצר מילים של כיתה",instruction:"כתבו את המילה המתאימה לכל חפץ בכיתה.",kind:"classroom"},
+    {id:"ws2-complete-abc",icon:"🚉",title:"השלימו רצף ABC",desc:"מילוי אותיות חסרות ברצף",instruction:"מלאו את האותיות החסרות ברצף.",kind:"complete-abc"},
+    {id:"ws2-picture-clues",icon:"💡",title:"רמזי תמונה",desc:"הבנת רמז וכתיבת המילה",instruction:"הביטו בתמונה וברמז, וכתבו את המילה הנכונה.",kind:"picture-clues"}
+  ],
+  3: [
+    {id:"ws3-write-word",icon:"📝",title:"כתבו את המילה",desc:"כתיבת מילה מלאה לפי תמונה",instruction:"הביטו בתמונה וכתבו את כל המילה באנגלית.",kind:"write-word"},
+    {id:"ws3-short-sentence",icon:"💬",title:"השלמת משפט",desc:"מילה מתאימה בתוך משפט",instruction:"בחרו או כתבו את המילה המתאימה כדי להשלים את המשפט.",kind:"short-sentence"},
+    {id:"ws3-alpha-order",icon:"🔤",title:"סדר אלפביתי",desc:"סידור מילים לפי ABC",instruction:"סדרו את המילים לפי הסדר האלפביתי.",kind:"alpha-order"},
+    {id:"ws3-word-categories",icon:"📂",title:"מיון לפי קטגוריות",desc:"מיינו מילים לפי נושא",instruction:"מיינו את המילים לקטגוריות: חיות, צבעים, מספרים או חפצים.",kind:"word-categories"},
+    {id:"ws3-fix-mistake",icon:"🛠️",title:"תקנו את הטעות",desc:"איתור ותיקון שגיאה במילה",instruction:"מצאו את הטעות במילה וכתבו את המילה הנכונה.",kind:"fix-mistake"},
+    {id:"ws3-read-and-match",icon:"📖",title:"קראו והתאימו",desc:"הבנת משפטים קצרים",instruction:"קראו את המשפטים וחברו אותם לתמונה המתאימה.",kind:"read-and-match"},
+    {id:"ws3-word-search",icon:"🔍",title:"חיפוש מילים",desc:"מציאת מילים בטבלה",instruction:"מצאו את המילים המוחבאות בתוך טבלת האותיות.",kind:"word-search"},
+    {id:"ws3-mixed-review",icon:"🏆",title:"חזרה מעורבת",desc:"דף מסכם עם כמה סוגי משימות",instruction:"בצעו את כל המשימות: כתיבה, התאמה, מיון והשלמה.",kind:"mixed-review"}
+  ]
+};
+
+const COLORINGS = {
+  1: [
+    {id:"co1-fish",icon:"🐟",title:"דג פשוט",desc:"ציור פשוט עם מעט פרטים",instruction:"צבעו את הציור לפי רצונכם. זהו ציור פשוט עם מעט פרטים.",scene:"simple-fish"},
+    {id:"co1-flower",icon:"🌸",title:"פרח גדול",desc:"פרח גדול וברור לצביעה",instruction:"צבעו את הפרח ואת העלים. נסו לצבוע בתוך הקווים.",scene:"simple-flower"},
+    {id:"co1-butterfly",icon:"🦋",title:"פרפר פשוט",desc:"פרפר גדול עם מעט קישוטים",instruction:"צבעו את הפרפר. אפשר לתת לכל כנף צבע אחר.",scene:"simple-butterfly"},
+    {id:"co1-house",icon:"🏠",title:"בית קטן",desc:"בית פשוט עם שמש וענן",instruction:"צבעו את הבית, השמש והענן.",scene:"simple-house"},
+    {id:"co1-balloon",icon:"🎈",title:"בלון שמח",desc:"בלון ופרטים קטנים",instruction:"צבעו את הבלון ואת הקישוטים מסביב.",scene:"simple-balloon"},
+    {id:"co1-cat",icon:"🐱",title:"חתול חמוד",desc:"חתול פשוט וגדול",instruction:"צבעו את החתול ואת הפרטים סביבו.",scene:"simple-cat"}
+  ],
+  2: [
+    {id:"co2-ocean",icon:"🐠",title:"ים בינוני",desc:"דגים, אצות וצדפים",instruction:"צבעו את ציור הים. יש יותר פרטים, אבל עדיין אפשר לצבוע בנוחות.",scene:"medium-ocean"},
+    {id:"co2-garden",icon:"🌼",title:"גינה פורחת",desc:"פרחים, עלים ופרפרים",instruction:"צבעו את הגינה ואת הפרפרים. נסו לבחור צבעים שונים לכל פרח.",scene:"medium-garden"},
+    {id:"co2-village",icon:"🏡",title:"כפר קטן",desc:"בית, עצים ועננים",instruction:"צבעו את כל סצנת הכפר: בית, עצים ושמיים.",scene:"medium-village"},
+    {id:"co2-farm",icon:"☀️",title:"חווה שמחה",desc:"חווה עם גדר ושמש",instruction:"צבעו את החווה ואת כל הפרטים שבה.",scene:"medium-farm"},
+    {id:"co2-balloons",icon:"🎈",title:"מסיבת בלונים",desc:"כמה בלונים וקישוטים",instruction:"צבעו את הבלונים ואת המסיבה שמסביב.",scene:"medium-balloons"},
+    {id:"co2-train",icon:"🚂",title:"רכבת בינונית",desc:"רכבת עם מסילה ועננים",instruction:"צבעו את הרכבת, העננים והמסילה.",scene:"medium-train"}
+  ],
+  3: [
+    {id:"co3-forest",icon:"🌳",title:"יער קסום",desc:"הרבה עצים, פרחים ופרטים קטנים",instruction:"זהו ציור מורכב. צבעו לאט ובסבלנות, ונסו לשים לב לפרטים הקטנים.",scene:"complex-forest"},
+    {id:"co3-ocean",icon:"🐟",title:"עולם הים",desc:"דגים, אצות, צדפים ופרטים רבים",instruction:"זהו ציור מפורט מאוד. צבעו את כל היצורים והפרטים בעולם הים.",scene:"complex-ocean"},
+    {id:"co3-space",icon:"🚀",title:"מסע בחלל",desc:"חלליות, כוכבים וכוכבי לכת",instruction:"צבעו את כל סצנת החלל. יש הרבה פרטים קטנים ומעניינים.",scene:"complex-space"},
+    {id:"co3-castle",icon:"🏰",title:"טירה קסומה",desc:"מגדלים, קירות ופרטים",instruction:"צבעו את הטירה וכל מה שמסביבה. זהו דף צביעה מורכב.",scene:"complex-castle"},
+    {id:"co3-mushroom",icon:"🍄",title:"כפר הפטריות",desc:"הרבה פטריות וקישוטים",instruction:"צבעו את כפר הפטריות וכל הפרטים שבתוכו.",scene:"complex-mushroom"},
+    {id:"co3-catgarden",icon:"🐱",title:"גן החתול",desc:"חתול בגינה עמוסת פרטים",instruction:"צבעו את החתול ואת כל הפרחים והצמחים שבגן.",scene:"complex-catgarden"}
+  ]
+};
+
+/* ---------------------------
+   OVERLAY
+--------------------------- */
+function ensureOverlay(){
+  if($("#hecOverlay")) return $("#hecOverlay");
+
+  const overlay = document.createElement("div");
+  overlay.id = "hecOverlay";
+  overlay.className = "hecOverlay";
+
+  overlay.innerHTML = `
+    <div class="hecDialog">
+      <div class="hecTools">
+        <button id="hecDownloadBtn" class="hecPrimary">⬇️ הורדת הדף</button>
+        <button id="hecPrintBtn" class="hecSecondary">🖨️ הדפסה</button>
+        <button id="hecCloseBtn" class="hecSecondary">✕ סגירה</button>
+      </div>
+      <h3 id="hecDialogTitle"></h3>
+      <div id="hecDialogInstruction" class="hecInstruction"></div>
+      <div id="hecPaper" class="hecPaper"></div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  $("#hecCloseBtn").onclick = () => overlay.style.display = "none";
+  $("#hecPrintBtn").onclick = () => window.print();
+  overlay.addEventListener("click", e=>{
+    if(e.target === overlay) overlay.style.display = "none";
+  });
+  document.addEventListener("keydown", e=>{
+    if(e.key === "Escape") overlay.style.display = "none";
+  });
+
+  return overlay;
+}
+
+let currentPrintableItem = null;
+
+function openPrintable(item, category){
+  ensureOverlay();
+  currentPrintableItem = {item, category};
+
+  $("#hecDialogTitle").textContent = item.title;
+  $("#hecDialogInstruction").innerHTML = `<strong>הוראות:</strong> ${item.instruction}`;
+
+  const paper = $("#hecPaper");
+  paper.replaceChildren();
+
+  const title = el("h2", item.title);
+  const nameLine = el("div","Name: ____________________     Date: __________","hecNameLine");
+
+  paper.append(title, nameLine);
+
+  if(category === "worksheet"){
+    renderWorksheetToPaper(item, paper);
+  }else{
+    renderColoringToPaper(item, paper);
+  }
+
+  $("#hecDownloadBtn").onclick = () => {
+    downloadPrintableHTML(item.id, item.title, paper.innerHTML);
+    markDone(item.id);
+  };
+
+  $("#hecOverlay").style.display = "block";
+  $("#hecOverlay").scrollTop = 0;
+}
+
+function downloadPrintableHTML(id, title, html){
+  const safeTitle = (title || "worksheet").replace(/[^\w\u0590-\u05FF\- ]+/g,"").trim() || "worksheet";
+  const doc = `<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>${safeTitle}</title>
+<style>
+body{font-family:Arial,sans-serif;background:#fff;color:#000}
+main{width:185mm;max-width:100%;margin:auto}
+svg{max-width:100%;height:auto}
+.hecLine{padding:12px 6px;border-bottom:1px dashed #999;min-height:42px;font-size:20px}
+.hecNameLine{font-size:14px;margin-bottom:14px}
+@page{size:A4;margin:10mm}
+</style>
+</head>
+<body>
+<main>${html}</main>
+</body>
+</html>`;
+  const blob = new Blob([doc], {type:"text/html;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = safeTitle + ".html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+
+/* ---------------------------
+   WORKSHEET RENDERERS
+--------------------------- */
+function line(text){
+  const d = el("div", text, "hecLine");
+  return d;
+}
+function addInstructionBlock(paper, text){
+  const box = document.createElement("div");
+  box.style.direction = "rtl";
+  box.style.textAlign = "right";
+  box.style.background = "#f5f1ff";
+  box.style.borderRight = "5px solid #7a5ae1";
+  box.style.padding = "10px 12px";
+  box.style.borderRadius = "10px";
+  box.style.marginBottom = "14px";
+  box.innerHTML = `<strong>הוראות בעברית:</strong> ${text}`;
+  paper.append(box);
+}
+
+function renderWorksheetToPaper(item, paper){
+  addInstructionBlock(paper, item.instruction);
+
+  const level = getWorksheetLevelById(item.id);
+  const chosenWords = shuffle(WORDS).slice(0, level===1 ? 7 : level===2 ? 8 : 10);
+
+  switch(item.kind){
+
+    case "match-case": {
+      const big = chosenWords.map(w=>w[0]);
+      const small = shuffle(big.map(x=>x.toLowerCase()));
+      paper.append(line("1. Match the capital letter to the lowercase letter."));
+      big.forEach((b,i)=>{
+        paper.append(line(`${i+1}.   ${b}    ____________    ${small[i]}`));
+      });
+      break;
+    }
+
+    case "first-letter": {
+      paper.append(line("1. Write the first letter of each word."));
+      chosenWords.forEach((w,i)=>{
+        paper.append(line(`${i+1}.   ${w[2]}   _____   ${w[1].slice(1)}`));
+      });
+      break;
+    }
+
+    case "circle-letter": {
+      const target = sample(chosenWords)[0];
+      paper.append(line(`Circle every ${target} and ${target.toLowerCase()}.`));
+      for(let i=0;i<8;i++){
+        const pool = shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")).slice(0,8);
+        pool.splice(i%4,0,target);
+        pool.splice((i+2)%5,0,target.toLowerCase());
+        paper.append(line(pool.join("    ")));
+      }
+      break;
+    }
+
+    case "next-letter": {
+      paper.append(line("Write the next letter in each row."));
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+      shuffle(alphabet.slice(0,20)).slice(0,8).forEach((letter,i)=>{
+        const idx = alphabet.indexOf(letter);
+        paper.append(line(`${i+1}.   ${letter}   _____`));
+      });
+      break;
+    }
+
+    case "trace": {
+      paper.append(line("Trace the letters and write them again."));
+      chosenWords.slice(0,8).forEach((w,i)=>{
+        paper.append(line(`${i+1}.   ${w[0]} ${w[0]} ${w[0]}    ________`));
+      });
+      break;
+    }
+
+    case "picture-word": {
+      paper.append(line("Match the picture to the correct word."));
+      const words = chosenWords.slice(0,6);
+      const right = shuffle(words.map(w=>w[1]));
+      words.forEach((w,i)=>{
+        paper.append(line(`${i+1}.   ${w[2]}     ____________     ${right[i]}`));
+      });
+      break;
+    }
+
+    case "same-letter": {
+      paper.append(line("Choose the word that starts with the same letter."));
+      chosenWords.slice(0,6).forEach((w,i)=>{
+        const options = shuffle([
+          w[1],
+          sample(WORDS.filter(x=>x[0]!==w[0]))[1],
+          sample(WORDS.filter(x=>x[0]!==w[0]))[1]
+        ]);
+        paper.append(line(`${i+1}.   ${w[2]}   →   ${options.join("     /     ")}`));
+      });
+      break;
+    }
+
+    case "find-lower": {
+      paper.append(line("Find the matching lowercase letter."));
+      chosenWords.slice(0,8).forEach((w,i)=>{
+        const options = shuffle([
+          w[0].toLowerCase(),
+          sample(WORDS)[0].toLowerCase(),
+          sample(WORDS)[0].toLowerCase()
+        ]);
+        paper.append(line(`${i+1}.   ${w[0]}   →   ${options.join("     /     ")}`));
+      });
+      break;
+    }
+
+    case "missing-middle": {
+      paper.append(line("Complete the missing letter in each word."));
+      chosenWords.forEach((w,i)=>{
+        const letters = w[1].replace(/\s/g,"").split("");
+        const pos = Math.min(1, letters.length-1);
+        letters[pos] = "_";
+        paper.append(line(`${i+1}.   ${w[2]}   ${letters.join(" ")}   ______`));
+      });
+      break;
+    }
+
+    case "sort-letters": {
+      paper.append(line("Sort the letters into capital letters and lowercase letters."));
+      const mixed = shuffle(chosenWords.slice(0,8).flatMap(w=>[w[0], w[0].toLowerCase()])).slice(0,12);
+      paper.append(line(mixed.join("    ")));
+      paper.append(line("Capital letters: ______________________________"));
+      paper.append(line("Lowercase letters: ____________________________"));
+      break;
+    }
+
+    case "unscramble": {
+      paper.append(line("Put the letters in the correct order."));
+      chosenWords.slice(0,8).forEach((w,i)=>{
+        const mixed = shuffle(w[1].replace(/\s/g,"").split(""));
+        paper.append(line(`${i+1}.   ${w[2]}   ${mixed.join(" - ")}   ____________`));
+      });
+      break;
+    }
+
+    case "odd-one": {
+      paper.append(line("Find the word that does not belong."));
+      for(let i=0;i<6;i++){
+        const base = sample(WORDS);
+        const same = shuffle(WORDS.filter(x=>x[0]===base[0])).slice(0,0);
+        const other1 = sample(WORDS.filter(x=>x[0]===base[0] || x[1][0]===base[1][0]));
+        const other2 = sample(WORDS.filter(x=>x[0]===base[0] || x[1][0]===base[1][0]));
+        const odd = sample(WORDS.filter(x=>x[0]!==base[0]));
+        const options = shuffle([base[1], other1[1], other2[1], odd[1]]);
+        paper.append(line(`${i+1}.   ${options.join("     |     ")}`));
+      }
+      break;
+    }
+
+    case "match-beginnings": {
+      paper.append(line("Connect pictures that start with the same letter."));
+      const a = shuffle(WORDS).slice(0,6);
+      const b = shuffle(WORDS.filter(x=>a.every(y=>y[0]!==x[0]))).slice(0,6);
+      a.forEach((w,i)=>{
+        paper.append(line(`${i+1}.   ${w[2]} ${w[1]}    ____________    ${b[i][2]} ${b[i][1]}`));
+      });
+      break;
+    }
+
+    case "classroom": {
+      const objects = [
+        ["book","📖"],["bag","🎒"],["pencil","✏️"],["ruler","📏"],
+        ["notebook","📓"],["chair","🪑"],["desk","🟫"],["scissors","✂️"]
+      ];
+      paper.append(line("Write the correct English word for each classroom object."));
+      shuffle(objects).slice(0,8).forEach((o,i)=>{
+        paper.append(line(`${i+1}.   ${o[1]}   ____________________`));
+      });
+      break;
+    }
+
+    case "complete-abc": {
+      paper.append(line("Complete the missing letters in the ABC lines."));
+      const rows = [
+        "A B _ D E",
+        "F _ H I J",
+        "K L _ N O",
+        "P _ R S T",
+        "_ V W X Y",
+        "A _ C _ E"
+      ];
+      rows.forEach((r,i)=>paper.append(line(`${i+1}.   ${r}`)));
+      break;
+    }
+
+    case "picture-clues": {
+      paper.append(line("Look at the picture and the clue. Write the word."));
+      chosenWords.slice(0,8).forEach((w,i)=>{
+        const clue = `${w[0]} _ _`;
+        paper.append(line(`${i+1}.   ${w[2]}   clue: ${clue}   ____________`));
+      });
+      break;
+    }
+
+    case "write-word": {
+      paper.append(line("Write the full English word for each picture."));
+      chosenWords.forEach((w,i)=>{
+        paper.append(line(`${i+1}.   ${w[2]}   ____________________`));
+      });
+      break;
+    }
+
+    case "short-sentence": {
+      paper.append(line("Complete the sentence with the correct word."));
+      const rows = [
+        ["The ___ is yellow.","sun"],
+        ["I see a ___ in the sky.","kite"],
+        ["The ___ is in the house.","cat"],
+        ["I eat an ___.","apple"],
+        ["The ___ can jump.","rabbit"],
+        ["I write with a ___.","pencil"]
+      ];
+      rows.forEach((r,i)=>paper.append(line(`${i+1}.   ${r[0]}    (${r[1]})`)));
+      break;
+    }
+
+    case "alpha-order": {
+      paper.append(line("Put the words in alphabetical order."));
+      for(let i=0;i<6;i++){
+        const row = shuffle(chosenWords.slice(i, i+4).map(x=>x[1])).slice(0,4);
+        paper.append(line(`${i+1}.   ${row.join(" , ")}   →   ________________________`));
+      }
+      break;
+    }
+
+    case "word-categories": {
+      const words = ["cat","dog","red","blue","one","two","book","pencil"];
+      paper.append(line("Sort the words into categories."));
+      paper.append(line(words.join("     ")));
+      paper.append(line("Animals: __________________"));
+      paper.append(line("Colors: ___________________"));
+      paper.append(line("Numbers: _________________"));
+      paper.append(line("Classroom objects: ________"));
+      break;
+    }
+
+    case "fix-mistake": {
+      const mistakes = [
+        ["zat","zebra"],["aplpe","apple"],["doq","dog"],
+        ["trea","tree"],["rabit","rabbit"],["pencel","pencil"]
+      ];
+      paper.append(line("Find the mistake and write the correct word."));
+      mistakes.forEach((m,i)=>paper.append(line(`${i+1}.   ${m[0]}   →   ____________`)));
+      break;
+    }
+
+    case "read-and-match": {
+      const rows = [
+        ["It is red and round.","🍎"],
+        ["It shines in the sky.","☀️"],
+        ["It lives in the sea.","🐟"],
+        ["It can fly in the wind.","🪁"],
+        ["It is a big wild animal.","🦁"],
+        ["You use it to write.","✏️"]
+      ];
+      paper.append(line("Read the sentence and match it to the correct picture."));
+      rows.forEach((r,i)=>paper.append(line(`${i+1}.   ${r[0]}    ____________    ${r[1]}`)));
+      break;
+    }
+
+    case "word-search": {
+      paper.append(line("Find the hidden words in the letter grid."));
+      const gridLines = [
+        "C A T X B O O K",
+        "D O G Y F I S H",
+        "A P P L E R E D",
+        "P E N C I L S U",
+        "R A B B I T N N",
+        "O R A N G E M O"
+      ];
+      gridLines.forEach(g=>paper.append(line(g)));
+      paper.append(line("Words to find: cat, dog, fish, apple, pencil, rabbit, orange"));
+      break;
+    }
+
+    case "mixed-review": {
+      paper.append(line("Part 1: Write the word."));
+      chosenWords.slice(0,3).forEach((w,i)=>paper.append(line(`${i+1}.   ${w[2]}   ____________`)));
+      paper.append(line("Part 2: Match capital to lowercase."));
+      chosenWords.slice(0,4).forEach((w,i)=>paper.append(line(`${i+4}.   ${w[0]}    ____________    ${w[0].toLowerCase()}`)));
+      paper.append(line("Part 3: Complete the missing letter."));
+      chosenWords.slice(4,7).forEach((w,i)=>{
+        const letters = w[1].split("");
+        letters[0] = "_";
+        paper.append(line(`${i+8}.   ${w[2]}   ${letters.join(" ")}   ______`));
+      });
+      break;
+    }
+  }
+}
+
+function getWorksheetLevelById(id){
+  if(id.startsWith("ws1-")) return 1;
+  if(id.startsWith("ws2-")) return 2;
+  return 3;
+}
+
+/* ---------------------------
+   COLORING RENDERERS
+--------------------------- */
+function svgWrap(content){
+  return `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 820" style="max-width:100%;height:auto">
+    <rect width="600" height="820" fill="white"/>
+    ${content}
+  </svg>`;
+}
+function P(){ return `fill="white" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"`; }
+function circle(x,y,r){ return `<circle cx="${x}" cy="${y}" r="${r}" ${P()}/>`; }
+function rect(x,y,w,h,rx=0){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" ${P()}/>`; }
+function lineSvg(x1,y1,x2,y2){ return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black" stroke-width="3"/>`; }
+function path(d){ return `<path d="${d}" ${P()}/>`; }
+function flower(x,y,s=1){
+  let out="";
+  for(let i=0;i<6;i++){
+    const a=i*Math.PI/3;
+    out+=circle(x+Math.cos(a)*16*s,y+Math.sin(a)*16*s,10*s);
+  }
+  out+=circle(x,y,8*s);
+  out+=lineSvg(x,y+24*s,x,y+60*s);
+  return out;
+}
+function fish(x,y,s=1){
+  return `<ellipse cx="${x}" cy="${y}" rx="${55*s}" ry="${30*s}" ${P()}/>
+          <polygon points="${x-50*s},${y} ${x-95*s},${y-32*s} ${x-95*s},${y+32*s}" ${P()}/>
+          ${circle(x+28*s,y-8*s,4*s)}`;
+}
+function butterfly(x,y,s=1){
+  return `<ellipse cx="${x-20*s}" cy="${y-15*s}" rx="${24*s}" ry="${32*s}" ${P()}/>
+          <ellipse cx="${x+20*s}" cy="${y-15*s}" rx="${24*s}" ry="${32*s}" ${P()}/>
+          <ellipse cx="${x-18*s}" cy="${y+18*s}" rx="${18*s}" ry="${22*s}" ${P()}/>
+          <ellipse cx="${x+18*s}" cy="${y+18*s}" rx="${18*s}" ry="${22*s}" ${P()}/>
+          ${rect(x-4*s,y-36*s,8*s,75*s,5)}`;
+}
+function tree(x,y,s=1){
+  return rect(x-9*s,y,18*s,90*s,3) +
+         circle(x,y-18*s,42*s) +
+         circle(x-24*s,y-4*s,24*s) +
+         circle(x+24*s,y-2*s,24*s);
+}
+function house(x,y,s=1){
+  return rect(x,y,140*s,110*s,5) +
+         path(`M${x-10*s} ${y} L${x+70*s} ${y-60*s} L${x+150*s} ${y} Z`) +
+         rect(x+52*s,y+54*s,34*s,56*s,3) +
+         rect(x+15*s,y+18*s,26*s,26*s,3) +
+         rect(x+98*s,y+18*s,26*s,26*s,3);
+}
+function balloon(x,y,s=1){
+  return `<ellipse cx="${x}" cy="${y}" rx="${28*s}" ry="${38*s}" ${P()}/>
+          ${path(`M${x} ${y+38*s} q -14 26 0 60`)}`;
+}
+function cat(x,y,s=1){
+  return `<ellipse cx="${x}" cy="${y+60*s}" rx="${55*s}" ry="${65*s}" ${P()}/>
+          ${circle(x,y-20*s,46*s)}
+          ${path(`M${x-36*s} ${y-50*s} l -8 -40 34 20 Z`)}
+          ${path(`M${x+36*s} ${y-50*s} l 8 -40 -34 20 Z`)}
+          ${circle(x-16*s,y-24*s,3*s)}
+          ${circle(x+16*s,y-24*s,3*s)}
+          ${path(`M${x-6*s} ${y-5*s} l 6 8 l 6 -8`)}
+          ${lineSvg(x-15*s,y+8*s,x-45*s,y+2*s)}
+          ${lineSvg(x+15*s,y+8*s,x+45*s,y+2*s)}`;
+}
+function star(x,y,r=14){
+  let pts=[];
+  for(let i=0;i<10;i++){
+    const a=-Math.PI/2+i*Math.PI/5;
+    const rr=i%2?r*.45:r;
+    pts.push(`${x+Math.cos(a)*rr},${y+Math.sin(a)*rr}`);
+  }
+  return `<polygon points="${pts.join(" ")}" ${P()}/>`;
+}
+
+function renderColoringToPaper(item, paper){
+  addInstructionBlock(paper, item.instruction);
+  const svg = buildColoringSVG(item.scene);
+  const holder = document.createElement("div");
+  holder.innerHTML = svg;
+  paper.append(holder);
+}
+
+function buildColoringSVG(scene){
+  switch(scene){
+
+    /* LEVEL 1: very simple */
+    case "simple-fish":
+      return svgWrap(
+        fish(300,380,1.9) +
+        circle(120,170,18) +
+        circle(170,210,10) +
+        circle(450,170,12) +
+        lineSvg(90,680,510,680)
+      );
+
+    case "simple-flower":
+      return svgWrap(
+        flower(300,330,2.4) +
+        lineSvg(300,390,300,620) +
+        path("M300 470 Q250 440 220 500") +
+        path("M300 540 Q350 500 390 550") +
+        circle(110,140,28)
+      );
+
+    case "simple-butterfly":
+      return svgWrap(
+        butterfly(300,360,2) +
+        flower(140,640,1.1) +
+        flower(460,640,1.1) +
+        circle(500,130,25)
+      );
+
+    case "simple-house":
+      return svgWrap(
+        house(210,350,1.2) +
+        circle(500,130,32) +
+        circle(115,170,24) +
+        circle(145,155,28) +
+        lineSvg(70,660,540,660)
+      );
+
+    case "simple-balloon":
+      return svgWrap(
+        balloon(300,300,1.8) +
+        star(160,190,20) +
+        star(430,200,20) +
+        circle(300,610,35)
+      );
+
+    case "simple-cat":
+      return svgWrap(
+        cat(300,360,1.3) +
+        flower(150,650,1) +
+        flower(450,650,1) +
+        lineSvg(70,700,530,700)
+      );
+
+    /* LEVEL 2: medium */
+    case "medium-ocean":
+      return svgWrap(
+        fish(190,320,1.2) +
+        fish(390,420,1) +
+        circle(120,130,24) +
+        circle(160,180,14) +
+        circle(475,180,16) +
+        path("M90 730 Q120 610 140 730") +
+        path("M180 730 Q210 610 230 730") +
+        path("M410 730 Q440 590 460 730") +
+        path("M500 730 Q525 620 545 730") +
+        circle(280,640,22) +
+        circle(330,660,17)
+      );
+
+    case "medium-garden":
+      return svgWrap(
+        flower(140,650,1) +
+        flower(230,610,1.2) +
+        flower(330,640,1.1) +
+        flower(460,620,1.2) +
+        butterfly(300,260,1.3) +
+        butterfly(420,360,.9) +
+        circle(510,120,28) +
+        lineSvg(70,720,540,720)
+      );
+
+    case "medium-village":
+      return svgWrap(
+        house(70,430,1) +
+        house(330,470,.82) +
+        tree(290,500,.75) +
+        circle(500,120,28) +
+        circle(140,170,25) +
+        circle(170,155,28) +
+        lineSvg(50,710,550,710)
+      );
+
+    case "medium-farm":
+      return svgWrap(
+        house(220,420,.95) +
+        tree(130,490,.7) +
+        circle(490,115,28) +
+        lineSvg(70,705,530,705) +
+        lineSvg(95,610,95,700) +
+        lineSvg(145,610,145,700) +
+        lineSvg(95,610,145,610) +
+        lineSvg(180,610,180,700) +
+        lineSvg(230,610,230,700) +
+        lineSvg(180,610,230,610) +
+        flower(450,650,.9)
+      );
+
+    case "medium-balloons":
+      return svgWrap(
+        balloon(170,210,1) +
+        balloon(290,180,1.2) +
+        balloon(410,220,1) +
+        star(120,115,16) +
+        star(470,120,16) +
+        rect(180,600,240,95,10) +
+        circle(300,645,20)
+      );
+
+    case "medium-train":
+      return svgWrap(
+        rect(100,450,130,95,10) +
+        rect(250,450,130,95,10) +
+        rect(400,420,85,125,10) +
+        circle(130,555,18)+circle(200,555,18)+
+        circle(280,555,18)+circle(350,555,18)+
+        circle(420,555,18)+circle(470,555,18)+
+        lineSvg(60,595,540,595)+
+        circle(160,150,22)+circle(190,140,24)
+      );
+
+    /* LEVEL 3: complex */
+    case "complex-forest":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        tree(120,310,.9) +
+        tree(465,320,.85) +
+        tree(290,270,.75) +
+        house(225,430,.75) +
+        butterfly(390,340,.85) +
+        butterfly(210,300,.72) +
+        flower(90,690,.8)+flower(145,655,.7)+flower(200,700,.9)+flower(255,665,.75)+
+        flower(315,695,.8)+flower(380,660,.85)+flower(445,700,.75)+flower(505,670,.9)+
+        circle(500,105,34) +
+        star(80,120,8)+star(115,160,8)+star(160,125,7)+star(420,150,8)+star(475,180,8)
+      );
+
+    case "complex-ocean":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        fish(150,250,1) + fish(320,350,1.1) + fish(450,250,.9) +
+        fish(190,500,.7) + fish(380,560,.8) +
+        path("M75 735 Q95 580 118 735") +
+        path("M130 735 Q165 545 182 735") +
+        path("M210 735 Q240 600 260 735") +
+        path("M330 735 Q360 535 385 735") +
+        path("M430 735 Q460 565 490 735") +
+        path("M520 735 Q545 610 560 735") +
+        circle(90,630,18)+circle(145,665,15)+circle(295,650,20)+circle(500,670,15)+
+        circle(120,120,14)+circle(160,165,12)+circle(220,190,8)+circle(470,135,10)+circle(510,175,14)
+      );
+
+    case "complex-space":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        path("M250 470 L300 240 L350 470 Z") +
+        circle(300,340,28) +
+        path("M250 440 L205 490 L250 475 Z") +
+        path("M350 440 L395 490 L350 475 Z") +
+        circle(125,300,60) +
+        circle(470,450,52) +
+        star(80,120,16)+star(140,200,11)+star(210,90,13)+star(280,150,10)+star(360,95,15)+
+        star(440,170,12)+star(520,120,16)+star(500,290,10)+star(90,500,12)+star(165,575,16)+
+        star(260,640,10)+star(360,560,16)+star(470,650,14)
+      );
+
+    case "complex-castle":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        rect(120,355,105,275,5)+rect(238,315,124,315,5)+rect(375,355,105,275,5)+
+        rect(110,325,26,30)+rect(159,325,26,30)+rect(208,325,26,30)+
+        rect(228,285,26,30)+rect(286,285,26,30)+rect(344,285,26,30)+
+        rect(365,325,26,30)+rect(414,325,26,30)+rect(463,325,26,30)+
+        rect(280,520,42,110,18)+
+        circle(125,145,24)+circle(160,130,26)+circle(445,150,24)+circle(485,135,27)+
+        star(300,160,14)
+      );
+
+    case "complex-mushroom":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        rect(100,515,50,140,12)+path("M60 515 Q125 350 190 515 Z") +
+        rect(230,455,56,170,14)+path("M180 455 Q258 260 336 455 Z") +
+        rect(390,530,52,125,12)+path("M350 530 Q416 380 482 530 Z") +
+        circle(105,465,10)+circle(145,445,12)+circle(245,395,12)+circle(285,415,14)+circle(410,480,10)+
+        flower(85,705,.7)+flower(165,680,.8)+flower(240,710,.7)+flower(320,690,.8)+flower(420,710,.7)+flower(500,685,.8)
+      );
+
+    case "complex-catgarden":
+      return svgWrap(
+        rect(15,15,570,790,12) +
+        cat(300,370,1.05) +
+        tree(120,390,.7)+tree(470,400,.7) +
+        flower(85,695,.8)+flower(140,660,.75)+flower(205,705,.85)+flower(260,670,.75)+
+        flower(335,705,.85)+flower(395,665,.8)+flower(455,705,.75)+flower(520,675,.85)+
+        butterfly(210,250,.8)+butterfly(405,275,.8)+circle(500,110,30)
+      );
+
+    default:
+      return svgWrap(circle(300,300,80));
+  }
+}
+
+/* ---------------------------
+   SEPARATE LEVEL LIBRARIES
+--------------------------- */
+let worksheetLevel = 1;
+let coloringLevel = 1;
+
+function createCategoryPanel(targetId, title, intro, category){
+  const target = document.getElementById(targetId);
+  if(!target) return null;
+
+  const old = document.getElementById("hec-"+category+"-panel");
+  if(old) old.remove();
+
+  const panel = document.createElement("section");
+  panel.className = "hecPanel";
+  panel.id = "hec-"+category+"-panel";
+
+  const h2 = el("h2", title);
+  const p = el("div", intro, "hecIntro");
+  const buttons = el("div", undefined, "hecRowButtons");
+  const status = el("div", undefined, "hecStatus");
+  const grid = el("div", undefined, "hecGrid");
+
+  [1,2,3].forEach(level=>{
+    const button = el("button", `${"⭐".repeat(level)} רמה ${level}`);
+    button.onclick = ()=>{
+      if(category === "worksheet") worksheetLevel = level;
+      else coloringLevel = level;
+      rerenderAll();
+    };
+    buttons.append(button);
+  });
+
+  panel.append(h2,p,buttons,status,grid);
+  target.append(panel);
+
+  return {panel, buttons, status, grid};
+}
+
+let worksheetPanelParts = null;
+let coloringPanelParts = null;
+
+function renderCategory(category){
+  const parts = category === "worksheet" ? worksheetPanelParts : coloringPanelParts;
+  if(!parts) return;
+
+  const level = category === "worksheet" ? worksheetLevel : coloringLevel;
+  const data = category === "worksheet" ? WORKSHEETS[level] : COLORINGS[level];
+
+  parts.buttons.querySelectorAll("button").forEach((btn,idx)=>{
+    btn.classList.toggle("active", idx+1===level);
+  });
+
+  const doneCount = data.filter(item=>isDone(item.id)).length;
+  parts.status.textContent = `רמה ${level} | בוצעו ${doneCount} מתוך ${data.length} פעילויות`;
+
+  parts.grid.replaceChildren();
+
+  data.forEach(item=>{
+    const card = el("article", undefined, "hecCard");
+    const icon = el("div", item.icon, "hecCardIcon");
+    const title = el("strong", item.title);
+    const desc = el("small", item.desc);
+    const tag = el("div", category === "worksheet" ? "📄 דף עבודה" : "🎨 דף צביעה", "hecMiniTag");
+    const status = el("div", isDone(item.id) ? "✅ בוצע" : "○ טרם בוצע", isDone(item.id) ? "hecDone" : "hecNotDone");
+    const button = el("button", category === "worksheet" ? "פתיחת דף עבודה" : "פתיחת דף צביעה");
+
+    button.onclick = ()=>openPrintable(item, category);
+
+    card.append(icon,title,desc,tag,status,button);
+    parts.grid.append(card);
+  });
+}
+
+/* ---------------------------
+   GAMES WITH REAL LEVELS
+--------------------------- */
+let gameTopic = "ABC";
+let gameLevel = 1;
+let gameQuestions = [];
+let gameIndex = 0;
+let gameScore = 0;
+let gameAnswered = false;
+let gameParts = null;
+
+function buildGamesPanel(){
+  const page = document.getElementById("games");
+  if(!page) return;
+
+  const old = document.getElementById("hec-games-panel");
+  if(old) old.remove();
+
+  const panel = document.createElement("section");
+  panel.className = "hecPanel";
+  panel.id = "hec-games-panel";
+
+  panel.append(el("h2","🎮 משחקים לפי רמות"));
+  panel.append(el("div","כל המשחקים כוללים הוראות בעברית. המשחק ייחשב 'בוצע' רק אחרי סיום 10 שאלות.","hecIntro"));
+
+  const topics = el("div", undefined, "hecRowButtons");
+  const levels = el("div", undefined, "hecRowButtons");
+  const status = el("div", undefined, "hecStatus");
+  const wrap = el("div", undefined, "hecGameWrap");
+
+  ["ABC","Animals","Colors","Numbers"].forEach(name=>{
+    const btn = el("button", name);
+    btn.onclick = ()=>{
+      gameTopic = name;
+      startGame();
+    };
+    topics.append(btn);
+  });
+
+  [1,2,3].forEach(level=>{
+    const btn = el("button", `${"⭐".repeat(level)} רמה ${level}`);
+    btn.onclick = ()=>{
+      gameLevel = level;
+      startGame();
+    };
+    levels.append(btn);
+  });
+
+  panel.append(topics, levels, status, wrap);
+  page.insertBefore(panel, page.firstChild);
+
+  gameParts = {panel, topics, levels, status, wrap};
+  startGame();
+}
+
+function gameProgressId(){
+  return `game-${gameTopic.toLowerCase()}-level-${gameLevel}`;
+}
+
+function startGame(){
+  if(!gameParts) return;
+  gameIndex = 0;
+  gameScore = 0;
+  gameAnswered = false;
+  gameQuestions = Array.from({length:10}, ()=>makeGameQuestion(gameTopic, gameLevel));
+  renderGame();
+}
+
+function makeGameQuestion(topic, level){
+  if(topic === "ABC"){
+    if(level === 1){
+      const w = sample(WORDS);
+      return {
+        prompt:"איזו אות קטנה מתאימה לאות הגדולה?",
+        instruction:"בחרו את האות הקטנה המתאימה.",
+        visual:w[0],
+        answer:w[0].toLowerCase(),
+        choices:shuffle([
+          w[0].toLowerCase(),
+          sample(WORDS)[0].toLowerCase(),
+          sample(WORDS)[0].toLowerCase()
+        ]).slice(0,3)
+      };
+    }
+    if(level === 2){
+      const w = sample(WORDS);
+      return {
+        prompt:"באיזו אות מתחילה המילה שבתמונה?",
+        instruction:"הביטו בתמונה ובחרו את האות הראשונה של המילה.",
+        visual:`${w[2]} ${w[1]}`,
+        answer:w[0],
+        choices:shuffle([w[0], sample(WORDS)[0], sample(WORDS)[0], sample(WORDS)[0]]).slice(0,4)
+      };
+    }
+    const w = sample(WORDS);
+    return {
+      prompt:"כתבו את המילה באנגלית",
+      instruction:"הביטו בתמונה וכתבו את המילה המלאה באנגלית.",
+      visual:w[2],
+      answer:w[1].toLowerCase(),
+      typing:true
+    };
+  }
+
+  if(topic === "Animals"){
+    if(level === 1){
+      const a = sample(ANIMALS);
+      return {
+        prompt:"מה שם החיה באנגלית?",
+        instruction:"בחרו את שם החיה באנגלית.",
+        visual:a[1],
+        answer:a[0],
+        choices:shuffle([a[0], sample(ANIMALS)[0], sample(ANIMALS)[0]]).slice(0,3)
+      };
+    }
+    if(level === 2){
+      const a = sample(ANIMALS);
+      return {
+        prompt:"באיזו אות מתחילה החיה?",
+        instruction:"בחרו את האות הראשונה של שם החיה.",
+        visual:`${a[1]} ${a[0]}`,
+        answer:a[0][0].toUpperCase(),
+        choices:shuffle([a[0][0].toUpperCase(), sample(WORDS)[0], sample(WORDS)[0], sample(WORDS)[0]]).slice(0,4)
+      };
+    }
+    const a = sample(ANIMALS);
+    return {
+      prompt:"כתבו את שם החיה באנגלית",
+      instruction:"הביטו בחיה וכתבו את שמה באנגלית.",
+      visual:a[1],
+      answer:a[0].toLowerCase(),
+      typing:true
+    };
+  }
+
+  if(topic === "Colors"){
+    if(level === 1){
+      const c = sample(COLORS);
+      return {
+        prompt:"מהו שם הצבע באנגלית?",
+        instruction:"בחרו את שם הצבע באנגלית.",
+        visual:c[1],
+        answer:c[0],
+        choices:shuffle([c[0], sample(COLORS)[0], sample(COLORS)[0]]).slice(0,3)
+      };
+    }
+    if(level === 2){
+      const c = sample(COLORS);
+      return {
+        prompt:"בחרו את המילה הנכונה לצבע",
+        instruction:"הביטו בסמל הצבע ובחרו את המילה הנכונה.",
+        visual:c[1],
+        answer:c[0],
+        choices:shuffle([c[0], sample(COLORS)[0], sample(COLORS)[0], sample(COLORS)[0]]).slice(0,4)
+      };
+    }
+    const c = sample(COLORS);
+    return {
+      prompt:"כתבו את שם הצבע באנגלית",
+      instruction:"כתבו את שם הצבע באנגלית.",
+      visual:c[1],
+      answer:c[0].toLowerCase(),
+      typing:true
+    };
+  }
+
+  if(topic === "Numbers"){
+    if(level === 1){
+      const n = sample(NUMBERS.slice(0,10));
+      return {
+        prompt:"איך אומרים את המספר באנגלית?",
+        instruction:"בחרו את המילה הנכונה למספר.",
+        visual:n[0],
+        answer:n[1],
+        choices:shuffle([n[1], sample(NUMBERS.slice(0,10))[1], sample(NUMBERS.slice(0,10))[1]]).slice(0,3)
+      };
+    }
+    if(level === 2){
+      const n = sample(NUMBERS.slice(10));
+      return {
+        prompt:"בחרו את המילה הנכונה למספר",
+        instruction:"זהו את המספר ובחרו את המילה המתאימה באנגלית.",
+        visual:n[0],
+        answer:n[1],
+        choices:shuffle([n[1], sample(NUMBERS.slice(10))[1], sample(NUMBERS.slice(10))[1], sample(NUMBERS.slice(10))[1]]).slice(0,4)
+      };
+    }
+    const n = sample(NUMBERS);
+    return {
+      prompt:"כתבו את המספר באנגלית",
+      instruction:"כתבו באנגלית את המספר שאתם רואים.",
+      visual:n[0],
+      answer:n[1].toLowerCase(),
+      typing:true
+    };
+  }
+}
+
+function renderGame(){
+  if(!gameParts) return;
+
+  gameParts.topics.querySelectorAll("button").forEach(btn=>{
+    btn.classList.toggle("active", btn.textContent===gameTopic);
+  });
+  gameParts.levels.querySelectorAll("button").forEach((btn,idx)=>{
+    btn.classList.toggle("active", idx+1===gameLevel);
+  });
+
+  gameParts.status.textContent = `${gameTopic} | רמה ${gameLevel} | שאלה ${Math.min(gameIndex+1,10)}/10 | ניקוד ${gameScore} | ${isDone(gameProgressId()) ? "✅ הושלם בעבר" : "○ טרם הושלם"}`;
+  gameParts.wrap.replaceChildren();
+
+  if(gameIndex >= 10){
+    markDone(gameProgressId());
+
+    const endTitle = el("h3","🏆 סיימתם את המשחק!");
+    endTitle.style.textAlign="center";
+    const score = el("div",`הצלחתם לענות נכון על ${gameScore} מתוך 10 שאלות.`,"hecGameMeta");
+    const note = el("div","המשחק סומן כ'בוצע' רק עכשיו, כי סיימתם את כל השאלות.","hecGameInstruction");
+    const again = el("button","🔄 התחלה מחדש","hecPrimary");
+    again.onclick = startGame;
+
+    gameParts.wrap.append(endTitle,score,note,again);
+    return;
+  }
+
+  const q = gameQuestions[gameIndex];
+  const meta = el("div",`נושא: ${gameTopic} | רמה ${gameLevel}`,"hecGameMeta");
+  const question = el("div", q.prompt, "hecGameQuestion");
+  const instruction = el("div", `הוראות: ${q.instruction}`, "hecGameInstruction");
+  const visual = el("div", q.visual, "hecGameVisual");
+  const feedback = el("div","", "hecGameFeedback");
+  const next = el("button","לשאלה הבאה ←","hecPrimary");
+  next.style.display = "none";
+  next.onclick = ()=>{
+    gameIndex++;
+    gameAnswered = false;
+    renderGame();
+  };
+
+  function checkAnswer(answer){
+    if(gameAnswered) return;
+    gameAnswered = true;
+    const good = String(answer).trim().toLowerCase() === String(q.answer).trim().toLowerCase();
+    if(good) gameScore++;
+    feedback.textContent = good ? "✅ תשובה נכונה! כל הכבוד!" : `❌ תשובה לא נכונה. התשובה הנכונה היא: ${q.answer}`;
+    next.style.display = "inline-block";
+    gameParts.wrap.querySelectorAll(".hecGameAnswers button").forEach(b=>b.disabled=true);
+  }
+
+  gameParts.wrap.append(meta,question,instruction,visual);
+
+  if(q.typing){
+    const box = el("div", undefined, "hecGameInput");
+    const input = document.createElement("input");
+    input.placeholder = "Type in English";
+    const submit = el("button","בדיקה","hecPrimary");
+    submit.onclick = ()=>checkAnswer(input.value);
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter") checkAnswer(input.value);
+    });
+    box.append(input, submit);
+    gameParts.wrap.append(box);
+  }else{
+    const answers = el("div", undefined, "hecGameAnswers");
+    q.choices.forEach(choice=>{
+      const b = el("button", choice);
+      b.onclick = ()=>checkAnswer(choice);
+      answers.append(b);
+    });
+    gameParts.wrap.append(answers);
+  }
+
+  gameParts.wrap.append(feedback,next);
+}
+
+/* ---------------------------
+   PATCH OLD ENGLISH LABELS IN EXISTING CONTENT
+--------------------------- */
+function patchVisibleEnglishInstructions(){
+  const translations = [
+    ["Choose the correct answer","בחרו את התשובה הנכונה"],
+    ["Write the missing letter","השלימו את האות החסרה"],
+    ["Color the picture","צבעו את הציור"],
+    ["Find the differences","מצאו את ההבדלים"],
+    ["Next question","לשאלה הבאה"],
+    ["Play again","שחקו שוב"],
+    ["Print","הדפסה"],
+    ["Download","הורדה"]
+  ];
+
+  document.querySelectorAll("*").forEach(node=>{
+    if(node.children.length) return;
+    const txt = (node.textContent || "").trim();
+    if(!txt) return;
+    translations.forEach(([en,he])=>{
+      if(txt === en) node.textContent = he;
+    });
+  });
+}
+
+/* ---------------------------
+   RENDER ALL
+--------------------------- */
+function rerenderAll(){
+  if(worksheetPanelParts) renderCategory("worksheet");
+  if(coloringPanelParts) renderCategory("coloring");
+  if(gameParts) renderGame();
+  patchVisibleEnglishInstructions();
+}
+
+function initMasterPatch(){
+  hideOldBlocks();
+
+  worksheetPanelParts = createCategoryPanel(
+    "worksheets",
+    "📄 דפי עבודה לפי רמות",
+    "כאן תמצאו דפי עבודה אמיתיים בשלוש רמות שונות: קל, בינוני ומתקדם. בכל רמה יש סוגי משימות שונים.",
+    "worksheet"
+  );
+
+  coloringPanelParts = createCategoryPanel(
+    "printables",
+    "🎨 דפי צביעה לפי רמות",
+    "כאן תמצאו דפי צביעה בשלוש רמות שונות: פשוט, בינוני ומורכב. כל רמה כוללת ציורים ברמת פירוט שונה באמת.",
+    "coloring"
+  );
+
+  renderCategory("worksheet");
+  renderCategory("coloring");
+  buildGamesPanel();
+  patchVisibleEnglishInstructions();
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initMasterPatch);
+}else{
+  initMasterPatch();
+}
+
+})();
+</script>
+<!-- END HAPPY ENGLISH CLUB MASTER PATCH -->
 </body>
 </html>
