@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ABC Games | Happy English Club</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#30345b;background:#faf7ff}
+header{background:linear-gradient(120deg,#7450dc,#c577e8);color:white;text-align:center;padding:30px 15px}
+header h1{font-size:38px;margin:8px}
+header p{font-size:17px}
+nav a{color:white}
+main{max-width:1050px;margin:auto;padding:20px}
+h2{color:#7553d7}
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:white;border:2px solid #eee5ff;border-radius:22px;padding:23px;text-align:center;box-shadow:0 5px 20px #62519a10}
+.card .emoji{font-size:45px}
+.card h3{color:#634bc1}
+.card p{color:#777;font-size:14px;min-height:35px}
+button{border:0;background:#7757dc;color:white;border-radius:13px;padding:13px 22px;font-size:16px;font-weight:bold;cursor:pointer}
+button:hover{filter:brightness(.96)}
+button:disabled{opacity:.55;cursor:default}
+button.secondary{background:#eae3ff;color:#654ac2}
+#play{display:none}
+.questionBox{background:white;border-radius:25px;padding:28px;text-align:center;margin:18px auto;max-width:760px;box-shadow:0 8px 28px #6657a51a}
+#visual{font-size:68px;margin:25px auto;direction:ltr;min-height:85px}
+#question{font-size:23px;font-weight:bold}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:13px;max-width:480px;margin:22px auto}
+.answer{background:#f5efff;border:2px solid #e6d8ff;color:#49348b;font-size:27px;min-height:74px}
+.answer.correct{background:#a6efc7;border-color:#4cb97e;color:#146b39}
+.answer.wrong{background:#ffd7dd;border-color:#e77484;color:#a72f49}
+#feedback{font-size:21px;font-weight:bold;min-height:35px}
+.score{font-weight:bold;color:#7655df;font-size:19px}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+#end{display:none;text-align:center;background:white;border-radius:25px;padding:35px;margin:25px auto;max-width:650px}
+.printArea{background:white;padding:22px;border-radius:22px;margin-top:24px}
+.sheetButtons{display:flex;gap:10px;flex-wrap:wrap}
+.sheet{direction:ltr;text-align:left;font-size:20px;margin-top:20px}
+.sheet .line{padding:15px;border-bottom:1px dashed #ccc}
+.sheet h2{text-align:center}
+.hide{display:none}
+@media(max-width:700px){.games{grid-template-columns:1fr 1fr}.card{padding:15px}.answers{gap:8px}#visual{font-size:55px}}
+@media(max-width:460px){.games{grid-template-columns:1fr}header h1{font-size:30px}}
+@media print{
+header,.games,.actions,.sheetButtons,.printArea>p,#play,#end{display:none!important}
+body{background:white}
+main{padding:0}
+.printArea{box-shadow:none}
+.sheet{display:block!important}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>🌈 Happy English Club</h1>
+<h2 style="color:white">ABC Fun Games!</h2>
+<p>לומדים אותיות באנגלית דרך משחקים מהנים</p>
+<nav><a href="/">🏠 חזרה לאתר הראשי</a></nav>
+</header>
+
+<main>
+<section id="menu">
+<h2>🎮 בוחרים משחק</h2>
+<div class="games" id="games"></div>
+</section>
+
+<section id="play">
+<div class="actions">
+<button class="secondary" onclick="goHome()">🏠 לכל המשחקים</button>
+<button class="secondary" onclick="startGame(currentMode)">🔄 התחלה מחדש</button>
+</div>
+<div class="questionBox">
+<h2 id="gameTitle"></h2>
+<div class="score" id="score"></div>
+<p id="question"></p>
+<div id="visual"></div>
+<div class="answers" id="answers"></div>
+<div id="feedback"></div>
+<button id="next" style="display:none" onclick="nextQuestion()">לשאלה הבאה ←</button>
+</div>
+</section>
+
+<section id="end">
+<div style="font-size:65px">🏆</div>
+<h2>Excellent Work!</h2>
+<p id="finalScore"></p>
+<div class="actions">
+<button onclick="startGame(currentMode)">משחקים שוב 🎮</button>
+<button class="secondary" onclick="goHome()">בחירת משחק אחר</button>
+</div>
+</section>
+
+<section class="printArea" id="printArea">
+<h2>🖨️ דפי עבודה להדפסה</h2>
+<p>בחרו פעילות, והיא תיפתח כדף תרגול שאפשר להדפיס.</p>
+<div class="sheetButtons">
+<button onclick="makeSheet('match')">אות גדולה וקטנה</button>
+<button onclick="makeSheet('missing')">האות החסרה</button>
+<button onclick="makeSheet('first')">האות הפותחת</button>
+</div>
+<div id="sheet" class="sheet hide"></div>
+<div class="actions" style="margin-top:18px">
+<button id="printBtn" class="hide" onclick="window.print()">🖨️ הדפסה</button>
+</div>
+</section>
+</main>
+
+<script>
+const alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const words=[
+["A","apple","🍎"],["B","banana","🍌"],
+["C","cat","🐱"],["D","dog","🐶"],
+["E","egg","🥚"],["F","fish","🐟"],
+["G","gift","🎁"],["H","house","🏠"],
+["I","ice cream","🍦"],["J","jacket","🧥"],
+["K","kite","🪁"],["L","lemon","🍋"],
+["M","moon","🌙"],["N","nose","👃"],
+["O","orange","🍊"],["P","pencil","✏️"],
+["Q","queen","👑"],["R","rabbit","🐰"],
+["S","sun","☀️"],["T","tree","🌳"],
+["U","umbrella","☂️"],["V","violin","🎻"],
+["W","water","💧"],["X","box","📦"],
+["Y","yellow","💛"],["Z","zebra","🦓"]
+];
+const classroom=[
+["book","📖"],["desk","🪑"],["pencil","✏️"],
+["bag","🎒"],["scissors","✂️"],["chair","🪑"],
+["crayons","🖍️"],["ruler","📏"],["notebook","📓"],
+["glue","🧴"]
+];
+const modes=[
+["match","🔠","Big and Small","התאימו אות גדולה לאות קטנה"],
+["picture","🖼️","First Letter","גלו באיזו אות מתחילה התמונה"],
+["missing","✏️","Missing Letter","השלימו את האות החסרה במילה"],
+["classroom","🎒","My Classroom","זהו חפצים באנגלית"],
+["train","🚂","ABC Train","מצאו את האות הבאה ברצף"],
+["word","🔎","Guess the Word","בחרו את המילה המתאימה לתמונה"]
+];
+let currentMode="",questions=[],position=0,points=0,answered=false;
+
+const $=id=>document.getElementById(id);
+const shuffle=arr=>[...arr].sort(()=>Math.random()-.5);
+const pick=arr=>arr[Math.floor(Math.random()*arr.length)];
+
+function choices(correct,pool){
+ const different=[...new Set(pool)].filter(x=>x!==correct);
+ return shuffle([correct,...shuffle(different).slice(0,3)]);
+}
+function buildMenu(){
+ $("games").replaceChildren();
+ modes.forEach(([id,emoji,title,desc])=>{
+ const card=document.createElement("div");
+ card.className="card";
+ const symbol=document.createElement("div");
+ symbol.className="emoji";symbol.textContent=emoji;
+ const h=document.createElement("h3");h.textContent=title;
+ const p=document.createElement("p");p.textContent=desc;
+ const btn=document.createElement("button");
+ btn.textContent="בואו נשחק!";
+ btn.onclick=()=>startGame(id);
+ card.append(symbol,h,p,btn);
+ $("games").append(card);
+ });
+}
+function makeQuestion(mode){
+ if(mode==="match"){
+ const letter=pick(alphabet);
+ return {
+ prompt:"איזו אות קטנה מתאימה לאות הגדולה?",
+ visual:letter,
+ correct:letter.toLowerCase(),
+ choices:choices(letter.toLowerCase(),alphabet.map(x=>x.toLowerCase()))
+ };
+ }
+ if(mode==="picture"){
+ const w=pick(words);
+ return {
+ prompt:"באיזו אות מתחילה המילה שבתמונה?",
+ visual:w[2],
+ correct:w[0],
+ choices:choices(w[0],alphabet)
+ };
+ }
+ if(mode==="missing"){
+ const w=pick(words.filter(x=>x[1].length>=3&&!x[1].includes(" ")));
+ const letters=w[1].split("");
+ const index=Math.floor(Math.random()*letters.length);
+ const answer=letters[index];
+ letters[index]="_";
+ return {
+ prompt:"איזו אות חסרה במילה?",
+ visual:w[2]+"  "+letters.join(""),
+ correct:answer,
+ choices:choices(answer,alphabet.map(x=>x.toLowerCase()))
+ };
+ }
+ if(mode==="classroom"){
+ const obj=pick(classroom);
+ return {
+ prompt:"איך קוראים לחפץ הזה באנגלית?",
+ visual:obj[1],
+ correct:obj[0],
+ choices:choices(obj[0],classroom.map(x=>x[0]))
+ };
+ }
+ if(mode==="train"){
+ const index=Math.floor(Math.random()*23);
+ const next=alphabet[index+3];
+ return {
+ prompt:"איזו אות באה בהמשך הרכבת?",
+ visual:alphabet.slice(index,index+3).join("  →  ")+"  →  ?",
+ correct:next,
+ choices:choices(next,alphabet)
+ };
+ }
+ const w=pick(words);
+ return {
+ prompt:"איזו מילה מתאימה לתמונה?",
+ visual:w[2],
+ correct:w[1],
+ choices:choices(w[1],words.map(x=>x[1]))
+ };
+}
+function startGame(mode){
+ currentMode=mode;
+ questions=Array.from({length:10},()=>makeQuestion(mode));
+ position=0;points=0;
+ $("menu").style.display="none";
+ $("end").style.display="none";
+ $("play").style.display="block";
+ $("gameTitle").textContent=modes.find(x=>x[0]===mode)[2];
+ showQuestion();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function showQuestion(){
+ answered=false;
+ const q=questions[position];
+ $("score").textContent="שאלה "+(position+1)+" מתוך 10 | ⭐ "+points+" נקודות";
+ $("question").textContent=q.prompt;
+ $("visual").textContent=q.visual;
+ $("feedback").textContent="";
+ $("next").style.display="none";
+ $("answers").replaceChildren();
+ q.choices.forEach(choice=>{
+ const btn=document.createElement("button");
+ btn.className="answer";
+ btn.textContent=choice;
+ btn.onclick=()=>answer(choice);
+ $("answers").append(btn);
+ });
+}
+function answer(choice){
+ if(answered)return;
+ answered=true;
+ const q=questions[position];
+ const ok=choice===q.correct;
+ if(ok)points+=10;
+ document.querySelectorAll(".answer").forEach(btn=>{
+ btn.disabled=true;
+ if(btn.textContent===q.correct)btn.classList.add("correct");
+ else if(btn.textContent===choice)btn.classList.add("wrong");
+ });
+ $("feedback").textContent=ok
+ ?"🎉 Excellent! כל הכבוד!"
+ :"💜 התשובה הנכונה: "+q.correct;
+ $("next").style.display="inline-block";
+ $("next").textContent=position===9?"לסיום 🏆":"לשאלה הבאה ←";
+}
+function nextQuestion(){
+ position++;
+ if(position>=10){
+ $("play").style.display="none";
+ $("end").style.display="block";
+ $("finalScore").textContent="צברת "+points+" מתוך 100 נקודות!";
+ }else showQuestion();
+}
+function goHome(){
+ $("play").style.display="none";
+ $("end").style.display="none";
+ $("menu").style.display="block";
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function makeSheet(type){
+ const box=$("sheet");
+ box.replaceChildren();
+ box.classList.remove("hide");
+ $("printBtn").classList.remove("hide");
+ const heading=document.createElement("h2");
+ const titles={
+ match:"Match Big and Small Letters",
+ missing:"Write the Missing Letter",
+ first:"Write the First Letter"
+ };
+ heading.textContent=titles[type];
+ box.append(heading);
+ const name=document.createElement("p");
+ name.textContent="Name: ____________________    Date: __________";
+ box.append(name);
+ const selected=shuffle(words).slice(0,10);
+ selected.forEach((w,index)=>{
+ const line=document.createElement("div");
+ line.className="line";
+ if(type==="match"){
+ line.textContent=(index+1)+".   "+w[0]+"       ______       "+w[0].toLowerCase();
+ }else if(type==="missing"){
+ const word=w[1].split("");
+ const i=Math.floor(word.length/2);
+ word[i]="_";
+ line.textContent=(index+1)+".   "+w[2]+"     "+word.join(" ")+"     ______";
+ }else{
+ line.textContent=(index+1)+".   "+w[2]+"      ____ "+w[1].slice(1);
+ }
+ box.append(line);
+ });
+ box.scrollIntoView({behavior:"smooth"});
+}
+buildMenu();
+</script>
+</body>
+</html>
