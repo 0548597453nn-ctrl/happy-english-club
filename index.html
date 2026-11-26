@@ -4626,5 +4626,484 @@ if(document.readyState==="loading"){
 </script>
 <!-- END UNIFIED FILTER -->
 
+<!-- WORKSHEETS: CORRECT LEVELS AND PICTURE CLUES -->
+<style>
+#heCorrectedWorksheets {
+  margin:24px 0;
+  padding:22px;
+  background:linear-gradient(135deg,#fff2df,#eee7ff,#e7fff2);
+  border:2px solid #e3d6ff;
+  border-radius:24px;
+}
+#heCorrectedWorksheets h2 {
+  color:#7452d8;
+  margin:0 0 10px;
+}
+.heCorrectedButtons {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin:13px 0;
+}
+.heCorrectedButtons button {
+  background:white;
+  border:2px solid #ddd0ff;
+  border-radius:14px;
+  padding:11px 15px;
+  color:#6044b5;
+  font-weight:bold;
+  cursor:pointer;
+}
+.heCorrectedButtons button.selected {
+  background:#7655df;
+  color:white;
+}
+.heCorrectedGrid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;
+  margin-top:17px;
+}
+.heCorrectedCard {
+  background:white;
+  padding:15px;
+  border:1px solid #eee5fc;
+  border-radius:17px;
+}
+.heCorrectedCard .hecCard,
+.heCorrectedCard .heUnifiedCard {
+  margin:0;
+  box-shadow:none;
+}
+.hePictureClues {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:16px 0;
+  direction:ltr;
+}
+.hePictureClue {
+  text-align:center;
+  border:1px solid #aaa;
+  border-radius:9px;
+  padding:9px 4px;
+  break-inside:avoid;
+}
+.hePictureClue .picture {
+  font-size:35px;
+}
+.hePictureClue .hint {
+  font-size:13px;
+  color:#333;
+}
+@media print {
+  .hePictureClue {
+    border-color:#555;
+  }
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+
+const NEW_LEVELS = {
+  "abc-alphabet-strip":1,
+  "abc-sound":1,
+  "abc-picture":1,
+
+  "ws1-first-letter":2,
+  "ws1-picture-word":2,
+  "ws1-same-letter":2,
+
+  "ws2-sort-letters":1,
+  "ws2-odd-one":1,
+  "ws2-match-beginnings":1,
+  "ws2-complete-abc":1,
+
+  "ws2-unscramble":3,
+  "ws2-classroom":3,
+  "ws2-picture-clues":3,
+
+  "ws3-short-sentence":2,
+  "ws3-alpha-order":2,
+  "ws3-word-categories":2
+};
+
+const OLD_IDS = {
+  "ABC Mega Strip":"abc-alphabet-strip",
+  "What Letter Is It?":"abc-sound",
+  "Look, Say, Write":"abc-picture"
+};
+
+const MASTER_IDS = {
+  "האות הראשונה":"ws1-first-letter",
+  "תמונה ומילה":"ws1-picture-word",
+  "אות פותחת זהה":"ws1-same-letter",
+  "מיון אותיות":"ws2-sort-letters",
+  "היוצא דופן":"ws2-odd-one",
+  "חיבור לפי אות פותחת":"ws2-match-beginnings",
+  "השלימו רצף ABC":"ws2-complete-abc",
+  "השלימו את רצף הABC":"ws2-complete-abc",
+  "סדרו את האותיות":"ws2-unscramble",
+  "חפצים בכיתה":"ws2-classroom",
+  "רמזי תמונה":"ws2-picture-clues",
+  "השלמת משפט":"ws3-short-sentence",
+  "השלמת המשפט":"ws3-short-sentence",
+  "סדר אלפביתי":"ws3-alpha-order",
+  "מיון לפי קטגוריות":"ws3-word-categories",
+  "תקנו את הטעות":"ws3-fix-mistake",
+  "חיפוש מילים":"ws3-word-search"
+};
+
+const EMOJI_HINTS = {
+  "zebra":"🦓",
+  "apple":"🍎",
+  "dog":"🐶",
+  "tree":"🌳",
+  "rabbit":"🐰",
+  "pencil":"✏️",
+  "cat":"🐱",
+  "fish":"🐟",
+  "orange":"🍊"
+};
+
+const HINTS_HE = {
+  "zebra":"זברה",
+  "apple":"תפוח",
+  "dog":"כלב",
+  "tree":"עץ",
+  "rabbit":"ארנב",
+  "pencil":"עיפרון",
+  "cat":"חתול",
+  "fish":"דג",
+  "orange":"תפוז"
+};
+
+const topics=[
+  "אותיות ABC",
+  "צבעים",
+  "מספרים",
+  "בעלי חיים"
+];
+
+const $=selector=>document.querySelector(selector);
+const $$=selector=>Array.from(document.querySelectorAll(selector));
+
+let currentTopic="אותיות ABC";
+let currentLevel=1;
+let catalog=[];
+let controls=null;
+
+function make(tag,text,className){
+  const element=document.createElement(tag);
+  if(text!==undefined)element.textContent=text;
+  if(className)element.className=className;
+  return element;
+}
+
+function findLevelButton(container,level){
+  return Array.from(container.querySelectorAll("button"))
+    .find(button=>Number(button.dataset.level)===level);
+}
+
+function findTopicButton(container,topic){
+  return Array.from(container.querySelectorAll("button"))
+    .find(button=>button.dataset.topic===topic);
+}
+
+function collectMaster(){
+  const panel=$("#hec-worksheet-panel");
+  if(!panel)return [];
+
+  const buttons=panel.querySelectorAll(
+    ".hecRowButtons button"
+  );
+  const grid=panel.querySelector(".hecGrid");
+
+  if(!grid)return [];
+
+  const result=[];
+
+  for(let level=1;level<=3;level++){
+    const button=buttons[level-1];
+    if(!button)continue;
+
+    button.click();
+
+    Array.from(grid.children).forEach(card=>{
+      const title=card.querySelector("strong")
+        ?.textContent?.trim()||"";
+
+      const id=MASTER_IDS[title]||"master-"+title;
+
+      result.push({
+        id,
+        title,
+        topic:"אותיות ABC",
+        level:NEW_LEVELS[id]||level,
+        card,
+        source:"master"
+      });
+    });
+  }
+
+  return result;
+}
+
+function collectOlder(){
+  const panel=$("#heUnified-worksheet");
+  if(!panel)return [];
+
+  const topicRow=panel.querySelectorAll(
+    ".heFilterRow"
+  )[0];
+
+  const levelRow=panel.querySelectorAll(
+    ".heFilterRow"
+  )[1];
+
+  const grid=panel.querySelector(".heUnifiedGrid");
+
+  if(!topicRow||!levelRow||!grid)return [];
+
+  const result=[];
+  const seen=new Set();
+
+  for(const topic of topics){
+    const topicButton=findTopicButton(topicRow,topic);
+    if(!topicButton)continue;
+
+    topicButton.click();
+
+    for(let level=1;level<=3;level++){
+      const levelButton=findLevelButton(levelRow,level);
+      if(!levelButton)continue;
+
+      levelButton.click();
+
+      grid.querySelectorAll(".heUnifiedCard")
+        .forEach(card=>{
+          const title=card.querySelector("h3")
+            ?.textContent?.trim()||"";
+
+          const id=OLD_IDS[title]||"old-"+title;
+          const unique=topic+"|"+id;
+
+          if(seen.has(unique))return;
+          seen.add(unique);
+
+          result.push({
+            id,
+            title,
+            topic,
+            level:NEW_LEVELS[id]||level,
+            card,
+            source:"old"
+          });
+        });
+    }
+  }
+
+  return result;
+}
+
+function buildCatalog(){
+  const old=collectOlder();
+  const master=collectMaster();
+
+  catalog=[...old,...master];
+
+  const seen=new Set();
+  catalog=catalog.filter(item=>{
+    const key=item.topic+"|"+item.id;
+    if(seen.has(key))return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function buildCorrectedPanel(){
+  const page=$("#worksheets");
+  if(!page)return;
+
+  $("#heCorrectedWorksheets")?.remove();
+
+  const panel=make("section",undefined,"");
+  panel.id="heCorrectedWorksheets";
+
+  panel.append(make("h2","📄 דפי עבודה לפי נושא ורמה"));
+  panel.append(make(
+    "p",
+    "בחרו נושא ורמת קושי. כל פעילות מופיעה ברמה המתאימה לה."
+  ));
+
+  const topicButtons=make("div",undefined,"heCorrectedButtons");
+  const levelButtons=make("div",undefined,"heCorrectedButtons");
+  const count=make("p");
+  const grid=make("div",undefined,"heCorrectedGrid");
+
+  topics.forEach(topic=>{
+    const button=make("button",topic);
+
+    button.onclick=()=>{
+      currentTopic=topic;
+      render();
+    };
+
+    topicButtons.append(button);
+  });
+
+  [1,2,3].forEach(level=>{
+    const button=make(
+      "button",
+      "⭐".repeat(level)+" רמה "+level
+    );
+
+    button.onclick=()=>{
+      currentLevel=level;
+      render();
+    };
+
+    levelButtons.append(button);
+  });
+
+  panel.append(
+    make("h3","בחרו נושא"),
+    topicButtons,
+    make("h3","בחרו רמה"),
+    levelButtons,
+    count,
+    grid
+  );
+
+  page.insertBefore(panel,page.firstChild);
+
+  controls={panel,topicButtons,levelButtons,count,grid};
+
+  render();
+}
+
+function render(){
+  if(!controls)return;
+
+  Array.from(controls.topicButtons.children)
+    .forEach(button=>{
+      button.classList.toggle(
+        "selected",
+        button.textContent===currentTopic
+      );
+    });
+
+  Array.from(controls.levelButtons.children)
+    .forEach((button,index)=>{
+      button.classList.toggle(
+        "selected",
+        index+1===currentLevel
+      );
+    });
+
+  const chosen=catalog.filter(item=>
+    item.topic===currentTopic&&
+    item.level===currentLevel
+  );
+
+  controls.grid.replaceChildren();
+
+  chosen.forEach(item=>{
+    const wrapper=make("article",undefined,"heCorrectedCard");
+    wrapper.append(item.card);
+    controls.grid.append(wrapper);
+
+    if(item.id==="ws3-fix-mistake"||
+       item.id==="ws3-word-search"){
+      attachPictureHints(item);
+    }
+  });
+
+  controls.count.textContent=
+    currentTopic+" | רמה "+currentLevel+
+    " | "+chosen.length+" דפי עבודה";
+
+  if(!chosen.length){
+    controls.grid.append(make(
+      "p",
+      "עדיין אין דפי עבודה בנושא וברמה שבחרתם."
+    ));
+  }
+}
+
+function attachPictureHints(item){
+  const button=item.card.querySelector("button");
+  if(!button||button.dataset.pictureClueAttached==="1")return;
+
+  button.dataset.pictureClueAttached="1";
+
+  button.addEventListener("click",()=>{
+    setTimeout(()=>{
+      addPictureHintsToPaper(item.id);
+    },0);
+  });
+}
+
+function addPictureHintsToPaper(id){
+  const paper=$("#hecPaper");
+  if(!paper)return;
+
+  paper.querySelector(".hePictureClues")?.remove();
+
+  const words=id==="ws3-fix-mistake"
+    ?["zebra","apple","dog","tree","rabbit","pencil"]
+    :["cat","dog","fish","apple","pencil","rabbit","orange"];
+
+  const container=make("div",undefined,"hePictureClues");
+
+  words.forEach(word=>{
+    const box=make("div",undefined,"hePictureClue");
+    const pic=make("div",EMOJI_HINTS[word],"picture");
+    const hint=make("div",HINTS_HE[word],"hint");
+
+    box.append(pic,hint);
+    container.append(box);
+  });
+
+  const instruction=make(
+    "p",
+    id==="ws3-fix-mistake"
+      ?"רמזים: הסתכלו בתמונות, מצאו את הטעות בכל מילה ותקנו אותה."
+      :"רמזים: הסתכלו בתמונות ומצאו בטבלת האותיות את המילים המתאימות."
+  );
+
+  instruction.style.direction="rtl";
+  instruction.style.textAlign="right";
+
+  paper.insertBefore(instruction,paper.children[2]||null);
+  paper.insertBefore(container,instruction.nextSibling);
+}
+
+function init(){
+  if(!$("#heUnified-worksheet")||
+     !$("#hec-worksheet-panel")){
+    console.warn("Worksheets libraries were not found");
+    return;
+  }
+
+  buildCatalog();
+  buildCorrectedPanel();
+
+  // Hide only the former worksheet displays.
+  $("#heUnified-worksheet").style.display="none";
+  $("#hec-worksheet-panel").style.display="none";
+}
+
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",init);
+}else{
+  init();
+}
+})();
+</script>
+<!-- END WORKSHEET LEVEL CORRECTIONS -->
+
 </body>
 </html>
